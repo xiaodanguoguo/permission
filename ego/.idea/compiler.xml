@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="base-api" />
+        <module name="base-facade" />
+        <module name="core" />
+        <module name="ego-props" />
+        <module name="registry-center" />
+        <module name="webapps-op" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="base-api" target="1.8" />
+      <module name="base-facade" target="1.8" />
+      <module name="core" target="1.8" />
+      <module name="ego-gateway" target="1.8" />
+      <module name="ego-props" target="1.5" />
+      <module name="enquiry-api" target="1.8" />
+      <module name="enquiry-facade" target="1.8" />
+      <module name="invoice-api" target="1.8" />
+      <module name="invoice-facade" target="1.8" />
+      <module name="message-api" target="1.8" />
+      <module name="message-facade" target="1.8" />
+      <module name="order-api" target="1.8" />
+      <module name="order-facade" target="1.8" />
+      <module name="price-api" target="1.8" />
+      <module name="price-facade" target="1.8" />
+      <module name="registry-center" target="1.8" />
+      <module name="schedule" target="1.8" />
+      <module name="services" target="1.8" />
+      <module name="services-base" target="1.8" />
+      <module name="services-enquiry" target="1.8" />
+      <module name="services-invoice" target="1.8" />
+      <module name="services-message" target="1.8" />
+      <module name="services-order" target="1.8" />
+      <module name="services-price" target="1.8" />
+      <module name="services-settlement" target="1.8" />
+      <module name="services-workflow" target="1.8" />
+      <module name="settlement-api" target="1.8" />
+      <module name="settlement-facade" target="1.8" />
+      <module name="webapps" target="1.5" />
+      <module name="webapps-op" target="1.8" />
+      <module name="webapps-www" target="1.8" />
+      <module name="workflow-api" target="1.8" />
+      <module name="workflow-facade" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

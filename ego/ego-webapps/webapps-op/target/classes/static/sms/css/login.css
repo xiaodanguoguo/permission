@@ -1,0 +1,34 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: MicrosoftYaHei;
+}
+.Login-navigation-page {
+  padding-top: 178px;
+  width: 1120px;
+  height: 663px;
+  background-color: white;
+  margin: 100px auto;
+}
+.Login-navigation-page .Login-navigation-pagecon {
+  text-align: center;
+}
+.Login-navigation-page .Login-navigation-pagecon .Login-navigation-welcome {
+  font-size: 26px;
+  color: #333;
+}
+.Login-navigation-page .Login-navigation-pagecon div:nth-child(2) {
+  padding: 100px;
+  margin: 0 auto;
+  width: 100px;
+  height: 72px;
+}
+.Login-navigation-page .Login-navigation-pagecon div:nth-child(2) img {
+  width: 100%;
+}
+.Login-navigation-page .Login-navigation-pagecon div:nth-child(3) {
+  font-size: 19px;
+}
+.Login-navigation-page .Login-navigation-pagecon div:nth-child(3) a {
+  color: #4fb0ac;
+}

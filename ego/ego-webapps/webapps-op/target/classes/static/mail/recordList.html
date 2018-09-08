@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<head>
+
+<title>邮件模板列表页</title>
+    <meta charset="UTF-8">
+   
+    <link rel="stylesheet" href="/static/sms/css/base_message.css">
+    <link rel="stylesheet" href="/static/css/shortmessage.css">
+    <link rel="stylesheet" href="/static/base/css/base_blue.css">
+    
+    <link rel="stylesheet" type="text/css" href="/static/plugin/page/css/messagePage.css">
+    <link href="/static/plugin/WdatePickerBlue/My97DatePicker/skin/messageWdatePicker.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/static/plugin/select/chosen_message.css">
+    <script type="text/javascript" src="/static/base/js/jquery.js"></script>
+    <script type="text/javascript" src="/static/base/js/public.js"></script>
+    <script type="text/javascript" src="/static/plugin/popup/script/manhuaDialog.1.0.js"></script>
+    <script type="text/javascript" src="/static/plugin/WdatePickerBlue/My97DatePicker/messageWdatePicker.js"></script>
+	<script type="text/javascript" src="/static/js/reqConfig.js"></script>
+    <script type="text/javascript" src="/static/base/js/docassistant.js"></script>
+    <script type="text/javascript" src="/static/plugin/page/script/jquery.page.js"></script>
+    <script src="/static/plugin/select/chosen.jquery.js"></script>
+    <script src="/static/plugin/highcharts/highcharts.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	$(".tcdPageCode").createPage({
+            pageCount:40,
+            current:1,
+            backFn:function(p){
+                onRefresh();
+            }
+        });
+        $("#condtemplateType").chosen({
+            no_results_text: "查无数据!",
+            width: "228PX",
+            enable_split_word_search: false,
+            placeholder_text_single: '全部'
+        });
+    })
+    
+    function clsStandardTableCtrl$progress(jsonItem,cloneRow)
+	{
+		//alert("自己业务定义！");
+		switch(jsonItem.status)
+		{
+			case "1":
+				$(cloneRow).find("#templateStatus").text("上线中");
+				$(cloneRow).find("#btnSearch").show();
+				$(cloneRow).find("#btnOffLine").show();
+				$(cloneRow).find("#btnEdit").hide();
+				$(cloneRow).find("#btnDel").hide();
+				$(cloneRow).find("#btnOnline").hide();
+				break;
+			case "2":
+				$(cloneRow).find("#templateStatus").text("已下线");
+				$(cloneRow).find("#btnSearch").hide();
+				$(cloneRow).find("#btnOffLine").hide();
+				$(cloneRow).find("#btnEdit").show();
+				$(cloneRow).find("#btnDel").show();
+				$(cloneRow).find("#btnOnline").show();
+				break;
+			default:
+				break;
+		
+		}
+		$(cloneRow).find("#btnSearch").click(function(){
+			var templateId = $(this).parents("tr:first")[0].jsonData.templateId;
+			//地址待定
+			window.open("/template/email/get?templateId="+templateId);
+		});
+		$(cloneRow).find("#btnOffLine").click(function(){
+			var templateId = $(this).parents("tr:first")[0].jsonData.templateId;
+			var reqParam = {"templateId":null};
+			reqParam.templateId = templateId;
+			$.ajax({
+                url: '/template/email/disable',
+                type: 'POST',
+                async: false,
+                cache: false,
+                contentType:'application/json',
+                data: reqParam,
+                dataType: 'text',
+                success: function (data) {
+                    var jsonData = JSON.parse(data);
+                    if (jsonData.status == "1") {
+                        alert("下线成功");
+                        document.body.jsCtrl.ctrl = document.getElementById("mailTemplateList");
+                        document.body.jsCtrl.init();
+                    }
+					
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+		});
+		$(cloneRow).find("#btnEdit").click(function(){
+			var templateId = $(this).parents("tr:first")[0].jsonData.templateId;
+			//地址待定
+			window.open("/template/email/get?templateId="+templateId);
+		});
+		$(cloneRow).find("#btnDel").click(function(){
+			var templateId = $(this).parents("tr:first")[0].jsonData.templateId;
+			var reqParam = {"templateId":null};
+			reqParam.templateId = templateId;
+			$.ajax({
+                url: '/template/email/delete',
+                type: 'POST',
+                async: false,
+                cache: false,
+                contentType:'application/json',
+                data: reqParam,
+                dataType: 'text',
+                success: function (data) {
+                    var jsonData = JSON.parse(data);
+                    if (jsonData.status == "1") {
+                        alert("下线成功");
+                        document.body.jsCtrl.ctrl = document.getElementById("mailTemplateList");
+                        document.body.jsCtrl.init();
+                    }
+					
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+		});
+		$(cloneRow).find("#btnOnline").click(function(){
+			var templateId = $(this).parents("tr:first")[0].jsonData.templateId;
+			var reqParam = {"templateId":null};
+			reqParam.templateId = templateId;
+			$.ajax({
+                url: '/template/sms/enable',
+                type: 'POST',
+                async: false,
+                cache: false,
+                contentType:'application/json',
+                data: reqParam,
+                dataType: 'text',
+                success: function (data) {
+                    var jsonData = JSON.parse(data);
+                    if (jsonData.status == "1") {
+                        alert("下线成功");
+                        document.body.jsCtrl.ctrl = document.getElementById("mailTemplateList");
+                        document.body.jsCtrl.init();
+                    }
+					
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+		});
+		
+	}
+    </script>
+</head>
+<body>
+	<div class="bgContainer">
+	    <div class="og-top" id="js-loader">
+
+	    </div>
+		<div class="og-left" id="js-loaderleft">
+
+		</div>
+	    <div class="og-head-main">
+
+	    		<p  class="maincontentTit">邮件模版</p>
+	        	<div class="Short-message-management-platform">
+				    <div class="Short-message-management-platformcon">
+				        <div class="Short-message-management-platformcon-nav">
+				            <span class="Short-message-management-name">*</span><b>类型</b>
+				            <select id="condtemplateType">
+				            	<option value="">全部</option>
+								<option value="1">验证码</option>
+								<option value="2">服务通知</option>
+								<option value="3">营销</option>
+				            </select>
+				            <span class="Short-message-management-name">*</span><b>模板</b>
+				            <input type="text" placeholder="请输入模版名称" id="condtemplateName">
+				
+				            <button type="button" comType="searchBtnCtrl" cond="condtemplateType,condtemplateName" rule="cond" unionTableId="mailTemplateList"><img src="/static/images/icon-search.png" >  查询</button><br>
+				      
+				        </div>
+				        <div class="Short-message-management-platformcon-con">
+				            <span><img src="/static/images/iconPlus.png" style="margin-top: -3px">添加邮件模版</span>
+				        </div>
+				        <div class="Short-message-management-platformcon-table">
+				            <table  cellpadding="0" class="Short-table" id="mailTemplateList" comType="standardTableCtrl" page="tcdPageCode" templateId="templateRow" reqPath="template/email/list" reqParam="{}" method="POST" noData="nonData">
+				                <thead>
+				                <tr class="Short-table-tr">
+				                    <th class="fb">邮件编码</th>
+				                    <th class="fb">模版名称</th>
+				                    <th class="fb">模版类型</th>
+				                    <th class="fb">创建时间</th>
+				                    <th class="fb">模版状态</th>
+				                    <th class="fb">操作</th>
+				           
+				                </tr>
+				                <tr style="display:none;" id="templateRow">
+				                    <td id="templateCode">order121152345edfgg</td>
+				                    <td id="templateName">营销活动</td>
+				                    <td id="templateType">营销</td>
+				                    <td id="createDate">2016-02-04　17:09</td>
+				                    <td id="templateStatus">上线中</td>
+				                    <td><a href="" id="btnEdit">编辑</a><a href="" id="btnOnline">上线</a><a href="" id="btnDel">删除</a><a href="" id="btnSearch">查看</a><a href="" id="btnOffLine">下线</a></td>
+				                </tr>
+				                <tr>
+				                    <td>order121152345edfgg</td>
+				                    <td>营销活动</td>
+				                    <td>营销</td>
+				                    <td>2016-02-04　17:09</td>
+				                    <td>上线中</td>
+				                    <td><a href="">删除</a><a href="">查看</a></td>
+				                </tr>
+				                </thead>
+				            </table>
+				            <div class="tcdPageCode fr" style="text-align: center;width: 100%"></div>
+				        </div>
+				        <div style="display: none" id="nonData" class="nodata-message"><p  class="Short-table-Nos">暂无数据</p></div>
+				    </div>
+				</div>
+
+			</div>
+	</div>
+</body>
+</html>
+<script>
+  // console.log($(".Short-table tbody tr").length)
+   for(var i = 0;i<$(".Short-table tbody tr").length;i++){
+       $(".Short-table tbody tr:odd").css("background","#F5F7F9")
+   }
+</script>

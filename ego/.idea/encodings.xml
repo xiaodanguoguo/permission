@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/ebase-core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-gateway" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-props" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-registry-center" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-services" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-services/base" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-services/base/base-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-services/base/base-facade" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-services/enquiry" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-services/enquiry/enquiry-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-services/enquiry/enquiry-facade" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-services/invoice" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-services/invoice/invoice-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-services/invoice/invoice-facade" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-services/message" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-services/message/message-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-services/message/message-facade" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-services/order" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-services/order/order-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-services/order/order-facade" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-services/schedule" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-services/workflow" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-services/workflow/workflow-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-services/workflow/workflow-facade" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-webapps" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-webapps/webapps-op" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ego-webapps/webapps-www" charset="UTF-8" />
+  </component>
+</project>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/../ebase-core/pom.xml" />
+        <option value="$PROJECT_DIR$/ego-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/ego-props/pom.xml" />
+        <option value="$PROJECT_DIR$/ego-registry-center/pom.xml" />
+        <option value="$PROJECT_DIR$/ego-services/pom.xml" />
+        <option value="$PROJECT_DIR$/ego-webapps/pom.xml" />
+        <option value="$PROJECT_DIR$/ego-services/schedule/pom.xml" />
+        <option value="$PROJECT_DIR$/ego-services/order/pom.xml" />
+        <option value="$PROJECT_DIR$/ebase-core/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8 (1)" project-jdk-type="JavaSDK" />
+  <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="trunkUrl" value="svn://10.5.210.201/svn/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="mySupportsUserInfoFilter" value="true" />
+  </component>
+</project>

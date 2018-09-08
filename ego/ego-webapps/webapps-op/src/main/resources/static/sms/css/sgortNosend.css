@@ -1,0 +1,114 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+.Short-message-management-platform {
+  background-color: white;
+  width: 1120px;
+  height: 663px;
+  padding: 30px;
+
+}
+.Short-message-management-platform .Short-message-management-platformcon-nav {
+  color: #999;
+}
+
+.Short-message-management-platform .Short-message-management-platformcon-nav input{
+  width: 298px;
+  height: 30px;
+  border: 1px solid #CCCCCC;
+  text-indent: 10px;
+}
+.Short-message-management-platform .Short-message-management-platformcon-nav .Short-message-navRight-his {
+  clear: both;
+  padding-top: 10px;
+}
+.Short-message-management-platform .Short-message-management-platformcon-nav .Short-message-navRight-his p {
+  display: block;
+  margin-left: 33%;
+}
+.Short-message-management-platform .Short-message-management-platformcon-nav .Short-message-navRight {
+  margin-left: 3.5%;
+  float: left;
+}
+.Short-message-management-platform .Short-message-management-platformcon-nav .Short-message-navRight .Wdate {
+  margin-left: 10px;
+}
+.Short-message-management-platform .Short-message-management-platformcon-nav .Short-message-navLeft {
+  float: left;
+  text-indent: 10px;
+}
+.Short-message-management-platform .Short-message-management-platformcon-nav .Short-message-navLeft input {
+  margin-left: 14px;
+  width: 228px;
+  height: 28px;
+  border: 1px solid #CCCCCC;
+}
+.Short-message-management-platform .Short-message-management-platformcon-nav .Short-message-management-name {
+  margin-left: 30px;
+  color: #E2062C;
+}
+.Short-message-management-platform .Short-message-management-platformcon-nav button {
+  color: #999;
+  margin-left: 30px;
+  width: 80px;
+  height: 30px;
+  background-color: white;
+  border: 1px solid #ccc;
+}
+.Short-message-management-platform .Short-message-management-platformcon-nav input {
+  width: 228px;
+  height: 26px;
+  margin-left: 30px;
+}
+.Short-message-management-platform .Short-message-management-platformcon-nav select {
+  margin-left: 10px;
+  margin-bottom: 30px;
+  color: #999;
+  width: 228px;
+  height: 30px;
+}
+.Short-message-management-platform .Short-message-management-platformcon-con {
+  margin-top: 29px;
+  border-top: 1px solid #ccc;
+  padding-top: 35px;
+  padding-bottom: 35px;
+}
+.Short-message-management-platform .Short-message-management-platformcon-con span {
+  border: 1px solid #4FB0AC;
+  color: #4FB0AC;
+  width: 122px;
+  height: 30px;
+  display: block;
+  text-align: center;
+  line-height: 30px;
+}
+
+.Short-message-management-platform .Short-message-management-platformcon-table {
+  width: 100%;
+}
+.Short-message-management-platform .Short-message-management-platformcon-table a{margin-right: 10px}
+.Short-message-management-platform .Short-message-management-platformcon-table .Short-table-red {
+  font-weight: bold;
+  color: #F14400;
+}
+.Short-message-management-platform .Short-message-management-platformcon-table .Short-table-green {
+  font-weight: bold;
+  color: #3D9A4F;
+}
+.Short-message-management-platform .Short-message-management-platformcon-table table {
+  text-align: center;
+  width: 100%;
+}
+.Short-message-management-platform .Short-message-management-platformcon-table table tr {
+  height: 40px;
+}
+.Short-message-management-platform .Short-message-management-platformcon-table table .Short-table-tr {
+  background-color: #F5F7F9 ;
+  color: #536C76;
+}
+.Short-message-management-platform .Short-message-management-platformcon-table table .Short-table-tr th{text-align: center}
+.Short-message-management-platform .Short-table-Nos {
+  color: #999;
+  margin: 13% 47%;
+}

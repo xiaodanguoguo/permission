@@ -1,0 +1,8 @@
+com\ebase\ego\webapps\op\controller\Jurisdiction\FunctionManageController.class
+com\ebase\ego\webapps\op\controller\Jurisdiction\AcctRoleGroupRoleController.class
+com\ebase\ego\webapps\op\main\WebappsApplication.class
+com\ebase\ego\webapps\op\controller\Jurisdiction\AcctOperPrivRelaController.class
+com\ebase\ego\webapps\op\controller\Jurisdiction\RoleInfoController.class
+com\ebase\ego\webapps\op\controller\Jurisdiction\OrgInfoController.class
+com\ebase\ego\webapps\op\controller\Jurisdiction\SysBasicsAccttController.class
+com\ebase\ego\webapps\op\controller\Jurisdiction\RoleGroupController.class
