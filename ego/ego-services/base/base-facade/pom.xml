@@ -33,6 +33,16 @@
 			<groupId>com.ego</groupId>
 			<artifactId>base-api</artifactId>
 			<version>${project.version}</version>
+			<!--<exclusions>-->
+				<!--<exclusion>-->
+					<!--<groupId>org.mybatis</groupId>-->
+					<!--<artifactId>mybatis-spring</artifactId>-->
+				<!--</exclusion>-->
+				<!--<exclusion>-->
+					<!--<groupId>org.mybatis</groupId>-->
+					<!--<artifactId>mybatis</artifactId>-->
+				<!--</exclusion>-->
+			<!--</exclusions>-->
 		</dependency>
 	</dependencies>
 	<dependencyManagement>

@@ -2,6 +2,7 @@ package com.ego.services.base.api.controller.Jurisdiction;
 
 
 import com.ebase.core.page.PageDTO;
+import com.ebase.core.page.PageInfo;
 import com.ebase.core.service.ServiceResponse;
 import com.ego.services.base.api.vo.Jurisdiction.RoleInfoVO;
 
@@ -26,7 +27,7 @@ public interface RoleInfoAPI {
      * @return
      */
     @RequestMapping(value = "/roleInfoList",method = RequestMethod.POST)
-    ServiceResponse<PageDTO<RoleInfoVO>> roleInfoList(@RequestBody RoleInfoVO jsonRequest);
+    ServiceResponse<PageInfo<RoleInfoVO>> roleInfoList(@RequestBody RoleInfoVO jsonRequest);
 
     /**
      * 所有可用角色

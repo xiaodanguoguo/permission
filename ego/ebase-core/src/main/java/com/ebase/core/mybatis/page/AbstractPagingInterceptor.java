@@ -124,7 +124,7 @@ public abstract class AbstractPagingInterceptor implements Interceptor {
 
 	/**
 	 * 获取查询 记录数 sql
-	 * 
+	 *
 	 * @param targetSql
 	 * @return
 	 */
@@ -132,7 +132,7 @@ public abstract class AbstractPagingInterceptor implements Interceptor {
 
 	/**
 	 * 获取select 分页的sql
-	 * 
+	 *
 	 * @param targetSql
 	 * @param pageDTO
 	 * @return
@@ -141,7 +141,7 @@ public abstract class AbstractPagingInterceptor implements Interceptor {
 
 	/**
 	 * 是否需要分页
-	 * 
+	 *
 	 * @return
 	 */
 	protected abstract boolean needPage();

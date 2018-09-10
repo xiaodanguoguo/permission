@@ -3,7 +3,7 @@ package com.ego.services.base.facade.controller.Jurisdiction;
 
 
 import com.ebase.core.exception.BusinessException;
-import com.ebase.core.page.PageDTO;
+import com.ebase.core.page.PageInfo;
 import com.ebase.core.service.ServiceResponse;
 import com.ebase.utils.JsonUtil;
 import com.ego.services.base.api.vo.Jurisdiction.RoleGroupVO;
@@ -38,11 +38,11 @@ public class RoleGroupController {
      * @return
      */
     @RequestMapping("/roleGroupList")
-    public ServiceResponse<PageDTO<RoleGroupVO>> roleGroupList(@RequestBody RoleGroupVO jsonRequest){
-        ServiceResponse<PageDTO<RoleGroupVO>> jsonResponse = new ServiceResponse<>();
+    public ServiceResponse<PageInfo<RoleGroupVO>> roleGroupList(@RequestBody RoleGroupVO jsonRequest){
+        ServiceResponse<PageInfo<RoleGroupVO>> jsonResponse = new ServiceResponse<>();
        try {
             LOG.info("list 参数 = {}",JsonUtil.toJson(jsonRequest));
-            PageDTO<RoleGroupVO> page = roleGroupService.roleGroupList(jsonRequest);
+           PageInfo<RoleGroupVO> page = roleGroupService.roleGroupList(jsonRequest);
             jsonResponse.setRetContent(page);
        } catch (Exception e) {
            jsonResponse.setException(new BusinessException("0104001", new Object[]{jsonResponse}));

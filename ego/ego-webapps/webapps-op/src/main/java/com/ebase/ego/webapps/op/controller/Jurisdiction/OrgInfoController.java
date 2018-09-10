@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.ebase.core.page.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,11 +177,11 @@ public class OrgInfoController {
 	  * @return
 	  */
 	 @RequestMapping(value = "/getListOrgInfo", method = RequestMethod.POST)
-	 public JsonResponse<PageDTO<OrgInfoVO>> getListOrgInfo(@RequestBody JsonRequest<OrgInfoVO> jsonRequest) {
+	 public JsonResponse<PageInfo<OrgInfoVO>> getListOrgInfo(@RequestBody JsonRequest<OrgInfoVO> jsonRequest) {
 		 logger.info(" www 系统编码list 参数 = {}",JsonUtil.toJson(jsonRequest));
 		 
 		 OrgInfoVO orgInfoVO = jsonRequest.getReqBody();
-		 JsonResponse<PageDTO<OrgInfoVO>> jsonResponse = new JsonResponse<PageDTO<OrgInfoVO>>();
+		 JsonResponse<PageInfo<OrgInfoVO>> jsonResponse = new JsonResponse<PageInfo<OrgInfoVO>>();
 		 try {
 			 jsonResponse = orgInfoServiceAPI.getListOrgInfo(orgInfoVO);
 		} catch (BusinessException e) {

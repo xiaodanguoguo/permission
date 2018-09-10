@@ -1,7 +1,7 @@
 package com.ego.services.base.facade.controller.Jurisdiction;
 
 import com.ebase.core.exception.BusinessException;
-import com.ebase.core.page.PageDTO;
+import com.ebase.core.page.PageInfo;
 import com.ebase.core.service.ServiceResponse;
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
@@ -100,12 +100,12 @@ public class SysBasicsAcctController {
      * @return
      */
     @RequestMapping("/sysAcctList")
-    public JsonResponse<PageDTO<AcctInfoVO>> listSysAcct(@RequestBody JsonRequest<AcctInfoVO> jsonRequest){
-        JsonResponse<PageDTO<AcctInfoVO>> jsonResponse = new JsonResponse();
+    public JsonResponse<PageInfo<AcctInfoVO>> listSysAcct(@RequestBody JsonRequest<AcctInfoVO> jsonRequest){
+        JsonResponse<PageInfo<AcctInfoVO>> jsonResponse = new JsonResponse();
         LOG.info("list 参数 = {}",JsonUtil.toJson(jsonRequest));
 
         try{
-            PageDTO<AcctInfoVO> page = sysBasicsAcctService.listSysAcct(jsonRequest);
+            PageInfo<AcctInfoVO> page = sysBasicsAcctService.listSysAcct(jsonRequest);
             jsonResponse.setRspBody(page);
         }catch (Exception e){
             LOG.error("查询列表 失败 error = {}",e);

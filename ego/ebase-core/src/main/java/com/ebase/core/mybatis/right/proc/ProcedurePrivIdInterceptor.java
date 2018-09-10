@@ -44,12 +44,12 @@ public class ProcedurePrivIdInterceptor implements Interceptor {
 			}
 			BoundSql srcBoundSql = ms.getBoundSql(srcParameter);
 			Executor executor = (Executor) invocation.getTarget();
-			
+
 			// 获取原始sql
 			String srcSqlContent = getSql(srcBoundSql, ms.getConfiguration());
-			
+
 			String callMsId = ms.getId()+CALLABLE;
-			
+
 			MappedStatement callMs = null;
 			// 创建 callable的 MappedStatement
 			if(callMsMap.containsKey(callMsId)){
@@ -58,12 +58,12 @@ public class ProcedurePrivIdInterceptor implements Interceptor {
 				callMs = newCallMs(ms,callMsId);
 				callMsMap.put(callMsId, callMs);
 			}
-			
+
 			// 获取callable传入参数
 			Map<String, Object> callMapParameter = getCallParameter(srcSqlContent);
-			
+
 			Object returnObject = null;
-			
+
 			if(invocation.getMethod().getName().equals("query")){
 				// 执行查询操作
 				returnObject = executor.query(callMs, callMapParameter, RowBounds.DEFAULT, resultHandler);
@@ -141,11 +141,11 @@ public class ProcedurePrivIdInterceptor implements Interceptor {
 	}
 
 	/**
-	 * <parameter property="execSql" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/> 
-	 * <parameter property="dataRange" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/> 
+	 * <parameter property="execSql" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
+	 * <parameter property="dataRange" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
 	 * <parameter property="rightId" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
 	 * <parameter property="total" jdbcType="NUMERIC" javaType="java.lang.Long" mode="OUT"/>
-	 * 
+	 *
 	 * @return
 	 */
 	private List<ParameterMapping> getCallParameterMappings(Configuration configuration) {
@@ -169,7 +169,7 @@ public class ProcedurePrivIdInterceptor implements Interceptor {
 
 	/**
 	 * 获取call sql 方式
-	 * 
+	 *
 	 * @return
 	 */
 	private String getCallSql() {

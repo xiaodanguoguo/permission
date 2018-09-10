@@ -2,12 +2,12 @@ package com.ego.services.base.api.controller.Jurisdiction;
 
 import java.util.List;
 
+import com.ebase.core.page.PageInfo;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.ebase.core.page.PageDTO;
 import com.ebase.core.service.ServiceResponse;
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
@@ -67,7 +67,7 @@ public interface OrgInfoServiceAPI {
 	 * @return 参数（id:主键,orgCode:机构代码,orgName:机构名称,parentId:上级机构,remark:备注,status:0:停用;1:启用,createdBy:创建人,createdTime:创建时间,updatedBy:修改人,updatedTime:修改时间）
 	 */
 	@RequestMapping(value = "/getListOrgInfo",method = RequestMethod.POST)
-	JsonResponse<PageDTO<OrgInfoVO>> getListOrgInfo(OrgInfoVO orgInfoVO);
+	JsonResponse<PageInfo<OrgInfoVO>> getListOrgInfo(OrgInfoVO orgInfoVO);
 	
 	/**
 	 * 组织表查询（父类查出子类信息）

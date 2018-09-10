@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ego-services/base/base-api/base-api.iml" filepath="$PROJECT_DIR$/ego-services/base/base-api/base-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ego-services/base/base-facade/base-facade.iml" filepath="$PROJECT_DIR$/ego-services/base/base-facade/base-facade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ebase-core/core.iml" filepath="$PROJECT_DIR$/ebase-core/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ego.iml" filepath="$PROJECT_DIR$/.idea/ego.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ego-props/ego-props.iml" filepath="$PROJECT_DIR$/ego-props/ego-props.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ego-registry-center/registry-center.iml" filepath="$PROJECT_DIR$/ego-registry-center/registry-center.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ego-services/services.iml" filepath="$PROJECT_DIR$/ego-services/services.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ego-services/base/services-base.iml" filepath="$PROJECT_DIR$/ego-services/base/services-base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ego-webapps/webapps.iml" filepath="$PROJECT_DIR$/ego-webapps/webapps.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ego-webapps/webapps-op/webapps-op.iml" filepath="$PROJECT_DIR$/ego-webapps/webapps-op/webapps-op.iml" />
+    </modules>
+  </component>
+</project>

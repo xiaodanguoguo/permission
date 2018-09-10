@@ -3,6 +3,7 @@ package com.ego.services.base.facade.service.Jurisdiction.impl;
 
 import com.ebase.core.page.PageDTO;
 import com.ebase.core.page.PageDTOUtil;
+import com.ebase.core.page.PageInfo;
 import com.ebase.utils.BeanCopyUtil;
 import com.ego.services.base.api.vo.Jurisdiction.RoleInfoVO;
 import com.ego.services.base.facade.common.IsDelete;
@@ -15,6 +16,7 @@ import com.ego.services.base.facade.dao.Jurisdiction.RoleInfoMapper;
 import com.ego.services.base.facade.model.Jurisdiction.AcctRoleGroupRole;
 import com.ego.services.base.facade.model.Jurisdiction.RoleInfo;
 import com.ego.services.base.facade.service.Jurisdiction.RoleInfoService;
+import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -172,7 +174,7 @@ public class RoleInfoServiceImpl implements RoleInfoService {
 
 
     @Override
-    public PageDTO<RoleInfoVO> roleInfoList(RoleInfoVO jsonRequest) {
+    public PageInfo<RoleInfoVO> roleInfoList(RoleInfoVO jsonRequest) {
         RoleInfo roleInfo=new RoleInfo();
         BeanCopyUtil.copy(jsonRequest,roleInfo);
         try {
@@ -181,17 +183,17 @@ public class RoleInfoServiceImpl implements RoleInfoService {
             roleInfo.setRoleTitle(roleInfo.getRoleCode());
             roleInfo.setIsDelete(IsDelete.NO.getCode());
             //查询分页数据
+            PageHelper.startPage(jsonRequest.getPageNum(), jsonRequest.getPageSize());
             List<RoleInfo> list = roleInfoMapper.find(roleInfo);
 
-            PageDTO<RoleInfo> page = PageDTOUtil.transform(list);
+            PageInfo<RoleInfo> pageInfo = new PageInfo<>(list);
 
-            //转换
-            PageDTO<RoleInfoVO> pageVo = new PageDTO(page.getPageNum(),page.getPageSize());
-            pageVo.setTotal(page.getTotal());
-            List<RoleInfo> resultData = page.getResultData();
-
-            List<RoleInfoVO> result = BeanCopyUtil.copyList(resultData, RoleInfoVO.class);
-            pageVo.setResultData(result);
+            List<RoleInfoVO> roleInfoVo= BeanCopyUtil.copyList(list, RoleInfoVO.class);
+            PageInfo<RoleInfoVO> pageVo = new PageInfo(roleInfoVo);
+            pageVo.setTotal(pageInfo.getTotal());
+            pageVo.setPages(pageInfo.getPages());
+            pageVo.setPageNum(pageInfo.getPageNum());
+            pageVo.setPageSize(pageInfo.getPageSize());
             return pageVo;
         } finally {
             PageDTOUtil.endPage();

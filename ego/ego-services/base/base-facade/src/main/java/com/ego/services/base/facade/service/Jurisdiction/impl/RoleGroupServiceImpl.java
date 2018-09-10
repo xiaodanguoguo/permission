@@ -3,6 +3,7 @@ package com.ego.services.base.facade.service.Jurisdiction.impl;
 
 import com.ebase.core.page.PageDTO;
 import com.ebase.core.page.PageDTOUtil;
+import com.ebase.core.page.PageInfo;
 import com.ebase.utils.BeanCopyUtil;
 import com.ego.services.base.api.vo.Jurisdiction.RoleGroupVO;
 import com.ego.services.base.facade.common.IsDelete;
@@ -72,11 +73,10 @@ public class RoleGroupServiceImpl implements RoleGroupService {
 
 
     @Override
-    public PageDTO<RoleGroupVO> roleGroupList(RoleGroupVO jsonRequest) {
+    public PageInfo<RoleGroupVO> roleGroupList(RoleGroupVO jsonRequest) {
         RoleGroup roleGroup=new RoleGroup();
         BeanCopyUtil.copy(jsonRequest,roleGroup);
         try {
-            PageDTOUtil.startPage(jsonRequest);
 
             //roleInfo.setRoleTitle(roleInfo.getRoleCode());
             roleGroup.setIsDelete(IsDelete.NO.getCode());
@@ -94,15 +94,14 @@ public class RoleGroupServiceImpl implements RoleGroupService {
             //查询分页数据
             List<RoleGroup> list = roleGroupMapper.find(roleGroup);
 
-            PageDTO<RoleGroup> page = PageDTOUtil.transform(list);
+            PageInfo<RoleGroup> pageInfo = new PageInfo<>(list);
 
-            //转换
-            PageDTO<RoleGroupVO> pageVo = new PageDTO(page.getPageNum(),page.getPageSize());
-            pageVo.setTotal(page.getTotal());
-            List<RoleGroup> resultData = page.getResultData();
-
-            List<RoleGroupVO> result = BeanCopyUtil.copyList(resultData, RoleGroupVO.class);
-            pageVo.setResultData(result);
+            List<RoleGroupVO> roleInfoVo= BeanCopyUtil.copyList(list, RoleGroupVO.class);
+            PageInfo<RoleGroupVO> pageVo = new PageInfo(roleInfoVo);
+            pageVo.setTotal(pageInfo.getTotal());
+            pageVo.setPages(pageInfo.getPages());
+            pageVo.setPageNum(pageInfo.getPageNum());
+            pageVo.setPageSize(pageInfo.getPageSize());
             return pageVo;
         } finally {
             PageDTOUtil.endPage();

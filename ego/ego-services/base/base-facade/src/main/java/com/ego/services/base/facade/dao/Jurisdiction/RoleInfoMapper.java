@@ -1,6 +1,8 @@
 package com.ego.services.base.facade.dao.Jurisdiction;
 
+import com.ebase.core.page.Page;
 import com.ego.services.base.facade.model.Jurisdiction.RoleInfo;
+import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
 
@@ -18,6 +20,8 @@ public interface RoleInfoMapper {
     int updateByPrimaryKey(RoleInfo record);
 
     List<RoleInfo> find(RoleInfo roleInfo);
+
+    List<RoleInfo> findTwo(RoleInfo roleInfo);
 
     List<RoleInfo> findAll(RoleInfo roleInfo);
 

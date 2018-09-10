@@ -2,12 +2,17 @@ package com.ego.services.base.facade.controller.Jurisdiction;
 
 
 import com.ebase.core.exception.BusinessException;
-import com.ebase.core.page.PageDTO;
 import com.ebase.core.service.ServiceResponse;
+import com.ebase.utils.BeanCopyUtil;
 import com.ebase.utils.JsonUtil;
 import com.ego.services.base.api.vo.Jurisdiction.RoleInfoVO;
 import com.ego.services.base.facade.common.SysPramType;
+import com.ego.services.base.facade.dao.Jurisdiction.RoleInfoMapper;
+import com.ego.services.base.facade.model.Jurisdiction.RoleInfo;
 import com.ego.services.base.facade.service.Jurisdiction.RoleInfoService;
+import com.github.pagehelper.PageHelper;
+import com.ebase.core.page.PageInfo;
+import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +34,9 @@ import java.util.Map;
 public class RoleInfoController {
 
     private static Logger LOG = LoggerFactory.getLogger(RoleInfoController.class);
+
+    @Autowired
+    private RoleInfoMapper roleInfoMapper;
 
     @Autowired
     private RoleInfoService roleInfoService;
@@ -124,17 +132,46 @@ public class RoleInfoController {
      * @return
      */
     @RequestMapping("/roleInfoList")
-    public ServiceResponse<PageDTO<RoleInfoVO>> roleInfoList(@RequestBody RoleInfoVO jsonRequest){
-        ServiceResponse<PageDTO<RoleInfoVO>> jsonResponse = new ServiceResponse();
+    public ServiceResponse<PageInfo<RoleInfoVO>> roleInfoList(@RequestBody RoleInfoVO jsonRequest){
+        ServiceResponse<PageInfo<RoleInfoVO>> jsonResponse = new ServiceResponse();
         try {
             LOG.info("list 参数 = {}",JsonUtil.toJson(jsonRequest));
-            PageDTO<RoleInfoVO> page = roleInfoService.roleInfoList(jsonRequest);
+            PageInfo<RoleInfoVO> page = roleInfoService.roleInfoList(jsonRequest);
             jsonResponse.setRetContent(page);
         } catch (Exception e) {
             throw new BusinessException("0103001");
         }
         return jsonResponse;
     }
+
+
+    /**
+     * 系统参数 list 接口
+     * @param roleInfoc
+     * @return
+     */
+    @RequestMapping("/pageList")
+    public ServiceResponse<PageInfo<RoleInfoVO>> pageList(@RequestBody RoleInfo roleInfoc){
+        ServiceResponse<PageInfo<RoleInfoVO>> jsonResponse = new ServiceResponse();
+        int pageNo = 1;
+        int pageSize = 3;
+        PageHelper.startPage(pageNo, pageSize);
+        List<RoleInfo> list=roleInfoMapper.findTwo(roleInfoc);
+
+        PageInfo<RoleInfo> pageInfo = new PageInfo<>(list);
+
+        List<RoleInfoVO> roleInfoVo= BeanCopyUtil.copyList(list, RoleInfoVO.class);
+        PageInfo<RoleInfoVO> pageVo = new PageInfo(roleInfoVo);
+        pageVo.setTotal(pageInfo.getTotal());
+        pageVo.setPages(pageInfo.getPages());
+
+        jsonResponse.setRetContent(pageVo);
+        return jsonResponse;
+    }
+
+
+
+
 
     /**
      * 系统参数 树状图 接口

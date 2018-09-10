@@ -1,6 +1,6 @@
 package com.ebase.ego.webapps.op.controller.Jurisdiction;
 
-import com.ebase.core.page.PageDTO;
+import com.ebase.core.page.PageInfo;
 import com.ebase.core.service.ServiceResponse;
 import feign.FeignException;
 import org.slf4j.Logger;
@@ -45,12 +45,12 @@ public class RoleGroupController {
      * @return
      */
     @RequestMapping(value = "/roleGroupList",method = RequestMethod.POST)
-    public JsonResponse<PageDTO<RoleGroupVO>> roleGroupList(@RequestBody JsonRequest<RoleGroupVO> jsonRequest){
+    public JsonResponse<PageInfo<RoleGroupVO>> roleGroupList(@RequestBody JsonRequest<RoleGroupVO> jsonRequest){
 
-        JsonResponse<PageDTO<RoleGroupVO>> result = new JsonResponse<>();
+        JsonResponse<PageInfo<RoleGroupVO>> result = new JsonResponse<>();
         try {
             //根据service层返回的编码做不同的操作
-            ServiceResponse<PageDTO<RoleGroupVO>> response=roleGroupAPI.roleGroupList(jsonRequest.getReqBody());
+            ServiceResponse<PageInfo<RoleGroupVO>> response=roleGroupAPI.roleGroupList(jsonRequest.getReqBody());
             if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode())) {
                 result.setRspBody(response.getRetContent());
                 //如果需要异常信息

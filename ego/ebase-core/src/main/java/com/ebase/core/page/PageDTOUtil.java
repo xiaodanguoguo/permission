@@ -18,7 +18,7 @@ import java.util.List;
  * @date 2017年8月8日下午3:26:28
  */
 public class PageDTOUtil {
-	
+
 	public static void startPage(Object params){
 
 		int pageNum = (int) ReflectUtil.getFieldValue(params, "pageNum");
@@ -26,21 +26,21 @@ public class PageDTOUtil {
 		PageDTO<?> pageDTO = new PageDTO<>(pageNum, pageSize);
 		PageThreadLocal.init(pageDTO);
 	}
-	
+
 	public static void startPage(int pageNum,int pageSize){
 		PageDTO<?> pageDTO = new PageDTO<>(pageNum, pageSize);
 		PageThreadLocal.init(pageDTO);
 	}
-	
+
 	public static void endPage(){
 		PageThreadLocal.remove();
 	}
-	
+
 	public static PageDTO<?> getCurrent(){
 		return PageThreadLocal.get();
 	}
-	
-	
+
+
 	/**
 	 * 在 page startPage 和 endPage 方法之间的查询语句返回的List对象进行转换，
 	 * @param list
@@ -56,7 +56,7 @@ public class PageDTOUtil {
 		pageDTO.setResultData(resultData);
 		return pageDTO;
 	}
-	
+
 	/**
 	 * 在 page startPage 和 endPage 方法之间的查询语句返回的List对象进行转换，
 	 * @param list

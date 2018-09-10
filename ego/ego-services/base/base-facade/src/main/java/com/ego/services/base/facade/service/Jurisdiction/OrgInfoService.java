@@ -3,6 +3,7 @@ package com.ego.services.base.facade.service.Jurisdiction;
 import java.util.List;
 
 import com.ebase.core.page.PageDTO;
+import com.ebase.core.page.PageInfo;
 import com.ebase.core.web.json.JsonRequest;
 import com.ego.services.base.api.vo.Jurisdiction.OrgInfoVO;
 import com.ego.services.base.facade.model.Jurisdiction.AcctInfo;
@@ -27,7 +28,7 @@ public interface OrgInfoService {
 	
 	OrgInfo getOrgInfo(OrgInfo orgInfo);
 
-	PageDTO<OrgInfoVO> getListOrgInfo(OrgInfo orgInfo);
+	PageInfo<OrgInfoVO> getListOrgInfo(OrgInfo orgInfo);
 
 	List<OrgInfo> getMaterielOrginfo(AcctInfo acctInfo);
 

@@ -4,6 +4,7 @@ package com.ego.services.base.facade.controller.Jurisdiction;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ebase.core.page.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ebase.core.exception.BusinessException;
-import com.ebase.core.page.PageDTO;
 import com.ebase.core.service.ServiceResponse;
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
@@ -200,13 +200,13 @@ public class OrgInfoController {
 	 * @return
 	 */
 	@RequestMapping("/getListOrgInfo")
-	public JsonResponse<PageDTO<OrgInfoVO>> getListOrgInfo(@RequestBody OrgInfoVO orgInfoVO) {
-		JsonResponse<PageDTO<OrgInfoVO>> jsonResponse = new JsonResponse<PageDTO<OrgInfoVO>>();
+	public JsonResponse<PageInfo<OrgInfoVO>> getListOrgInfo(@RequestBody OrgInfoVO orgInfoVO) {
+		JsonResponse<PageInfo<OrgInfoVO>> jsonResponse = new JsonResponse<PageInfo<OrgInfoVO>>();
 
 		OrgInfo orgInfo = new OrgInfo();
 		BeanCopyUtil.copy(orgInfoVO, orgInfo);
 		try {
-			PageDTO<OrgInfoVO> page = orgInfoService.getListOrgInfo(orgInfo);
+			PageInfo<OrgInfoVO> page = orgInfoService.getListOrgInfo(orgInfo);
 			jsonResponse.setRspBody(page);
 		} catch (BusinessException e) {
 			jsonResponse.setRetCode(e.getErrorCode());

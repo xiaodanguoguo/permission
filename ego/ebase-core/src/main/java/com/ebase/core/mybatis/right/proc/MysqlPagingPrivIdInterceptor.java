@@ -27,7 +27,7 @@ import java.util.List;
 @Intercepts(@Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class,Integer.class }))
 public class MysqlPagingPrivIdInterceptor extends AbstractPagingInterceptor {
 
-	
+
 	/**
 	 * 改造sql变成查询总数的sql
 	 * @param targetSql
@@ -57,11 +57,11 @@ public class MysqlPagingPrivIdInterceptor extends AbstractPagingInterceptor {
 		}
 
 	}
-	
+
 	private static List<SelectItem> createCountItemList() {
 		ExpressionList expressionList = new ExpressionList();
 		List<Expression> expressions = new ArrayList<>();
-		expressions.add(new LongValue(1));	
+		expressions.add(new LongValue(1));
 		expressionList.setExpressions(expressions);
 		Function count = new Function();
 		count.setName("count");
@@ -77,7 +77,7 @@ public class MysqlPagingPrivIdInterceptor extends AbstractPagingInterceptor {
 	 * @param targetSql
 	 *            正常查询数据的sql: select id, name from user where name = ?
 	 * @return select id, name from user where name = ? limit 0,10
-	 * 
+	 *
 	 */
 	@Override
 	protected String getSelectPagingSql(String targetSql,PageDTO<?> pageDto) {
@@ -107,5 +107,5 @@ public class MysqlPagingPrivIdInterceptor extends AbstractPagingInterceptor {
 //		}
 		return true;
 	}
-	
+
 }

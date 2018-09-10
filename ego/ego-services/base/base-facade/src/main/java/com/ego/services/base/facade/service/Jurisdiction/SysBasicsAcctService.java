@@ -1,6 +1,7 @@
 package com.ego.services.base.facade.service.Jurisdiction;
 
 import com.ebase.core.page.PageDTO;
+import com.ebase.core.page.PageInfo;
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
 import com.ego.services.base.api.vo.Jurisdiction.*;
@@ -14,7 +15,7 @@ public interface SysBasicsAcctService {
 
     AcctInfoVO LoginAcct(AcctInfoVO acctInfoVO);
 
-    PageDTO<AcctInfoVO> listSysAcct(JsonRequest<AcctInfoVO> jsonRequest);
+    PageInfo<AcctInfoVO> listSysAcct(JsonRequest<AcctInfoVO> jsonRequest);
 
     List<AcctInfoExcel> sysAcctListExcel(AcctInfoVO acctInfoVO);
 

@@ -3,6 +3,7 @@ package com.ego.services.base.facade.service.Jurisdiction;
 
 
 import com.ebase.core.page.PageDTO;
+import com.ebase.core.page.PageInfo;
 import com.ego.services.base.api.vo.Jurisdiction.RoleGroupVO;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public interface RoleGroupService {
 
-    PageDTO<RoleGroupVO> roleGroupList(RoleGroupVO jsonRequest);
+    PageInfo<RoleGroupVO> roleGroupList(RoleGroupVO jsonRequest);
 
     List<RoleGroupVO> findAll(RoleGroupVO jsonRequest);
 

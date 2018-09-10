@@ -2,6 +2,7 @@ package com.ego.services.base.api.controller.Jurisdiction;
 
 
 import com.ebase.core.page.PageDTO;
+import com.ebase.core.page.PageInfo;
 import com.ebase.core.service.ServiceResponse;
 import com.ego.services.base.api.vo.Jurisdiction.RoleGroupVO;
 
@@ -25,7 +26,7 @@ public interface RoleGroupAPI {
      * @return
      */
     @RequestMapping(value = "/roleGroupList",method = RequestMethod.POST)
-    ServiceResponse<PageDTO<RoleGroupVO>> roleGroupList(@RequestBody RoleGroupVO jsonRequest);
+    ServiceResponse<PageInfo<RoleGroupVO>> roleGroupList(@RequestBody RoleGroupVO jsonRequest);
 
     /**
      * 删除验证

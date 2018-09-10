@@ -3,6 +3,7 @@ package com.ego.services.base.facade.service.Jurisdiction.impl;
 import com.ebase.core.MD5Util;
 import com.ebase.core.page.PageDTO;
 import com.ebase.core.page.PageDTOUtil;
+import com.ebase.core.page.PageInfo;
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
 import com.ebase.utils.BeanCopyUtil;
@@ -19,6 +20,7 @@ import com.ego.services.base.facade.model.Jurisdiction.AcctRoleReal;
 import com.ego.services.base.facade.model.Jurisdiction.OrgInfo;
 import com.ego.services.base.facade.model.Jurisdiction.RoleInfo;
 import com.ego.services.base.facade.service.Jurisdiction.SysBasicsAcctService;
+import com.github.pagehelper.PageHelper;
 import org.apache.commons.collections.CollectionUtils;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -482,14 +484,13 @@ public class SysBasicsAcctServiceImpl implements SysBasicsAcctService {
      * @throws RuntimeException
      */
     @Override
-    public PageDTO<AcctInfoVO> listSysAcct(JsonRequest<AcctInfoVO> jsonRequest)throws RuntimeException {
+    public PageInfo<AcctInfoVO> listSysAcct(JsonRequest<AcctInfoVO> jsonRequest)throws RuntimeException {
 
         //这个对象 可直接操作数   据库
         AcctInfoVO reqBody = jsonRequest.getReqBody();
         AcctInfo ai=new AcctInfo();
         BeanCopyUtil.copy(reqBody,ai);
         try{
-            PageDTOUtil.startPage(ai);
             if(ai.getAcctType()==1){
                 ai.setAcctType(Long.parseLong("2"));
             }
@@ -497,15 +498,18 @@ public class SysBasicsAcctServiceImpl implements SysBasicsAcctService {
                 ai.setAcctType(Long.parseLong("1"));
                 ai.setoInfoId(null);
             }
+            PageHelper.startPage(ai.getPageNum(), ai.getPageSize());
             //获取用户信息
             List<AcctInfo> list = acctInfoMapper.findPage(ai);
-
-            PageDTO<AcctInfo> page = PageDTOUtil.transform(list);
+            PageInfo<AcctInfo> pageInfo = new PageInfo<>(list);
 
             //转成 vo 对象
-            PageDTO<AcctInfoVO> pageVo = new PageDTO(reqBody.getPageNum(),reqBody.getPageSize());
-            pageVo.setTotal(page.getTotal());
-            List<AcctInfo> resultData = page.getResultData();
+            PageInfo<AcctInfoVO> pageVo = new PageInfo(BeanCopyUtil.copyList(list, AcctInfoVO.class));
+            pageVo.setTotal(pageInfo.getTotal());
+            pageVo.setPages(pageInfo.getPages());
+            pageVo.setPageNum(pageInfo.getPageNum());
+            pageVo.setPageSize(pageInfo.getPageSize());
+            List<AcctInfo> resultData = pageInfo.getResultData();
 
             List<AcctInfoVO> result = new ArrayList<>(resultData.size());
 

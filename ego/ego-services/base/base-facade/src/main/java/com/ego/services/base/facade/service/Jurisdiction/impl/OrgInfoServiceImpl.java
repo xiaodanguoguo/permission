@@ -3,6 +3,8 @@ package com.ego.services.base.facade.service.Jurisdiction.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.ebase.core.page.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -177,22 +179,22 @@ public class OrgInfoServiceImpl implements OrgInfoService{
 	 * 组织机构信息查詢分页
 	 */
 	@Override
-	public  PageDTO<OrgInfoVO> getListOrgInfo(OrgInfo orgInfo) {
+	public PageInfo<OrgInfoVO> getListOrgInfo(OrgInfo orgInfo) {
 		OrgInfoVO reqBody = new OrgInfoVO();
 		try {
 			
             //可能还有更多参数
-            PageDTOUtil.startPage(reqBody);
+
 			List<OrgInfo> list = orgInfoMapper.selectListOrgInfo(orgInfo);
-			PageDTO<OrgInfo> page = PageDTOUtil.transform(list);
-			
+			PageInfo<OrgInfo> pageInfo = new PageInfo<>(list);
+
 			//转换
-            PageDTO<OrgInfoVO> pageVo = new PageDTO<OrgInfoVO>(page.getPageNum(),page.getPageSize());
-            pageVo.setTotal(page.getTotal());
-            List<OrgInfo> resultData = page.getResultData();
-            
-            List<OrgInfoVO> result = BeanCopyUtil.copyList(resultData, OrgInfoVO.class);
-            pageVo.setResultData(result);
+            List<OrgInfoVO> roleInfoVo= BeanCopyUtil.copyList(list, OrgInfoVO.class);
+			PageInfo<OrgInfoVO> pageVo = new PageInfo(roleInfoVo);
+			pageVo.setTotal(pageInfo.getTotal());
+			pageVo.setPages(pageInfo.getPages());
+			pageVo.setPageNum(pageInfo.getPageNum());
+			pageVo.setPageSize(pageInfo.getPageSize());
             return pageVo;
 		} finally {
             PageDTOUtil.endPage();

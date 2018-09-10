@@ -270,6 +270,16 @@
     </trim>
   </select>
 
+  <select id="findTwo" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.RoleInfo">
+      select
+      <include refid="Base_Column_List" />
+      from role_info
+    where 1=1
+    <if test="roleId != null and roleId != '' ">
+    AND role_id = #{roleId}
+  </if>
+  </select>
+
 
   <select id="findGroupId" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.RoleInfo">
     select rg.ROLE_GROUP_ID,r.* from role_info r

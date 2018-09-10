@@ -43,19 +43,7 @@
 
 	<plugins>
 		 <!--mybatis分页实现，忽略存储过程 -->
-		<plugin interceptor="com.ebase.core.mybatis.right.proc.MysqlPagingPrivIdInterceptor">
+		<plugin interceptor="com.ebase.core.mybatis.ptor.PageInterceptor">
 		</plugin>
-
-		<!--&lt;!&ndash;调用存储过程实现 &ndash;&gt;
-		<plugin interceptor="com.ebase.core.mybatis.right.proc.ProcedurePrivIdInterceptor">
-		</plugin>
-
-		&lt;!&ndash;错误拦截 &ndash;&gt;
-		<plugin interceptor="com.ebase.core.mybatis.right.proc.MybatisRightInterceptor">
-		</plugin>
-		&lt;!&ndash;时间拦截器 &ndash;&gt;
-		<plugin interceptor="com.ebase.core.mybatis.right.TimeInterceptor">
-		</plugin>-->
-
 	</plugins>
 </configuration>

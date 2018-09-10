@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.ebase</groupId>
@@ -38,7 +38,7 @@
 		<logback_version>1.1.7</logback_version>
 
 		<!-- mybatis mysql core 中并不引入 -->
-		<mybatis_version>3.2.8</mybatis_version>
+		<mybatis_version>3.4.2</mybatis_version>
 		<mybatis_spring>1.2.3</mybatis_spring>
 		<mysql_version>5.1.37</mysql_version>
 
@@ -49,9 +49,9 @@
 		<dependencies>
 			<!-- https://mvnrepository.com/artifact/com.github.tobato/fastdfs-client -->
 			<dependency>
-			    <groupId>com.github.tobato</groupId>
-			    <artifactId>fastdfs-client</artifactId>
-			    <version>1.25.3-RELEASE</version>
+				<groupId>com.github.tobato</groupId>
+				<artifactId>fastdfs-client</artifactId>
+				<version>1.25.3-RELEASE</version>
 			</dependency>
 			<!-- spring + aop start -->
 			<dependency>
@@ -312,7 +312,7 @@
 			<dependency>
 				<groupId>com.github.pagehelper</groupId>
 				<artifactId>pagehelper</artifactId>
-				<version>5.0.4</version>
+				<version>4.1.0</version>
 			</dependency>
 			<!-- 数据库连接池 -->
 			<dependency>
@@ -653,7 +653,7 @@
 				<exclusion>
 					<groupId>org.slf4j</groupId>
 					<artifactId>slf4j-api</artifactId>
-				</exclusion> 
+				</exclusion>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
 					<artifactId>slf4j-log4j12</artifactId>
@@ -830,24 +830,24 @@
 			<scope>provided</scope>
 		</dependency>
 
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.apache.shiro</groupId> -->
-<!-- 			<artifactId>shiro-core</artifactId> -->
-<!-- 			<exclusions> -->
-<!-- 				<exclusion> -->
-<!-- 					<groupId>org.slf4j</groupId> -->
-<!-- 					<artifactId>slf4j-api</artifactId> -->
-<!-- 				</exclusion> -->
-<!-- 				<exclusion> -->
-<!-- 					<groupId>commons-beanutils</groupId> -->
-<!-- 					<artifactId>commons-beanutils</artifactId> -->
-<!-- 				</exclusion> -->
-<!-- 			</exclusions> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.apache.shiro</groupId> -->
-<!-- 			<artifactId>shiro-web</artifactId> -->
-<!-- 		</dependency> -->
+		<!-- 		<dependency> -->
+		<!-- 			<groupId>org.apache.shiro</groupId> -->
+		<!-- 			<artifactId>shiro-core</artifactId> -->
+		<!-- 			<exclusions> -->
+		<!-- 				<exclusion> -->
+		<!-- 					<groupId>org.slf4j</groupId> -->
+		<!-- 					<artifactId>slf4j-api</artifactId> -->
+		<!-- 				</exclusion> -->
+		<!-- 				<exclusion> -->
+		<!-- 					<groupId>commons-beanutils</groupId> -->
+		<!-- 					<artifactId>commons-beanutils</artifactId> -->
+		<!-- 				</exclusion> -->
+		<!-- 			</exclusions> -->
+		<!-- 		</dependency> -->
+		<!-- 		<dependency> -->
+		<!-- 			<groupId>org.apache.shiro</groupId> -->
+		<!-- 			<artifactId>shiro-web</artifactId> -->
+		<!-- 		</dependency> -->
 		<dependency>
 			<groupId>javax.el</groupId>
 			<artifactId>javax.el-api</artifactId>
@@ -887,7 +887,7 @@
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 		</dependency>
-		
+
 		<!-- fastjson -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -903,10 +903,10 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-		    <groupId>com.github.tobato</groupId>
-		    <artifactId>fastdfs-client</artifactId>
-		    	<exclusions>
-		    </exclusions>
+			<groupId>com.github.tobato</groupId>
+			<artifactId>fastdfs-client</artifactId>
+			<exclusions>
+			</exclusions>
 		</dependency>
 	</dependencies>
 

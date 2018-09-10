@@ -16,7 +16,7 @@ import java.util.List;
  * @date 		2017年5月27日 下午4:07:54
  */
 public class PageDTO<T> implements java.io.Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -95,7 +95,7 @@ public class PageDTO<T> implements java.io.Serializable {
 
 	/**
 	 * 是否是第一页
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public boolean isFirstPage() {
@@ -104,7 +104,7 @@ public class PageDTO<T> implements java.io.Serializable {
 
 	/**
 	 * 是否为最后一页
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public boolean isLastPage() {
@@ -122,7 +122,7 @@ public class PageDTO<T> implements java.io.Serializable {
 		this.pageSize = pageSize;
 		calculateStartAndEndRow();
 	}
-	
+
 	public PageDTO(int pageNum, int pageSize,List<T> resultData) {
 		if (pageNum == 1 && pageSize == Integer.MAX_VALUE) {
 			pageSize = 0;
