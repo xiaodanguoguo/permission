@@ -1,10 +1,11 @@
-package com.ego.services.base.facade.controller.Jurisdiction;
+package com.ego.services.base.facade.controller.jurisdiction;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.ebase.core.page.PageInfo;
+import com.ego.services.base.api.vo.jurisdiction.SysInfoVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,11 @@ import com.ebase.core.service.ServiceResponse;
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
 import com.ebase.utils.BeanCopyUtil;
-import com.ego.services.base.api.vo.Jurisdiction.AcctInfoVO;
-import com.ego.services.base.api.vo.Jurisdiction.OrgInfoVO;
-import com.ego.services.base.facade.model.Jurisdiction.AcctInfo;
-import com.ego.services.base.facade.model.Jurisdiction.OrgInfo;
-import com.ego.services.base.facade.service.Jurisdiction.OrgInfoService;
+import com.ego.services.base.api.vo.jurisdiction.AcctInfoVO;
+import com.ego.services.base.api.vo.jurisdiction.OrgInfoVO;
+import com.ego.services.base.facade.model.jurisdiction.AcctInfo;
+import com.ego.services.base.facade.model.jurisdiction.OrgInfo;
+import com.ego.services.base.facade.service.jurisdiction.OrgInfoService;
 
 
 
@@ -194,6 +195,26 @@ public class OrgInfoController {
 		return response;
 	}
 
+
+	/**
+	 * 角色未引用并且可以引用的组织
+	 * @param orgInfoVO
+	 * @return
+	 */
+	@RequestMapping("/selectRoleYesQuote")
+	public JsonResponse<PageInfo<OrgInfoVO>> selectRoleYesQuote(@RequestBody OrgInfoVO orgInfoVO) {
+		JsonResponse<PageInfo<OrgInfoVO>> jsonResponse = new JsonResponse<PageInfo<OrgInfoVO>>();
+
+		try {
+			PageInfo<OrgInfoVO> page = orgInfoService.selectRoleYesQuote(orgInfoVO);
+			jsonResponse.setRspBody(page);
+		} catch (BusinessException e) {
+			jsonResponse.setRetCode(e.getErrorCode());
+			jsonResponse.setRetDesc(e.getMessage());
+		}
+		return jsonResponse;
+	}
+
 	/**
 	 * 组织机构信息查詢分页
 	 * @param id
@@ -203,10 +224,8 @@ public class OrgInfoController {
 	public JsonResponse<PageInfo<OrgInfoVO>> getListOrgInfo(@RequestBody OrgInfoVO orgInfoVO) {
 		JsonResponse<PageInfo<OrgInfoVO>> jsonResponse = new JsonResponse<PageInfo<OrgInfoVO>>();
 
-		OrgInfo orgInfo = new OrgInfo();
-		BeanCopyUtil.copy(orgInfoVO, orgInfo);
 		try {
-			PageInfo<OrgInfoVO> page = orgInfoService.getListOrgInfo(orgInfo);
+			PageInfo<OrgInfoVO> page = orgInfoService.getListOrgInfo(orgInfoVO);
 			jsonResponse.setRspBody(page);
 		} catch (BusinessException e) {
 			jsonResponse.setRetCode(e.getErrorCode());
@@ -240,4 +259,41 @@ public class OrgInfoController {
 		return response;
 	}
 
+
+	/**
+	 * 根据当前用户的组织id，查询出当前用户及当前用户一下的组织
+	 * 物料综合查询用
+	 * @return
+	 */
+	@RequestMapping("/selectSysQuoteOrgInof")
+	public ServiceResponse<List<OrgInfoVO>> selectSysQuoteOrgInof(@RequestBody SysInfoVO reqBody){
+		ServiceResponse<List<OrgInfoVO>> response = new ServiceResponse<List<OrgInfoVO>>();
+
+		try {
+			List<OrgInfoVO> listOrgInfo= orgInfoService.selectSysQuoteOrgInof(reqBody);
+			response.setRetContent(listOrgInfo);
+		} catch (BusinessException e) {
+			response.setException(new BusinessException("异常编码", new Object[]{"参数"}));
+			logger.error(e.getMessage());
+		}
+		return response;
+	}
+
+
+	/**
+	 * 角色引用多个组织 角色已引用组织
+	 * @return
+	 */
+	@RequestMapping("/selectRoleQuoteOrg")
+	public ServiceResponse<List<OrgInfoVO>> selectRoleQuoteOrg(@RequestBody OrgInfoVO reqBody){
+		ServiceResponse<List<OrgInfoVO>> response = new ServiceResponse<List<OrgInfoVO>>();
+		try {
+			List<OrgInfoVO> listOrgInfo= orgInfoService.selectRoleQuoteOrg(reqBody);
+			response.setRetContent(listOrgInfo);
+		} catch (BusinessException e) {
+			response.setException(new BusinessException("异常编码", new Object[]{"参数"}));
+			logger.error(e.getMessage());
+		}
+		return response;
+	}
 }

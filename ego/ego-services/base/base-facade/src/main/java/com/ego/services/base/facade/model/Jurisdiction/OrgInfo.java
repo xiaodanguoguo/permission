@@ -1,4 +1,4 @@
-package com.ego.services.base.facade.model.Jurisdiction;
+package com.ego.services.base.facade.model.jurisdiction;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,7 +19,11 @@ public class OrgInfo{
 	
 	private String id2;
 
-	
+	private Long roleId;
+
+	private String orgId;
+
+	private Long sysId;
 
 	public String getId2() {
 		return id2;
@@ -33,6 +37,22 @@ public class OrgInfo{
 	 * 上级机构
 	 */
 	private String parentId;
+
+	public Long getSysId() {
+		return sysId;
+	}
+
+	public void setSysId(Long sysId) {
+		this.sysId = sysId;
+	}
+
+	public String getOrgId() {
+		return orgId;
+	}
+
+	public void setOrgId(String orgId) {
+		this.orgId = orgId;
+	}
 
 	public String getParentId() {
 		return parentId;
@@ -92,7 +112,25 @@ public class OrgInfo{
 	 */
 	private Date updatedTime;
 
+	private String[] orgIds;
+
 	private OrgInfo parent;//parent
+
+	public String[] getOrgIds() {
+		return orgIds;
+	}
+
+	public void setOrgIds(String[] orgIds) {
+		this.orgIds = orgIds;
+	}
+
+	public Long getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
+	}
 
 	public OrgInfo getParent() {
 		return parent;
@@ -113,26 +151,6 @@ public class OrgInfo{
 	}
 	public void addChild(OrgInfo orgInfo) {
 		this.children.add(orgInfo);
-	}
-
-	private Integer pageSize = 10;
-	
-	private Integer pageNum =1;
-	
-	public Integer getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize;
-	}
-
-	public Integer getPageNum() {
-		return pageNum;	
-	}
-
-	public void setPageNum(Integer pageNum) {
-		this.pageNum = pageNum;
 	}
 
 	public String getOrgCode() {

@@ -1,4 +1,4 @@
-package com.ego.services.base.api.vo.Jurisdiction;
+package com.ego.services.base.api.vo.jurisdiction;
 
 import javax.management.relation.RoleInfo;
 import java.util.Date;
@@ -37,6 +37,8 @@ public class RoleInfoVO {
 
     private Byte roleType;          //角色类型
 
+    private Byte type;          //角色类型
+
     private Date startTime;         //有效时间
 
     private Date endTime;           //失效时间
@@ -48,6 +50,10 @@ public class RoleInfoVO {
     private Long roleGroupId;
 
     private String orgId;
+
+    private String[] orgIds;
+
+    private String quoteOrgId;      //引用组织ID
 
     private String orgTitle;
 
@@ -62,6 +68,60 @@ public class RoleInfoVO {
     private String orAcct;
 
     private Long AcctId;
+
+    private Long sysId;
+
+    private Long copyId;
+
+    private Long[] roleIds;
+
+    public Byte getType() {
+        return type;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
+    }
+
+    public Long[] getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(Long[] roleIds) {
+        this.roleIds = roleIds;
+    }
+
+    public String[] getOrgIds() {
+        return orgIds;
+    }
+
+    public void setOrgIds(String[] orgIds) {
+        this.orgIds = orgIds;
+    }
+
+    public Long getCopyId() {
+        return copyId;
+    }
+
+    public void setCopyId(Long copyId) {
+        this.copyId = copyId;
+    }
+
+    public String getQuoteOrgId() {
+        return quoteOrgId;
+    }
+
+    public void setQuoteOrgId(String quoteOrgId) {
+        this.quoteOrgId = quoteOrgId;
+    }
+
+    public Long getSysId() {
+        return sysId;
+    }
+
+    public void setSysId(Long sysId) {
+        this.sysId = sysId;
+    }
 
     public Long getAcctId() {
         return AcctId;

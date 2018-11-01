@@ -1,7 +1,8 @@
-package com.ego.services.base.facade.dao.Jurisdiction;
+package com.ego.services.base.facade.dao.jurisdiction;
 
-import com.ego.services.base.facade.model.Jurisdiction.AcctOperPrivRela;
-import com.ego.services.base.facade.model.Jurisdiction.FunctionManage;
+import com.ego.services.base.facade.model.jurisdiction.AcctOperPrivRela;
+import com.ego.services.base.facade.model.jurisdiction.FunctionManage;
+import com.ego.services.base.facade.model.jurisdiction.RoleInfo;
 
 public interface AcctOperPrivRelaMapper {
     int deleteByPrimaryKey(Long relaId);
@@ -21,4 +22,6 @@ public interface AcctOperPrivRelaMapper {
     int updateByPrimaryKeySelective(AcctOperPrivRela record);
 
     int updateByPrimaryKey(AcctOperPrivRela record);
+
+    int insertCopy(RoleInfo record);
 }

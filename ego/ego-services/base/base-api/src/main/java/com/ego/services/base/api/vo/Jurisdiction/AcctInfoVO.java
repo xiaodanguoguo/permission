@@ -1,4 +1,4 @@
-package com.ego.services.base.api.vo.Jurisdiction;
+package com.ego.services.base.api.vo.jurisdiction;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -24,6 +24,12 @@ public class AcctInfoVO implements Serializable {
 
     //登录来源
     private String loginSource;
+
+    private String companyId;
+
+    private String sysTitle;
+
+    private Long sysId;
 
     //账号名称 描述
     private String acctTitle;
@@ -111,7 +117,7 @@ public class AcctInfoVO implements Serializable {
 
     private List<AcctInfoVO> roleInfo;
 
-    private Long acctType;
+    private Long acctType;              // 0超级管理员  1组织管理员  2 用户  3系统管理员
 
     private Long purchaseType;          //1执行采购员2寻源采购员
 
@@ -123,9 +129,42 @@ public class AcctInfoVO implements Serializable {
 
     private int pageNum = 1;
 
-    private Long id;
+    private Serializable id;
     private Long parentId;
 
+    public Long getSysId() {
+        return sysId;
+    }
+
+    public void setSysId(Long sysId) {
+        this.sysId = sysId;
+    }
+
+    private String loginOrgId; //组织类型
+
+    public String getSysTitle() {
+        return sysTitle;
+    }
+
+    public void setSysTitle(String sysTitle) {
+        this.sysTitle = sysTitle;
+    }
+
+    public String getLoginOrgId() {
+        return loginOrgId;
+    }
+
+    public void setLoginOrgId(String loginOrgId) {
+        this.loginOrgId = loginOrgId;
+    }
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
 
     public Long getAcctId() {
         return acctId;
@@ -447,11 +486,11 @@ public class AcctInfoVO implements Serializable {
         this.pageNum = pageNum;
     }
 
-    public Long getId() {
+    public Serializable getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Serializable id) {
         this.id = id;
     }
 

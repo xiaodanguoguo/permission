@@ -1,12 +1,12 @@
-package com.ebase.ego.webapps.op.controller.Jurisdiction;
+package com.ebase.ego.webapps.op.controller.jurisdiction;
 
 import java.util.List;
 
 import com.ebase.core.service.ServiceResponse;
-import com.ego.services.base.api.controller.Jurisdiction.AcctAPI;
-import com.ego.services.base.api.controller.Jurisdiction.AcctRoleRealApl;
-import com.ego.services.base.api.vo.Jurisdiction.AcctToRoleInfoVO;
-import com.ego.services.base.api.vo.Jurisdiction.FunctionManageVO;
+import com.ego.services.base.api.controller.jurisdiction.AcctAPI;
+import com.ego.services.base.api.controller.jurisdiction.AcctRoleRealApl;
+import com.ego.services.base.api.vo.jurisdiction.AcctToRoleInfoVO;
+import com.ego.services.base.api.vo.jurisdiction.FunctionManageVO;
 
 import feign.FeignException;
 import org.slf4j.Logger;
@@ -21,11 +21,11 @@ import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
 import com.ebase.utils.JsonUtil;
 import com.ebase.utils.excel.ExcelUtils;
-import com.ego.services.base.api.controller.Jurisdiction.SysAccInfoAPI;
+import com.ego.services.base.api.controller.jurisdiction.SysAccInfoAPI;
 
-import com.ego.services.base.api.vo.Jurisdiction.AcctInfoExcel;
-import com.ego.services.base.api.vo.Jurisdiction.AcctInfoVO;
-import com.ego.services.base.api.vo.Jurisdiction.AcctRoleRealVO;
+import com.ego.services.base.api.vo.jurisdiction.AcctInfoExcel;
+import com.ego.services.base.api.vo.jurisdiction.AcctInfoVO;
+import com.ego.services.base.api.vo.jurisdiction.AcctRoleRealVO;
 
 /**
  *  系统基础 平台账号管理
@@ -114,7 +114,43 @@ public class SysBasicsAccttController {
         JsonResponse<AcctInfoVO> result = new JsonResponse<>();
         try {
             //根据service层返回的编码做不同的操作
-            ServiceResponse<AcctInfoVO> response=sysAccInfoAPI.getAcctInfo(jsonRequest.getReqBody());
+            AcctInfoVO acctInfoVO=jsonRequest.getReqBody();
+            acctInfoVO.setLoginOrgId(AssertContext.getOrgId());
+            ServiceResponse<AcctInfoVO> response=sysAccInfoAPI.getAcctInfo(acctInfoVO);
+            if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode())) {
+                result.setRspBody(response.getRetContent());
+                //如果需要异常信息
+            } else {
+                if (response.isHasError()) {
+                    //系统异常
+                    result.setRetCode(JsonResponse.SYS_EXCEPTION);
+                    //如果需要的话, 这个方法可以获取异常信息 response.getErrorMessage()
+                } else {
+                    //根据业务的不同确定返回的业务信息是否正常,是否需要执行下一步操作
+                    result.setRetCode(response.getRetCode());
+                }
+            }
+        } catch (FeignException e) {
+            e.printStackTrace();
+            result.setRetCode(JsonResponse.SYS_EXCEPTION);
+        }
+        return result;
+    }
+
+
+    /**
+     * 用户添加验证
+     * @param jsonRequest
+     * @return
+     */
+    @RequestMapping("/verAcctInfo")
+    public JsonResponse<String> verAcctInfo(@RequestBody JsonRequest<AcctInfoVO> jsonRequest){
+        JsonResponse<String> result = new JsonResponse<>();
+        try {
+            //根据service层返回的编码做不同的操作
+            AcctInfoVO acctInfoVO=jsonRequest.getReqBody();
+            //acctInfoVO.setoInfoId(AssertContext.getOrgId());
+            ServiceResponse<String> response=sysAccInfoAPI.verAcctInfo(acctInfoVO);
             if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode())) {
                 result.setRspBody(response.getRetContent());
                 //如果需要异常信息
@@ -184,6 +220,9 @@ public class SysBasicsAccttController {
 
         JsonResponse jsonResponse = new JsonResponse();
         try{
+            AcctInfoVO acctInfoVO=jsonRequest.getReqBody();
+            acctInfoVO.setoInfoId(AssertContext.getOrgId());
+            acctInfoVO.setAcctType(AssertContext.getAcctType());
             jsonResponse = sysAccInfoAPI.sysAcctList(jsonRequest);
         }catch (BusinessException e){
             jsonResponse.setRetCode(e.getErrorCode());

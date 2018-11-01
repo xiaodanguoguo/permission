@@ -1,7 +1,7 @@
-package com.ego.services.base.facade.dao.Jurisdiction;
+package com.ego.services.base.facade.dao.jurisdiction;
 
 
-import com.ego.services.base.facade.model.Jurisdiction.AcctRoleGroupRole;
+import com.ego.services.base.facade.model.jurisdiction.AcctRoleGroupRole;
 
 public interface AcctRoleGroupRoleMapper {
     int deleteByPrimaryKey(Long relaId);

@@ -1,25 +1,16 @@
-package com.ego.services.base.facade.service.Jurisdiction.impl;
+package com.ego.services.base.facade.service.jurisdiction.impl;
 
 import com.ebase.core.MD5Util;
-import com.ebase.core.page.PageDTO;
-import com.ebase.core.page.PageDTOUtil;
 import com.ebase.core.page.PageInfo;
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
 import com.ebase.utils.BeanCopyUtil;
 import com.ebase.utils.DateUtil;
-import com.ego.services.base.api.vo.Jurisdiction.*;
-import com.ego.services.base.facade.dao.*;
+import com.ego.services.base.api.vo.jurisdiction.*;
 import com.ego.services.base.facade.common.SysPramType;
-import com.ego.services.base.facade.dao.Jurisdiction.AcctInfoMapper;
-import com.ego.services.base.facade.dao.Jurisdiction.AcctRoleRealMapper;
-import com.ego.services.base.facade.dao.Jurisdiction.OrgInfoMapper;
-import com.ego.services.base.facade.dao.Jurisdiction.RoleInfoMapper;
-import com.ego.services.base.facade.model.Jurisdiction.AcctInfo;
-import com.ego.services.base.facade.model.Jurisdiction.AcctRoleReal;
-import com.ego.services.base.facade.model.Jurisdiction.OrgInfo;
-import com.ego.services.base.facade.model.Jurisdiction.RoleInfo;
-import com.ego.services.base.facade.service.Jurisdiction.SysBasicsAcctService;
+import com.ego.services.base.facade.dao.jurisdiction.*;
+import com.ego.services.base.facade.model.jurisdiction.*;
+import com.ego.services.base.facade.service.jurisdiction.SysBasicsAcctService;
 import com.github.pagehelper.PageHelper;
 import org.apache.commons.collections.CollectionUtils;
 
@@ -59,6 +50,9 @@ public class SysBasicsAcctServiceImpl implements SysBasicsAcctService {
 
     @Autowired
     private OrgInfoMapper orgInfoMapper;
+
+    @Autowired
+    private AcctUserSysMapper acctUserSysMapper;
 
 
     /**
@@ -414,22 +408,23 @@ public class SysBasicsAcctServiceImpl implements SysBasicsAcctService {
             //添加 用户表
             acctInfoMapper.insertAcctInfo(acctInfo);
 
-//            if(acctInfo.getAcctType()==1){
-//                //创建默认管理员角色
-//                RoleInfo roleInfo=new RoleInfo();
-//                roleInfo.setCreatedBy("创建人");
-//                roleInfo.setCreatedTime(new Date());
-//                roleInfo.setIsDelete("0");
-//                roleInfo.setStatus("1");
-//                roleInfo.setRoleTitle("管理员");
-//                roleInfo.setOrgId(acctInfo.getoInfoId());
-//                roleInfoMapper.insertSelective(roleInfo);
-//                //创建默认角色与用户关联
-//                AcctRoleReal acctRoleReal = new AcctRoleReal();
-//                acctRoleReal.setAcctId(acctInfo.getAcctId());
-//                acctRoleReal.setRoleId(roleInfo.getRoleId());
-//                acctRoleRealMapper.insertSelective(acctRoleReal);
-//            }
+            if(acctInfo.getAcctType()==1){
+                //创建默认角色与用户关联
+                AcctRoleReal acctRoleRealSup = new AcctRoleReal();
+                acctRoleRealSup.setAcctId(acctInfo.getAcctId());
+                acctRoleRealSup.setRoleId(Long.parseLong("-2"));
+                acctRoleRealMapper.insertSelective(acctRoleRealSup);
+            }else if(acctInfo.getAcctType()==3){
+                //创建默认角色与用户关联
+                AcctRoleReal acctRoleRealSup = new AcctRoleReal();
+                acctRoleRealSup.setAcctId(acctInfo.getAcctId());
+                acctRoleRealSup.setRoleId(Long.parseLong("-3"));
+                acctRoleRealMapper.insertSelective(acctRoleRealSup);
+                AcctUserSys acctUserSys=new AcctUserSys();
+                acctUserSys.setAcctId(acctInfo.getAcctId());
+                acctUserSys.setSysId(acctInfo.getSysId());
+                acctUserSysMapper.insertSelective(acctUserSys);
+            }
 
             List<Long> roleIds = reqBody.getRoleIds();
             for(Long r: roleIds){
@@ -439,12 +434,26 @@ public class SysBasicsAcctServiceImpl implements SysBasicsAcctService {
                 acctRoleRealMapper.insertAcctRole(acctRoleReal);
             }
         }else if(acctInfo.getAcctId()!=null){
+
             //用户表修改
             this.acctInfoMapper.updateByPrimaryKeySelective(acctInfo);
             List<Long> roleIds = reqBody.getRoleIds();
             AcctRoleReal acctRoleReal = new AcctRoleReal();
             acctRoleReal.setAcctId(acctInfo.getAcctId());
             acctRoleRealMapper.deleteAcctRole(acctRoleReal);
+//            if(acctInfo.getAcctType()==1){
+//                //创建默认角色与用户关联
+//                AcctRoleReal acctRoleRealSup = new AcctRoleReal();
+//                acctRoleRealSup.setAcctId(acctInfo.getAcctId());
+//                acctRoleRealSup.setRoleId(Long.parseLong("-2"));
+//                acctRoleRealMapper.insertSelective(acctRoleRealSup);
+//            }else if(acctInfo.getAcctType()==3){
+//                //创建默认角色与用户关联
+//                AcctRoleReal acctRoleRealSup = new AcctRoleReal();
+//                acctRoleRealSup.setAcctId(acctInfo.getAcctId());
+//                acctRoleRealSup.setRoleId(Long.parseLong("-3"));
+//                acctRoleRealMapper.insertSelective(acctRoleRealSup);
+//            }
             for(Long r: roleIds){
                 AcctRoleReal acctRoleRea2 = new AcctRoleReal();
                 acctRoleRea2.setAcctId(acctInfo.getAcctId());
@@ -491,18 +500,18 @@ public class SysBasicsAcctServiceImpl implements SysBasicsAcctService {
         AcctInfo ai=new AcctInfo();
         BeanCopyUtil.copy(reqBody,ai);
         try{
-            if(ai.getAcctType()==1){
-                ai.setAcctType(Long.parseLong("2"));
-            }
-            if(ai.getAcctType()==0){
-                ai.setAcctType(Long.parseLong("1"));
-                ai.setoInfoId(null);
-            }
-            PageHelper.startPage(ai.getPageNum(), ai.getPageSize());
+            ai.setAcctType(null);
+//            if(ai.getAcctType()==1){
+//                ai.setAcctType(Long.parseLong("2"));
+//            }
+//            if(ai.getAcctType()==0){
+//                ai.setAcctType(Long.parseLong("1"));
+//                ai.setoInfoId(null);
+//            }
+            PageHelper.startPage(reqBody.getPageNum(), reqBody.getPageSize());
             //获取用户信息
             List<AcctInfo> list = acctInfoMapper.findPage(ai);
             PageInfo<AcctInfo> pageInfo = new PageInfo<>(list);
-
             //转成 vo 对象
             PageInfo<AcctInfoVO> pageVo = new PageInfo(BeanCopyUtil.copyList(list, AcctInfoVO.class));
             pageVo.setTotal(pageInfo.getTotal());
@@ -541,9 +550,46 @@ public class SysBasicsAcctServiceImpl implements SysBasicsAcctService {
             pageVo.setResultData(result);
             return pageVo;
         } finally {
-            PageDTOUtil.endPage();
-
+//            PageDTOUtil.endPage();
+            PageHelper.clearPage();
         }
+    }
+
+
+    /**
+     * 用户添加验证信息
+     * @return
+     */
+    @Override
+    public String verAcctInfo(AcctInfoVO acctInfoVO) {
+        String ver="";
+        AcctInfo acctInfo=BeanCopyUtil.copy(acctInfoVO,AcctInfo.class);
+        List<AcctInfo> list1 = acctInfoMapper.verAcctInfo(acctInfo);
+        if(CollectionUtils.isEmpty(list1)){
+            ver="0";
+        }else {
+            ver="1";
+            return ver;
+        }
+        if(acctInfo.getAcctType()==1){
+            List<AcctInfo> list = acctInfoMapper.verAcctInfoType(acctInfo);
+            if(CollectionUtils.isEmpty(list)){
+                ver="0";
+            }else {
+                ver="2";
+                return ver;
+            }
+        }
+        if(acctInfo.getAcctType()==3){
+            List<AcctInfo> list = acctInfoMapper.verAcctInfoSysId(acctInfo);
+            if(CollectionUtils.isEmpty(list)){
+                ver="0";
+            }else {
+                ver="3";
+                return ver;
+            }
+        }
+        return ver;
     }
 
     /**
@@ -552,18 +598,18 @@ public class SysBasicsAcctServiceImpl implements SysBasicsAcctService {
      */
     @Override
     public AcctInfoVO getAcctInfo(AcctInfoVO acctInfoVO) {
-
+        PageHelper.clearPage();
         AcctInfo acctInfo=new AcctInfo();
         BeanCopyUtil.copy(acctInfoVO,acctInfo);
         AcctInfo acctId=new AcctInfo();
         acctId.setAcctId(acctInfo.getAcctId());
         List<AcctInfo> list1 = acctInfoMapper.findAcctRoleInfo(acctId);
-        acctInfo=list1.get(0);
         if(!CollectionUtils.isEmpty(list1)){
+            acctInfo=list1.get(0);
             List<RoleInfo> roleList =acctInfo.getRoleInfo();
             acctInfo.setRoleArr(roleList);
 
-            OrgInfo org = getOrgInfoByTree(acctInfo.getoInfoId());
+            OrgInfo org = getOrgInfoByTree(acctInfo.getoInfoId(),acctInfoVO.getLoginOrgId());
             acctInfo.setOrgInfo(org);
         }
 
@@ -603,12 +649,13 @@ public class SysBasicsAcctServiceImpl implements SysBasicsAcctService {
      * @param orgId
      * @return
      */
-    public OrgInfo getOrgInfoByTree(String orgId) {
+    public OrgInfo getOrgInfoByTree(String orgId,String loginOrgId) {
         OrgInfo orgInfo = new OrgInfo();
         orgInfo.setParentId(orgId);
+        orgInfo.setId(loginOrgId);
         OrgInfo org = orgInfoMapper.selectOrgInfoAcctInfo(orgInfo);
 
-        getParent(org);
+        getParent(org,loginOrgId);
         return org;
     }
 
@@ -616,16 +663,19 @@ public class SysBasicsAcctServiceImpl implements SysBasicsAcctService {
      *  递归 判断parentId是否为空
      * @param orgInfo
      */
-    private void getParent(OrgInfo orgInfo) {
+    private void getParent(OrgInfo orgInfo,String loginOrgId) {
         if (StringUtils.isEmpty(orgInfo)) {
             return;
         }else {
             String parentId = orgInfo.getParentId();
             if (parentId == null || parentId == "")
                 return;
-            OrgInfo parent = orgInfoMapper.selectOrgInfo2(orgInfo);
+            OrgInfo orgInfose=new OrgInfo();
+            orgInfose.setId(loginOrgId);
+            orgInfose.setParentId(parentId);
+            OrgInfo parent = orgInfoMapper.selectOrgInfo2(orgInfose);
             orgInfo.setParent(parent);
-            getParent(parent);
+            getParent(parent,loginOrgId);
         }
     }
 

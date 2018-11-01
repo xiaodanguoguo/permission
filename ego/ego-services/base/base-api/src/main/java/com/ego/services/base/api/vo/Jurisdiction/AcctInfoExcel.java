@@ -1,8 +1,6 @@
-package com.ego.services.base.api.vo.Jurisdiction;
+package com.ego.services.base.api.vo.jurisdiction;
 
 import com.ebase.utils.excel.ExcelAttribute;
-
-import java.util.Date;
 
 /**
  * 用于导出excel

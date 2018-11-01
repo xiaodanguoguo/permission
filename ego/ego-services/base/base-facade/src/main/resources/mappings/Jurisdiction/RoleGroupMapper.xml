@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ego.services.base.facade.dao.Jurisdiction.RoleGroupMapper" >
-  <resultMap id="BaseResultMap" type="com.ego.services.base.facade.model.Jurisdiction.RoleGroup" >
+<mapper namespace="com.ego.services.base.facade.dao.jurisdiction.RoleGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.ego.services.base.facade.model.jurisdiction.RoleGroup" >
     <id column="ROLE_GROUP_ID" property="roleGroupId" jdbcType="BIGINT" />
     <result column="ROLE_GROUP_CODE" property="roleGroupCode" jdbcType="VARCHAR" />
     <result column="ROLE_GROUP_TITLE" property="roleGroupTitle" jdbcType="VARCHAR" />
@@ -19,11 +19,12 @@
     <result column="ID_FULL_PATH" property="idFullPath" jdbcType="VARCHAR" />
     <result column="PARENT_APPLICATION_ID" property="parentApplicationId" jdbcType="BIGINT" />
 
+    <result column="SYS_ID" property="sysId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Base_Column_List" >
     ROLE_GROUP_ID, ROLE_GROUP_TITLE, ROLE_GROUP_DESC, IS_DELETE, STATUS,
     CREATED_BY, CREATED_TIME, UPDATED_BY, UPDATED_TIME ,ROLE_GROUP_CODE,ORG_ID,
-    PARENT_APPLICATION_ID,TITLE_FULL_PATH,ID_FULL_PATH
+    PARENT_APPLICATION_ID,TITLE_FULL_PATH,ID_FULL_PATH,SYS_ID
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -35,7 +36,7 @@
     delete from role_group
     where ROLE_GROUP_ID = #{roleGroupId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.ego.services.base.facade.model.Jurisdiction.RoleGroup" >
+  <insert id="insert" parameterType="com.ego.services.base.facade.model.jurisdiction.RoleGroup" >
     insert into role_group (ROLE_GROUP_ID, ROLE_GROUP_TITLE,
       ROLE_GROUP_DESC, IS_DELETE, STATUS, 
       CREATED_BY, CREATED_TIME, UPDATED_BY, 
@@ -45,7 +46,7 @@
       #{createdBy,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, 
       #{updatedTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" keyProperty="roleGroupId" useGeneratedKeys="true" keyColumn="ROLE_GROUP_ID"  parameterType="com.ego.services.base.facade.model.Jurisdiction.RoleGroup" >
+  <insert id="insertSelective" keyProperty="roleGroupId" useGeneratedKeys="true" keyColumn="ROLE_GROUP_ID"  parameterType="com.ego.services.base.facade.model.jurisdiction.RoleGroup" >
     insert into role_group
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="roleGroupId != null and roleGroupId != '' " >
@@ -91,6 +92,11 @@
       <if test="parentApplicationId != null and parentApplicationId != '' " >
         PARENT_APPLICATION_ID,
       </if>
+
+      <if test="sysId != null and sysId != '' " >
+        SYS_ID,
+      </if>
+
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="roleGroupId != null and roleGroupId != '' " >
@@ -136,9 +142,13 @@
       <if test="parentApplicationId != null and parentApplicationId != '' " >
         #{parentApplicationId},
       </if>
+
+      <if test="sysId != null and sysId != '' " >
+        #{sysId},
+      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ego.services.base.facade.model.Jurisdiction.RoleGroup" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.ego.services.base.facade.model.jurisdiction.RoleGroup" >
     update role_group
     <set >
       <if test="roleGroupCode != null and roleGroupCode != '' " >
@@ -182,13 +192,17 @@
       <if test="parentApplicationId != null and parentApplicationId != '' " >
         PARENT_APPLICATION_ID = #{parentApplicationId},
       </if>
+
+      <if test="sysId != null and sysId != '' " >
+        SYS_ID = #{sysId},
+      </if>
     </set>
     where ROLE_GROUP_ID = #{roleGroupId,jdbcType=BIGINT}
   </update>
 
 
 
-  <update id="updateIsStatus" parameterType="com.ego.services.base.facade.model.Jurisdiction.RoleGroup" >
+  <update id="updateIsStatus" parameterType="com.ego.services.base.facade.model.jurisdiction.RoleGroup" >
     update role_group
     <set >
       <if test="isDelete != null and isDelete != '' " >
@@ -209,7 +223,7 @@
   </update>
 
 
-  <update id="updateByPrimaryKey" parameterType="com.ego.services.base.facade.model.Jurisdiction.RoleGroup" >
+  <update id="updateByPrimaryKey" parameterType="com.ego.services.base.facade.model.jurisdiction.RoleGroup" >
     update role_group
     set ROLE_GROUP_TITLE = #{roleGroupTitle,jdbcType=VARCHAR},
       ROLE_GROUP_STATE = #{roleGroupState,jdbcType=TINYINT},
@@ -223,7 +237,7 @@
     where ROLE_GROUP_ID = #{roleGroupId,jdbcType=BIGINT}
   </update>
 
-  <select id="find" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.RoleGroup">
+  <select id="find" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.RoleGroup">
     select rg.*,o.ORG_NAME as orgTitle from (
     select r.* from role_group r
     <trim prefix="WHERE" prefixOverrides="AND |OR">
@@ -251,7 +265,7 @@
   </select>
 
 
-  <select id="findARoleGroupTree" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.RoleGroup">
+  <select id="findARoleGroupTree" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.RoleGroup">
     select *
     from role_group
     where 1=1
@@ -261,7 +275,7 @@
 
   </select>
 
-  <select id="verificationDeleteRoleGroup" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.RoleGroup">
+  <select id="verificationDeleteRoleGroup" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.RoleGroup">
 
     select r.role_id from role_info r
     LEFT JOIN acct_role_group_role argr on argr.role_id=r.role_id
@@ -274,7 +288,7 @@
 
 
   <!--根据分类ID查看是否分类下的角色是否被用户使用-->
-  <select id="findAcctId" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.RoleGroup">
+  <select id="findAcctId" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.RoleGroup">
 
     select ai.ACCT_ID from acct_info ai
     LEFT JOIN acct_role_real arr on ai.acct_id= arr.acct_id
@@ -294,7 +308,7 @@
   </select>
 
 
-  <select id="findRoleInfoId" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.RoleGroup">
+  <select id="findRoleInfoId" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.RoleGroup">
 
     select r.role_id from role_info r
     LEFT JOIN acct_role_group_role argr on argr.role_id=r.role_id
@@ -310,7 +324,7 @@
   </select>
 
 
-  <select id="findAll" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.RoleGroup">
+  <select id="findAll" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.RoleGroup">
     select
     <include refid="Base_Column_List" />
     from role_group
@@ -334,7 +348,7 @@
   </select>
 
 
-  <select id="findRoleGroupTitle" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.RoleGroup">
+  <select id="findRoleGroupTitle" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.RoleGroup">
     select
     <include refid="Base_Column_List" />
     from role_group

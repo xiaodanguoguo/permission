@@ -1,4 +1,4 @@
-package com.ego.services.base.api.vo.Jurisdiction;
+package com.ego.services.base.api.vo.jurisdiction;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,6 +35,36 @@ public class OrgInfoVO implements Serializable {
 	 * 上级机构
 	 */
 	private String parentId;
+
+	private Long roleId;
+
+	private String orgId;
+
+	private Long sysId;
+
+	public String getOrgId() {
+		return orgId;
+	}
+
+	public void setOrgId(String orgId) {
+		this.orgId = orgId;
+	}
+
+	public Long getSysId() {
+		return sysId;
+	}
+
+	public void setSysId(Long sysId) {
+		this.sysId = sysId;
+	}
+
+	public Long getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
+	}
 
 	public String getParentId() {
 		return parentId;
@@ -92,6 +122,16 @@ public class OrgInfoVO implements Serializable {
 	private Date updatedTime;
 
 	private OrgInfoVO parent;
+
+	private String[] orgIds;
+
+	public String[] getOrgIds() {
+		return orgIds;
+	}
+
+	public void setOrgIds(String[] orgIds) {
+		this.orgIds = orgIds;
+	}
 
 	public OrgInfoVO getParent() {
 		return parent;

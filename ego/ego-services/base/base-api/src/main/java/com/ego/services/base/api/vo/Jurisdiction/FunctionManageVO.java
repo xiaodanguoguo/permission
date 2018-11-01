@@ -1,4 +1,4 @@
-package com.ego.services.base.api.vo.Jurisdiction;
+package com.ego.services.base.api.vo.jurisdiction;
 
 import java.util.Date;
 import java.util.List;
@@ -55,6 +55,36 @@ public class FunctionManageVO {
     private List<FunctionManageVO> children;//子级功能
 
     private String orgIdAll;                //机构idall
+
+    private Long acctType;                  //用户类型  0 超级管理员  1 管理员  2 用户
+
+    private Long acctId;                    //用户ID
+
+    private Long sysId;                    //系统ID
+
+    public Long getSysId() {
+        return sysId;
+    }
+
+    public void setSysId(Long sysId) {
+        this.sysId = sysId;
+    }
+
+    public Long getAcctType() {
+        return acctType;
+    }
+
+    public void setAcctType(Long acctType) {
+        this.acctType = acctType;
+    }
+
+    public Long getAcctId() {
+        return acctId;
+    }
+
+    public void setAcctId(Long acctId) {
+        this.acctId = acctId;
+    }
 
     public String getOrgIdAll() {
         return orgIdAll;

@@ -1,11 +1,11 @@
-package com.ego.services.base.facade.service.Jurisdiction.impl;
+package com.ego.services.base.facade.service.jurisdiction.impl;
 
 
 import com.ebase.utils.BeanCopyUtil;
-import com.ego.services.base.api.vo.Jurisdiction.AcctOperPrivRelaVO;
-import com.ego.services.base.facade.dao.Jurisdiction.AcctOperPrivRelaMapper;
-import com.ego.services.base.facade.model.Jurisdiction.AcctOperPrivRela;
-import com.ego.services.base.facade.service.Jurisdiction.AcctOperPrivRelaService;
+import com.ego.services.base.api.vo.jurisdiction.AcctOperPrivRelaVO;
+import com.ego.services.base.facade.dao.jurisdiction.AcctOperPrivRelaMapper;
+import com.ego.services.base.facade.model.jurisdiction.AcctOperPrivRela;
+import com.ego.services.base.facade.service.jurisdiction.AcctOperPrivRelaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

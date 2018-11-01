@@ -1,8 +1,8 @@
-package com.ego.services.base.api.controller.Jurisdiction;
+package com.ego.services.base.api.controller.jurisdiction;
 
 
 import com.ebase.core.service.ServiceResponse;
-import com.ego.services.base.api.vo.Jurisdiction.AcctOperPrivRelaVO;
+import com.ego.services.base.api.vo.jurisdiction.AcctOperPrivRelaVO;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -1,4 +1,4 @@
-package com.ego.services.base.facade.model.Jurisdiction;
+package com.ego.services.base.facade.model.jurisdiction;
 
 import com.ego.services.base.facade.common.IsDelete;
 import com.ego.services.base.facade.common.Status;
@@ -47,11 +47,15 @@ public class RoleInfo {
 
     private String orgTitle;        //组织名称
 
+    private String quoteOrgId;        //引用组织ID
+
     private Long roleGroupId;       //角色组id
 
     private String orRole;          //角色还是角色组   角色树状图
 
     private String orgIdAll;        //组织ID，可能多个
+
+    private String[] orgIds;        //组织ID，可能多个
 
     private List<String> orgIdAlls;
 
@@ -68,6 +72,72 @@ public class RoleInfo {
     private String orAcct;      //角色与账户关联状态
 
     private Long acctId;
+
+    private Long sysId;
+
+    private Byte type;
+
+    private Byte relaStatus;
+
+    private Long copyId;
+
+    private Long[] roleIds;
+
+    public Long[] getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(Long[] roleIds) {
+        this.roleIds = roleIds;
+    }
+
+    public String[] getOrgIds() {
+        return orgIds;
+    }
+
+    public void setOrgIds(String[] orgIds) {
+        this.orgIds = orgIds;
+    }
+
+    public Long getCopyId() {
+        return copyId;
+    }
+
+    public void setCopyId(Long copyId) {
+        this.copyId = copyId;
+    }
+
+    public Byte getType() {
+        return type;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
+    }
+
+    public Byte getRelaStatus() {
+        return relaStatus;
+    }
+
+    public void setRelaStatus(Byte relaStatus) {
+        this.relaStatus = relaStatus;
+    }
+
+    public String getQuoteOrgId() {
+        return quoteOrgId;
+    }
+
+    public void setQuoteOrgId(String quoteOrgId) {
+        this.quoteOrgId = quoteOrgId;
+    }
+
+    public Long getSysId() {
+        return sysId;
+    }
+
+    public void setSysId(Long sysId) {
+        this.sysId = sysId;
+    }
 
     public Long getAcctId() {
         return acctId;

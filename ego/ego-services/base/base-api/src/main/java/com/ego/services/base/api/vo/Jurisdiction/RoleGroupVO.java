@@ -1,4 +1,4 @@
-package com.ego.services.base.api.vo.Jurisdiction;
+package com.ego.services.base.api.vo.jurisdiction;
 
 import javax.management.relation.RoleInfo;
 import java.util.Date;
@@ -48,6 +48,16 @@ public class RoleGroupVO {
     private Long parentApplicationId;       //父级Id
 
     private String orgIdAll;
+
+    private Long sysId;
+
+    public Long getSysId() {
+        return sysId;
+    }
+
+    public void setSysId(Long sysId) {
+        this.sysId = sysId;
+    }
 
     public String getOrgIdAll() {
         return orgIdAll;

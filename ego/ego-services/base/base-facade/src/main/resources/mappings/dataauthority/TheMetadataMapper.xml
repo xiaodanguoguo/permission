@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ego.services.base.facade.dao.dataauthority.TheMetadataMapper">
+    <resultMap id="BaseResultMap" type="com.ego.services.base.facade.model.dataauthority.TheMetadata">
+        <id column="ID" jdbcType="BIGINT" property="id" />
+        <result column="TABLE_NAME" jdbcType="VARCHAR" property="tableName" />
+        <result column="TABLE_NAME_CODE" jdbcType="VARCHAR" property="tableNameCode" />
+        <result column="TABLE_DESCRIBE" jdbcType="VARCHAR" property="tableDescribe" />
+        <result column="KEY_NAME" jdbcType="VARCHAR" property="keyName" />
+        <result column="KEY_CODE" jdbcType="VARCHAR" property="keyCode" />
+        <result column="KEY_TYPE" jdbcType="TINYINT" property="keyType" />
+        <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+        <result column="CREATED_DATE" jdbcType="TIMESTAMP" property="createdDate" />
+        <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+        <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+        <result column="DELETE_STATUS" jdbcType="TINYINT" property="deleteStatus" />
+        <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+        <result column="STATUS" property="status" jdbcType="TINYINT" />
+
+        <result column="SYS_ID" property="sysId" jdbcType="BIGINT" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        ID, TABLE_NAME, TABLE_NAME_CODE, TABLE_DESCRIBE, KEY_NAME, KEY_CODE, KEY_TYPE, CREATED_BY, 
+        CREATED_DATE, UPDATED_BY, UPDATED_TIME, DELETE_STATUS, REMARK, STATUS,SYS_ID
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select 
+        <include refid="Base_Column_List" />
+        from the_metadata
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from the_metadata
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.ego.services.base.facade.model.dataauthority.TheMetadata">
+        insert into the_metadata (ID, TABLE_NAME, TABLE_NAME_CODE, 
+            TABLE_DESCRIBE, KEY_NAME, KEY_CODE, 
+            KEY_TYPE, CREATED_BY, CREATED_DATE, 
+            UPDATED_BY, UPDATED_TIME, DELETE_STATUS, 
+            REMARK, STATUS)
+        values (#{id,jdbcType=BIGINT}, #{tableName,jdbcType=VARCHAR}, #{tableNameCode,jdbcType=VARCHAR}, 
+            #{tableDescribe,jdbcType=VARCHAR}, #{keyName,jdbcType=VARCHAR}, #{keyCode,jdbcType=VARCHAR}, 
+            #{keyType,jdbcType=TINYINT}, #{createdBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP},
+            #{updatedBy,jdbcType=VARCHAR}, #{updatedTime,jdbcType=TIMESTAMP}, #{deleteStatus,jdbcType=TINYINT}, 
+            #{remark,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ego.services.base.facade.model.dataauthority.TheMetadata">
+        insert into the_metadata
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="tableName != null">
+                TABLE_NAME,
+            </if>
+            <if test="tableNameCode != null">
+                TABLE_NAME_CODE,
+            </if>
+            <if test="tableDescribe != null">
+                TABLE_DESCRIBE,
+            </if>
+            <if test="keyName != null">
+                KEY_NAME,
+            </if>
+            <if test="keyCode != null">
+                KEY_CODE,
+            </if>
+            <if test="keyType != null">
+                KEY_TYPE,
+            </if>
+            <if test="createdBy != null">
+                CREATED_BY,
+            </if>
+            <if test="createdDate != null">
+                CREATED_DATE,
+            </if>
+            <if test="updatedBy != null">
+                UPDATED_BY,
+            </if>
+            <if test="updatedTime != null">
+                UPDATED_TIME,
+            </if>
+            <if test="deleteStatus != null">
+                DELETE_STATUS,
+            </if>
+            <if test="remark != null">
+                REMARK,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+
+            <if test="sysId != null">
+                SYS_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="tableName != null">
+                #{tableName,jdbcType=VARCHAR},
+            </if>
+            <if test="tableNameCode != null">
+                #{tableNameCode,jdbcType=VARCHAR},
+            </if>
+            <if test="tableDescribe != null">
+                #{tableDescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="keyName != null">
+                #{keyName,jdbcType=VARCHAR},
+            </if>
+            <if test="keyCode != null">
+                #{keyCode,jdbcType=VARCHAR},
+            </if>
+            <if test="keyType != null">
+                #{keyType},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null">
+                #{updatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedTime != null">
+                #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteStatus != null">
+                #{deleteStatus,jdbcType=TINYINT},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="sysId != null">
+                #{sysId},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ego.services.base.facade.model.dataauthority.TheMetadata">
+        update the_metadata
+        <set>
+            <if test="tableName != null">
+                TABLE_NAME = #{tableName,jdbcType=VARCHAR},
+            </if>
+            <if test="tableNameCode != null">
+                TABLE_NAME_CODE = #{tableNameCode,jdbcType=VARCHAR},
+            </if>
+            <if test="tableDescribe != null">
+                TABLE_DESCRIBE = #{tableDescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="keyName != null">
+                KEY_NAME = #{keyName,jdbcType=VARCHAR},
+            </if>
+            <if test="keyCode != null">
+                KEY_CODE = #{keyCode,jdbcType=VARCHAR},
+            </if>
+            <if test="keyType != null">
+                KEY_TYPE = #{keyType,jdbcType=BIT},
+            </if>
+            <if test="createdBy != null">
+                CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null">
+                UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedTime != null">
+                UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteStatus != null">
+                DELETE_STATUS = #{deleteStatus,jdbcType=TINYINT},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=BIT},
+            </if>
+            <if test="sysId != null">
+                SYS_ID = #{sysId},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ego.services.base.facade.model.dataauthority.TheMetadata">
+        update the_metadata
+        set TABLE_NAME = #{tableName,jdbcType=VARCHAR},
+            TABLE_NAME_CODE = #{tableNameCode,jdbcType=VARCHAR},
+            TABLE_DESCRIBE = #{tableDescribe,jdbcType=VARCHAR},
+            KEY_NAME = #{keyName,jdbcType=VARCHAR},
+            KEY_CODE = #{keyCode,jdbcType=VARCHAR},
+            KEY_TYPE = #{keyType,jdbcType=BIT},
+            CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+            CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP},
+            UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+            UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP},
+            DELETE_STATUS = #{deleteStatus,jdbcType=TINYINT},
+            REMARK = #{remark,jdbcType=VARCHAR},
+            STATUS = #{status,jdbcType=BIT}
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="select" resultMap="BaseResultMap">
+        select 
+        <include refid="Base_Column_List" />
+        from the_metadata
+        <include refid="Base_Where_Column_List" />
+
+        order by CREATED_DATE desc
+    </select>
+    <sql id="Base_Where_Column_List">
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="id != null">
+                and ID = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="tableName != null and tableName != '' ">
+                and TABLE_NAME like  CONCAT('%',CONCAT( #{tableName,jdbcType=VARCHAR}, '%'))
+            </if>
+            <if test="tableNameCode != null and tableNameCode != ''">
+                and TABLE_NAME_CODE like CONCAT('%',CONCAT( #{tableNameCode,jdbcType=VARCHAR}, '%'))
+            </if>
+            <if test="tableDescribe != null">
+                and TABLE_DESCRIBE = #{tableDescribe,jdbcType=VARCHAR}
+            </if>
+            <if test="keyName != null">
+                and KEY_NAME = #{keyName,jdbcType=VARCHAR}
+            </if>
+            <if test="keyCode != null">
+                and KEY_CODE = #{keyCode,jdbcType=VARCHAR}
+            </if>
+            <if test="keyType != null">
+                and KEY_TYPE = #{keyType}
+            </if>
+            <if test="createdBy != null">
+                and CREATED_BY = #{createdBy,jdbcType=VARCHAR}
+            </if>
+            <if test="createdDate != null">
+                and CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updatedBy != null">
+                and UPDATED_BY = #{updatedBy,jdbcType=VARCHAR}
+            </if>
+            <if test="updatedTime != null">
+                and UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="deleteStatus != null">
+                and DELETE_STATUS = #{deleteStatus,jdbcType=TINYINT}
+            </if>
+            <if test="remark != null">
+                and REMARK = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and STATUS = #{status}
+            </if>
+
+            <if test="sysId != null">
+                and sys_id = #{sysId}
+            </if>
+        </trim>
+    </sql>
+</mapper>

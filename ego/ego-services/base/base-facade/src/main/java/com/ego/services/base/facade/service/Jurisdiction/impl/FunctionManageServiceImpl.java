@@ -1,15 +1,15 @@
-package com.ego.services.base.facade.service.Jurisdiction.impl;
+package com.ego.services.base.facade.service.jurisdiction.impl;
 
 
 import com.ebase.utils.BeanCopyUtil;
-import com.ego.services.base.api.vo.Jurisdiction.FunctionManageVO;
+import com.ebase.utils.math.MathHelper;
+import com.ego.services.base.api.vo.jurisdiction.FunctionManageVO;
 import com.ego.services.base.facade.common.IsDelete;
 import com.ego.services.base.facade.common.SysPramType;
-import com.ego.services.base.facade.dao.Jurisdiction.AcctOperPrivRelaMapper;
-import com.ego.services.base.facade.dao.Jurisdiction.FunctionManageMapper;
-import com.ego.services.base.facade.dao.Jurisdiction.OrgInfoMapper;
-import com.ego.services.base.facade.model.Jurisdiction.FunctionManage;
-import com.ego.services.base.facade.service.Jurisdiction.FunctionManageService;
+import com.ego.services.base.facade.dao.jurisdiction.*;
+import com.ego.services.base.facade.model.jurisdiction.AcctFunctionSys;
+import com.ego.services.base.facade.model.jurisdiction.FunctionManage;
+import com.ego.services.base.facade.service.jurisdiction.FunctionManageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +33,17 @@ public class FunctionManageServiceImpl implements FunctionManageService {
     private FunctionManageMapper functionManageMapper;
 
     @Autowired
+    private SysInfoMapper sysInfoMapper;
+
+    @Autowired
     private AcctOperPrivRelaMapper acctOperPrivRelaMapper;
 
     @Autowired
     private OrgInfoMapper orgInfoMapper;
+
+    @Autowired
+    private AcctFunctionSysMapper acctFunctionSysMapper;
+
 
     /**
      * 管理员查询树状图
@@ -46,66 +53,35 @@ public class FunctionManageServiceImpl implements FunctionManageService {
     @Override
     public List<FunctionManageVO> functionManageList(FunctionManageVO functionManageVO) {
 
-        try {
-            FunctionManage functionManage=new FunctionManage();
-            BeanCopyUtil.copy(functionManageVO,functionManage);
-            //获取当前用户下的所有组织
-            functionManage=getFunctionOrgId(functionManage);
-
-
-            //查询出所有符合条件的树状图
-            List<FunctionManage> ListPath = functionManageMapper.findPath(functionManage);
-            int pathNum=0;
-            String allId="";
-            if(ListPath.size()>0) {
-                //拼接
-                for(int j=0;j<ListPath.size();j++){
-                    if(j==0){
-                        allId=allId+ListPath.get(j).getIdFullPath();
-                    }else{
-                        allId=allId+","+ListPath.get(j).getIdFullPath();
-                    }
-
-                }
-                String[]  strs=allId.split(",");
-                List<String> result = new ArrayList<>();
-                boolean flag;
-                //去重复
-                for(int i=0;i<strs.length;i++){
-                    flag = false;
-                    for(int j=0;j<result.size();j++){
-                        if(strs[i].equals(result.get(j))){
-                            flag = true;
-                            break;
-                        }
-                    }
-                    if(!flag){
-                        result.add(strs[i]);
-                    }
-                }
-
-                //List<String> allids= Arrays.asList(strs);
-                functionManage.setAllIds(result);
-            }
-
-
-            //查询一级树状图
+        FunctionManage functionManage=new FunctionManage();
+        BeanCopyUtil.copy(functionManageVO,functionManage);
+//            //查询一级系统
+//            List<SysInfo> listSys=new ArrayList<>();
+//            if(functionManage.getAcctType()==0 || functionManage.getAcctType().equals(0)){
+//                listSys = sysInfoMapper.selectSysInfoSuper(functionManage);
+//            }else{
+//                listSys = sysInfoMapper.selectSysInfoOrgId(functionManage);
+//            }
+//
+//
+//            for(SysInfo sysInfo:listSys){
+            //查询一级资源树状图
             List<FunctionManage> list = functionManageMapper.find(functionManage);
 
             List<FunctionManage> listTreeNull=new ArrayList<>();
-            for(int i=0;i<list.size();i++){
+            for(int i=0;i<list.size();i++) {
                 list.get(i).setChildren(listTreeNull);
-                if(list.get(i).getFunctionId()!=null){
+                if (list.get(i).getFunctionId() != null) {
                     functionManage.setParentApplicationId(list.get(i).getFunctionId());
                     //添加数据
-                    list.get(i).setChildren(menuChild(functionManage,list.get(i).getFunctionTitle()));
+                    list.get(i).setChildren(menuChild(functionManage, list.get(i).getFunctionTitle()));
                 }
             }
-            List<FunctionManageVO> result = BeanCopyUtil.copyList(list, FunctionManageVO.class);
-            return result;
-        } finally {
+//                sysInfo.setFunctionManages(list);
+//            }
 
-        }
+        List<FunctionManageVO> result = BeanCopyUtil.copyList(list, FunctionManageVO.class);
+        return result;
     }
 
     //获取当前用户下的所有组织
@@ -252,7 +228,6 @@ public class FunctionManageServiceImpl implements FunctionManageService {
                 functionManageMapper.updateFunctionIdAll(functionManage);
             }
         }else if(SysPramType.UPDATE.getMsg().equals(opt)){
-            reqBody.setUpdatedBy("修改人");
             reqBody.setUpdatedTime(new Date());
             //修改
             FunctionManage parId=functionManageMapper.findParentApplicationId(reqBody);
@@ -260,13 +235,14 @@ public class FunctionManageServiceImpl implements FunctionManageService {
 
             reqBody.setParentApplicationId(parId.getParentApplicationId());
         }else if(SysPramType.INSERT.getMsg().equals(opt)){
-            reqBody.setCreatedBy("创建人");
             reqBody.setCreatedTime(new Date());
             reqBody.setFunctionId(null);
             String idFullPath = "";
             if (StringUtils.isEmpty(reqBody.getParentApplicationId())) {
                 reqBody.setTitleFullPath(reqBody.getFunctionTitle());
+                reqBody.setFunctionCode(getFunctionCode(reqBody.getParentApplicationId()));
             } else {
+                reqBody.setFunctionCode(getFunctionCode(reqBody.getParentApplicationId()));
                 FunctionManage functionManageOne = functionManageMapper.selectByPrimaryKey(reqBody.getParentApplicationId());
                 reqBody.setTitleFullPath(functionManageOne.getTitleFullPath() + "," + reqBody.getFunctionTitle());
                 idFullPath = functionManageOne.getIdFullPath() + ",";
@@ -278,13 +254,32 @@ public class FunctionManageServiceImpl implements FunctionManageService {
             functionManageIdFull.setFunctionId(reqBody.getFunctionId());
             functionManageIdFull.setIdFullPath(idFullPath + reqBody.getFunctionId());
             functionManageMapper.updateByPrimaryKeySelective(functionManageIdFull);
+            AcctFunctionSys acctFunctionSys=new AcctFunctionSys();
+            acctFunctionSys.setCreatedTime(new Date());
+            acctFunctionSys.setFunctionId(reqBody.getFunctionId());
+            acctFunctionSys.setSysId(reqBody.getSysId());
+            acctFunctionSys.setStatus(Byte.parseByte("0"));
+            Integer num=acctFunctionSysMapper.insertSelective(acctFunctionSys);
         }
         FunctionManageVO functionManageVO1=BeanCopyUtil.copy(reqBody,FunctionManageVO.class);
         return functionManageVO1;
     }
 
-    //List<FunctionManage> list=functionManageMapper.verificationFunIsTtitle(reqBody);
-    //if(CollectionUtils.isEmpty(list)) {
+    public String getFunctionCode(Long parentApplicationId) {
+        String functionCode = "";
+        StringBuilder result = new StringBuilder();
+
+        if (!StringUtils.isEmpty(parentApplicationId)) {
+            FunctionManage f = functionManageMapper.selectByPrimaryKey(parentApplicationId);
+            result.append(f.getFunctionCode());
+        }
+        FunctionManage functionEntityCode=functionManageMapper.maxCode(parentApplicationId);
+        if (StringUtils.isEmpty(functionEntityCode))
+            functionCode = result.append("101").toString();
+        else
+            functionCode = MathHelper.add(functionEntityCode.getFunctionCode());
+        return functionCode;
+    }
 
     @Override
     public List<FunctionManageVO> verificationFunIsTtitle(FunctionManageVO jsonRequest) {

@@ -1,6 +1,6 @@
-package com.ego.services.base.facade.model.Jurisdiction;
+package com.ego.services.base.facade.model.jurisdiction;
 
-import com.ego.services.base.api.vo.Jurisdiction.OrgInfoVO;
+import com.ego.services.base.api.vo.jurisdiction.OrgInfoVO;
 import com.ego.services.base.facade.common.RegisterEnum;
 
 import java.util.Date;
@@ -73,15 +73,35 @@ public class AcctInfo {
 
     private  List<OrgInfoVO> OrgArr;
 
-    private Long acctType;
+    private Long acctType;          // 0超级管理员  1组织管理员  2 用户  3系统管理员
 
     private Long purchaseType;      //1执行采购员2寻源采购员
 
     private RegisterEnum registerEnum;  //前端注册供应商   后台注册供应商
 
-    private int pageSize =10;
+    private Long sysId;
 
-    private int pageNum = 1;
+//    private int pageSize =10;
+//
+//    private int pageNum = 1;
+
+    private String sysTitle;
+
+    public String getSysTitle() {
+        return sysTitle;
+    }
+
+    public void setSysTitle(String sysTitle) {
+        this.sysTitle = sysTitle;
+    }
+
+    public Long getSysId() {
+        return sysId;
+    }
+
+    public void setSysId(Long sysId) {
+        this.sysId = sysId;
+    }
 
     public String getCompanyId() {
         return companyId;
@@ -373,19 +393,19 @@ public class AcctInfo {
         this.registerEnum =  RegisterEnum.getRegisterEnum(registerEnum);
     }
 
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public int getPageNum() {
-        return pageNum;
-    }
-
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
-    }
+//    public int getPageSize() {
+//        return pageSize;
+//    }
+//
+//    public void setPageSize(int pageSize) {
+//        this.pageSize = pageSize;
+//    }
+//
+//    public int getPageNum() {
+//        return pageNum;
+//    }
+//
+//    public void setPageNum(int pageNum) {
+//        this.pageNum = pageNum;
+//    }
 }

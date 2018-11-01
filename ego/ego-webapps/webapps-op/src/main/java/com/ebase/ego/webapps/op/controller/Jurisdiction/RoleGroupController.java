@@ -1,4 +1,4 @@
-package com.ebase.ego.webapps.op.controller.Jurisdiction;
+package com.ebase.ego.webapps.op.controller.jurisdiction;
 
 import com.ebase.core.page.PageInfo;
 import com.ebase.core.service.ServiceResponse;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
-import com.ego.services.base.api.controller.Jurisdiction.AcctRoleGroupRoleAPI;
-import com.ego.services.base.api.controller.Jurisdiction.RoleGroupAPI;
-import com.ego.services.base.api.vo.Jurisdiction.AcctRoleGroupRoleVO;
-import com.ego.services.base.api.vo.Jurisdiction.RoleGroupVO;
+import com.ego.services.base.api.controller.jurisdiction.AcctRoleGroupRoleAPI;
+import com.ego.services.base.api.controller.jurisdiction.RoleGroupAPI;
+import com.ego.services.base.api.vo.jurisdiction.AcctRoleGroupRoleVO;
+import com.ego.services.base.api.vo.jurisdiction.RoleGroupVO;
 
 import java.util.List;
 

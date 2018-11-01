@@ -1,18 +1,17 @@
-package com.ego.services.base.facade.service.Jurisdiction.impl;
+package com.ego.services.base.facade.service.jurisdiction.impl;
 
 
-import com.ebase.core.page.PageDTO;
 import com.ebase.core.page.PageDTOUtil;
 import com.ebase.core.page.PageInfo;
 import com.ebase.utils.BeanCopyUtil;
-import com.ego.services.base.api.vo.Jurisdiction.RoleGroupVO;
+import com.ego.services.base.api.vo.jurisdiction.RoleGroupVO;
 import com.ego.services.base.facade.common.IsDelete;
 import com.ego.services.base.facade.common.Status;
 import com.ego.services.base.facade.common.SysPramType;
-import com.ego.services.base.facade.dao.Jurisdiction.*;
-import com.ego.services.base.facade.model.Jurisdiction.RoleGroup;
-import com.ego.services.base.facade.model.Jurisdiction.RoleInfo;
-import com.ego.services.base.facade.service.Jurisdiction.RoleGroupService;
+import com.ego.services.base.facade.dao.jurisdiction.*;
+import com.ego.services.base.facade.model.jurisdiction.RoleGroup;
+import com.ego.services.base.facade.model.jurisdiction.RoleInfo;
+import com.ego.services.base.facade.service.jurisdiction.RoleGroupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

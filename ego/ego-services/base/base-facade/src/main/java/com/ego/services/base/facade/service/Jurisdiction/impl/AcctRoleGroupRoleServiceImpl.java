@@ -1,11 +1,11 @@
-package com.ego.services.base.facade.service.Jurisdiction.impl;
+package com.ego.services.base.facade.service.jurisdiction.impl;
 
 
 import com.ebase.utils.BeanCopyUtil;
-import com.ego.services.base.api.vo.Jurisdiction.AcctRoleGroupRoleVO;
-import com.ego.services.base.facade.dao.Jurisdiction.AcctRoleGroupRoleMapper;
-import com.ego.services.base.facade.model.Jurisdiction.AcctRoleGroupRole;
-import com.ego.services.base.facade.service.Jurisdiction.AcctRoleGroupRoleService;
+import com.ego.services.base.api.vo.jurisdiction.AcctRoleGroupRoleVO;
+import com.ego.services.base.facade.dao.jurisdiction.AcctRoleGroupRoleMapper;
+import com.ego.services.base.facade.model.jurisdiction.AcctRoleGroupRole;
+import com.ego.services.base.facade.service.jurisdiction.AcctRoleGroupRoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

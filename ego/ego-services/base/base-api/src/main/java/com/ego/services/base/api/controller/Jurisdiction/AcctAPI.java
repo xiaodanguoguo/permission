@@ -1,10 +1,10 @@
-package com.ego.services.base.api.controller.Jurisdiction;
+package com.ego.services.base.api.controller.jurisdiction;
 
 import com.ebase.core.service.ServiceResponse;
 import com.ebase.core.session.AcctLogin;
 import com.ebase.core.session.AcctSession;
-import com.ego.services.base.api.vo.Jurisdiction.AcctInfoVO;
-import com.ego.services.base.api.vo.Jurisdiction.FunctionManageVO;
+import com.ego.services.base.api.vo.jurisdiction.AcctInfoVO;
+import com.ego.services.base.api.vo.jurisdiction.FunctionManageVO;
 
 import java.util.List;
 

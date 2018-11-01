@@ -1,10 +1,9 @@
-package com.ego.services.base.api.controller.Jurisdiction;
+package com.ego.services.base.api.controller.jurisdiction;
 
 
-import com.ebase.core.page.PageDTO;
 import com.ebase.core.page.PageInfo;
 import com.ebase.core.service.ServiceResponse;
-import com.ego.services.base.api.vo.Jurisdiction.RoleGroupVO;
+import com.ego.services.base.api.vo.jurisdiction.RoleGroupVO;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;

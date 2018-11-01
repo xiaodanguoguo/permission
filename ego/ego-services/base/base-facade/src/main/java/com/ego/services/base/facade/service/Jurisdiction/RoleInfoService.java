@@ -1,10 +1,9 @@
-package com.ego.services.base.facade.service.Jurisdiction;
+package com.ego.services.base.facade.service.jurisdiction;
 
 
 
-import com.ebase.core.page.PageDTO;
 import com.ebase.core.page.PageInfo;
-import com.ego.services.base.api.vo.Jurisdiction.RoleInfoVO;
+import com.ego.services.base.api.vo.jurisdiction.RoleInfoVO;
 
 import java.util.List;
 
@@ -17,6 +16,8 @@ public interface RoleInfoService {
 
     List<RoleInfoVO> roleInfoAll(RoleInfoVO jsonRequest);
 
+    List<RoleInfoVO> orgQuoteRoleInfo(RoleInfoVO jsonRequest);
+
     List<RoleInfoVO> roleInfoAllLike(RoleInfoVO jsonRequest);
 
     List<RoleInfoVO> roleRoleAcctInfo(RoleInfoVO jsonRequest);
@@ -27,5 +28,11 @@ public interface RoleInfoService {
 
     RoleInfoVO keepRoleInfo(RoleInfoVO jsonRequest);
 
+    RoleInfoVO saveCopyRole(RoleInfoVO jsonRequest);
+
     String verificationDeleteRoelInfo(RoleInfoVO jsonRequest);
+
+    String verQuoteRoleTitle(RoleInfoVO jsonRequest);
+
+    String verQuoteRoleIds(RoleInfoVO jsonRequest);
 }

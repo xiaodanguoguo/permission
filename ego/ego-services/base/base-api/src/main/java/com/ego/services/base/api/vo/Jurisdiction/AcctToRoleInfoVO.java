@@ -1,8 +1,7 @@
-package com.ego.services.base.api.vo.Jurisdiction;
+package com.ego.services.base.api.vo.jurisdiction;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.management.relation.RoleInfo;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class AcctToRoleInfoVO {
 
     private Date createdTime;
 
-
+    private Long sysId;
 
 
 
@@ -102,6 +101,14 @@ public class AcctToRoleInfoVO {
     private List<Long> roleIds;
 
     private Long acctType;
+
+    public Long getSysId() {
+        return sysId;
+    }
+
+    public void setSysId(Long sysId) {
+        this.sysId = sysId;
+    }
 
     public Long getAcctType() {
         return acctType;

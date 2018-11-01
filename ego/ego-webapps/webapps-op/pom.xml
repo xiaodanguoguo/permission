@@ -1,31 +1,37 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.ego</groupId>
-  <artifactId>webapps-op</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+	<groupId>com.ego</groupId>
+	<artifactId>webapps-op</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
-  <name>webapps-op</name>
-  <url>http://maven.apache.org</url>
+	<name>webapps-op</name>
+	<url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	  <spring-boot.version>1.5.9.RELEASE</spring-boot.version>
-  </properties>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring-boot.version>1.5.9.RELEASE</spring-boot.version>
+	</properties>
 
-  	<parent>
+	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.6.RELEASE</version>
+		<version>1.5.6.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<dependencies>
 		<dependency>
 			<groupId>com.ebase</groupId>
-  			<artifactId>core</artifactId>
+			<artifactId>core</artifactId>
 			<version>${project.version}</version>
+			<!--<exclusions>-->
+				<!--<exclusion>-->
+					<!--<groupId>com.github.pagehelper</groupId>-->
+					<!--<artifactId>pagehelper-spring-boot-starter</artifactId>-->
+				<!--</exclusion>-->
+			<!--</exclusions>-->
 		</dependency>
 		<dependency>
 			<groupId>net.sourceforge.nekohtml</groupId>
@@ -54,41 +60,47 @@
 			<version>1.3.2</version>
 		</dependency>
 
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.boot</groupId> -->
-<!-- 			<artifactId>spring-boot-starter-thymeleaf</artifactId> -->
-<!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
 
 		<dependency>
-			<groupId>org.jodd</groupId>
-			<artifactId>jodd-core</artifactId>
-			<version>3.4.8</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+			<scope>true</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.ego</groupId>
-   			 <artifactId>base-api</artifactId>
+			<artifactId>base-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.alibaba</groupId> -->
-<!-- 			<artifactId>fastjson</artifactId> -->
-<!-- 			<version>1.2.7</version> -->
-<!-- 		</dependency> -->
+		<dependency>
+			<groupId>com.ego</groupId>
+			<artifactId>message-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- 		<dependency> -->
+		<!-- 			<groupId>com.alibaba</groupId> -->
+		<!-- 			<artifactId>fastjson</artifactId> -->
+		<!-- 			<version>1.2.7</version> -->
+		<!-- 		</dependency> -->
 
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.cloud</groupId> -->
-<!-- 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId> -->
-<!-- 		</dependency> -->
+		<!-- 		<dependency> -->
+		<!-- 			<groupId>org.springframework.cloud</groupId> -->
+		<!-- 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId> -->
+		<!-- 		</dependency> -->
 		<!-- StreamUtil -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.boot</groupId> -->
-<!-- 			<artifactId>spring-boot-starter</artifactId> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.boot</groupId> -->
-<!-- 			<artifactId>spring-boot-starter-web</artifactId> -->
-<!-- 		</dependency> -->
+		<!-- 		<dependency> -->
+		<!-- 			<groupId>org.springframework.boot</groupId> -->
+		<!-- 			<artifactId>spring-boot-starter</artifactId> -->
+		<!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.jodd</groupId>
 			<artifactId>jodd-core</artifactId>
@@ -112,7 +124,11 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-hystrix</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<!-- <scope>provided</scope>-->
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

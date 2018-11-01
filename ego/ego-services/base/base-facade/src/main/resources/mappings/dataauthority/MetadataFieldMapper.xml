@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ego.services.base.facade.dao.dataauthority.MetadataFieldMapper">
+    <resultMap id="BaseResultMap" type="com.ego.services.base.facade.model.dataauthority.MetadataField">
+        <id column="FIELD_ID" jdbcType="BIGINT" property="fieldId" />
+        <result column="TABLE_ID" jdbcType="BIGINT" property="tableId" />
+        <result column="FIELD_NAME" jdbcType="VARCHAR" property="fieldName" />
+        <result column="FIELD_DESCRIBE" jdbcType="VARCHAR" property="fieldDescribe" />
+        <result column="FIELD_LENGTH" jdbcType="INTEGER" property="fieldLength" />
+        <result column="FIELD_TYPE" jdbcType="TINYINT" property="fieldType" />
+        <result column="FIELD_CODE" jdbcType="VARCHAR" property="fieldCode" />
+        <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+        <result column="CREATED_DATE" jdbcType="TIMESTAMP" property="createdDate" />
+        <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+        <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+        <result column="DELETE_STATUS" jdbcType="TINYINT" property="deleteStatus" />
+        <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+        <result column="STATUS" jdbcType="TINYINT" property="status" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        FIELD_ID, TABLE_ID, FIELD_NAME, FIELD_DESCRIBE, FIELD_LENGTH, FIELD_TYPE, FIELD_CODE, 
+        CREATED_BY, CREATED_DATE, UPDATED_BY, UPDATED_TIME, DELETE_STATUS, REMARK, STATUS
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select 
+        <include refid="Base_Column_List" />
+        from metadata_field
+        where FIELD_ID = #{fieldId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from metadata_field
+        where FIELD_ID = #{fieldId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.ego.services.base.facade.model.dataauthority.MetadataField">
+        insert into metadata_field (FIELD_ID, TABLE_ID, FIELD_NAME, 
+            FIELD_DESCRIBE, FIELD_LENGTH, FIELD_TYPE, 
+            FIELD_CODE, CREATED_BY, CREATED_DATE, 
+            UPDATED_BY, UPDATED_TIME, DELETE_STATUS, 
+            REMARK, STATUS)
+        values (#{fieldId,jdbcType=BIGINT}, #{tableId,jdbcType=BIGINT}, #{fieldName,jdbcType=VARCHAR}, 
+            #{fieldDescribe,jdbcType=VARCHAR}, #{fieldLength,jdbcType=INTEGER}, #{fieldType,jdbcType=BIT}, 
+            #{fieldCode,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, 
+            #{updatedBy,jdbcType=VARCHAR}, #{updatedTime,jdbcType=TIMESTAMP}, #{deleteStatus,jdbcType=TINYINT}, 
+            #{remark,jdbcType=VARCHAR}, #{status,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ego.services.base.facade.model.dataauthority.MetadataField">
+        insert into metadata_field
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fieldId != null">
+                FIELD_ID,
+            </if>
+            <if test="tableId != null">
+                TABLE_ID,
+            </if>
+            <if test="fieldName != null">
+                FIELD_NAME,
+            </if>
+            <if test="fieldDescribe != null">
+                FIELD_DESCRIBE,
+            </if>
+            <if test="fieldLength != null">
+                FIELD_LENGTH,
+            </if>
+            <if test="fieldType != null">
+                FIELD_TYPE,
+            </if>
+            <if test="fieldCode != null">
+                FIELD_CODE,
+            </if>
+            <if test="createdBy != null">
+                CREATED_BY,
+            </if>
+            <if test="createdDate != null">
+                CREATED_DATE,
+            </if>
+            <if test="updatedBy != null">
+                UPDATED_BY,
+            </if>
+            <if test="updatedTime != null">
+                UPDATED_TIME,
+            </if>
+            <if test="deleteStatus != null">
+                DELETE_STATUS,
+            </if>
+            <if test="remark != null">
+                REMARK,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fieldId != null">
+                #{fieldId,jdbcType=BIGINT},
+            </if>
+            <if test="tableId != null">
+                #{tableId,jdbcType=BIGINT},
+            </if>
+            <if test="fieldName != null">
+                #{fieldName,jdbcType=VARCHAR},
+            </if>
+            <if test="fieldDescribe != null">
+                #{fieldDescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="fieldLength != null">
+                #{fieldLength,jdbcType=INTEGER},
+            </if>
+            <if test="fieldType != null">
+                #{fieldType,jdbcType=TINYINT},
+            </if>
+            <if test="fieldCode != null">
+                #{fieldCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null">
+                #{updatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedTime != null">
+                #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteStatus != null">
+                #{deleteStatus,jdbcType=TINYINT},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ego.services.base.facade.model.dataauthority.MetadataField">
+        update metadata_field
+        <set>
+            <if test="tableId != null">
+                TABLE_ID = #{tableId,jdbcType=BIGINT},
+            </if>
+            <if test="fieldName != null">
+                FIELD_NAME = #{fieldName,jdbcType=VARCHAR},
+            </if>
+            <if test="fieldDescribe != null">
+                FIELD_DESCRIBE = #{fieldDescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="fieldLength != null">
+                FIELD_LENGTH = #{fieldLength,jdbcType=INTEGER},
+            </if>
+            <if test="fieldType != null">
+                FIELD_TYPE = #{fieldType,jdbcType=TINYINT},
+            </if>
+            <if test="fieldCode != null">
+                FIELD_CODE = #{fieldCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createdBy != null">
+                CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null">
+                UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedTime != null">
+                UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteStatus != null">
+                DELETE_STATUS = #{deleteStatus,jdbcType=TINYINT},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=TINYINT},
+            </if>
+        </set>
+        where FIELD_ID = #{fieldId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ego.services.base.facade.model.dataauthority.MetadataField">
+        update metadata_field
+        set TABLE_ID = #{tableId,jdbcType=BIGINT},
+            FIELD_NAME = #{fieldName,jdbcType=VARCHAR},
+            FIELD_DESCRIBE = #{fieldDescribe,jdbcType=VARCHAR},
+            FIELD_LENGTH = #{fieldLength,jdbcType=INTEGER},
+            FIELD_TYPE = #{fieldType,jdbcType=BIT},
+            FIELD_CODE = #{fieldCode,jdbcType=VARCHAR},
+            CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+            CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP},
+            UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+            UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP},
+            DELETE_STATUS = #{deleteStatus,jdbcType=TINYINT},
+            REMARK = #{remark,jdbcType=VARCHAR},
+            STATUS = #{status,jdbcType=BIT}
+        where FIELD_ID = #{fieldId,jdbcType=BIGINT}
+    </update>
+    <select id="select" resultMap="BaseResultMap">
+        select 
+        <include refid="Base_Column_List" />
+        from metadata_field
+        <include refid="Base_Where_Column_List" />
+    </select>
+    <sql id="Base_Where_Column_List">
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="fieldId != null">
+                and FIELD_ID = #{fieldId,jdbcType=BIGINT}
+            </if>
+            <if test="tableId != null">
+                and TABLE_ID = #{tableId,jdbcType=BIGINT}
+            </if>
+            <if test="fieldName != null">
+                and FIELD_NAME = #{fieldName,jdbcType=VARCHAR}
+            </if>
+            <if test="fieldDescribe != null">
+                and FIELD_DESCRIBE = #{fieldDescribe,jdbcType=VARCHAR}
+            </if>
+            <if test="fieldLength != null">
+                and FIELD_LENGTH = #{fieldLength,jdbcType=INTEGER}
+            </if>
+            <if test="fieldType != null">
+                and FIELD_TYPE = #{fieldType,jdbcType=TINYINT}
+            </if>
+            <if test="fieldCode != null">
+                and FIELD_CODE = #{fieldCode,jdbcType=VARCHAR}
+            </if>
+            <if test="createdBy != null">
+                and CREATED_BY = #{createdBy,jdbcType=VARCHAR}
+            </if>
+            <if test="createdDate != null">
+                and CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updatedBy != null">
+                and UPDATED_BY = #{updatedBy,jdbcType=VARCHAR}
+            </if>
+            <if test="updatedTime != null">
+                and UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="deleteStatus != null">
+                and DELETE_STATUS = #{deleteStatus,jdbcType=TINYINT}
+            </if>
+            <if test="remark != null">
+                and REMARK = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and STATUS = #{status,jdbcType=TINYINT}
+            </if>
+        </trim>
+    </sql>
+</mapper>

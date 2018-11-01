@@ -1,8 +1,9 @@
-package com.ego.services.base.api.controller.Jurisdiction;
+package com.ego.services.base.api.controller.jurisdiction;
 
 import java.util.List;
 
 import com.ebase.core.page.PageInfo;
+import com.ego.services.base.api.vo.jurisdiction.SysInfoVO;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.ebase.core.service.ServiceResponse;
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
-import com.ego.services.base.api.vo.Jurisdiction.AcctInfoVO;
-import com.ego.services.base.api.vo.Jurisdiction.OrgInfoVO;
+import com.ego.services.base.api.vo.jurisdiction.AcctInfoVO;
+import com.ego.services.base.api.vo.jurisdiction.OrgInfoVO;
 
 
 /**
@@ -68,6 +69,13 @@ public interface OrgInfoServiceAPI {
 	 */
 	@RequestMapping(value = "/getListOrgInfo",method = RequestMethod.POST)
 	JsonResponse<PageInfo<OrgInfoVO>> getListOrgInfo(OrgInfoVO orgInfoVO);
+
+	/**
+	 * 角色未引用并且可以引用的组织
+	 * @param orgInfoVO
+	 */
+	@RequestMapping(value = "/selectRoleYesQuote",method = RequestMethod.POST)
+	JsonResponse<PageInfo<OrgInfoVO>> selectRoleYesQuote(OrgInfoVO orgInfoVO);
 	
 	/**
 	 * 组织表查询（父类查出子类信息）
@@ -92,8 +100,22 @@ public interface OrgInfoServiceAPI {
 	  */
 	@RequestMapping(value = "/getMaterielOrginfo",method = RequestMethod.POST)
 	public ServiceResponse<List<OrgInfoVO>> getMaterielOrginfo(@RequestBody AcctInfoVO reqBody);
-	
-	
+
+	/**
+	 * 根据系统查询关联组织信息
+	 *
+	 * @return
+	 */
+	@RequestMapping(value = "/selectSysQuoteOrgInof",method = RequestMethod.POST)
+	public ServiceResponse<List<OrgInfoVO>> selectSysQuoteOrgInof(@RequestBody SysInfoVO reqBody);
+
+	/**
+	 * 角色引用多个组织 角色已引用组织
+	 *
+	 * @return
+	 */
+	@RequestMapping(value = "/selectRoleQuoteOrg",method = RequestMethod.POST)
+	public ServiceResponse<List<OrgInfoVO>> selectRoleQuoteOrg(@RequestBody OrgInfoVO orgInfoVO);
 	
 	/**
 	 * 组织表查询结构树（内存拼接）

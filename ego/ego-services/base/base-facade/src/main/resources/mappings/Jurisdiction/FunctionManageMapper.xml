@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ego.services.base.facade.dao.Jurisdiction.FunctionManageMapper" >
-  <resultMap id="BaseResultMap" type="com.ego.services.base.facade.model.Jurisdiction.FunctionManage" >
+<mapper namespace="com.ego.services.base.facade.dao.jurisdiction.FunctionManageMapper" >
+  <resultMap id="BaseResultMap" type="com.ego.services.base.facade.model.jurisdiction.FunctionManage" >
     <id column="FUNCTION_ID" property="functionId" jdbcType="BIGINT" />
     <result column="FUNCTION_CODE" property="functionCode" jdbcType="VARCHAR" />
     <result column="FUNCTION_TITLE" property="functionTitle" jdbcType="VARCHAR" />
@@ -32,11 +32,23 @@
     from function_manage
     where FUNCTION_ID = #{functionId,jdbcType=BIGINT}
   </select>
+
+  <select id="maxCode" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select max(function_code) as function_code from function_manage where 1=1
+
+    <if test="parentApplicationId != null and parentApplicationId != '' " >
+      and PARENT_APPLICATION_ID=#{parentApplicationId,jdbcType=BIGINT}
+    </if>
+    <if test="parentApplicationId == null " >
+      and PARENT_APPLICATION_ID is null
+    </if>
+
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from function_manage
     where FUNCTION_ID = #{functionId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.ego.services.base.facade.model.Jurisdiction.FunctionManage" >
+  <insert id="insert" parameterType="com.ego.services.base.facade.model.jurisdiction.FunctionManage" >
     insert into function_manage (FUNCTION_ID, FUNCTION_CODE, FUNCTION_TITLE, 
       FUNCTION_DESC, ID_FULL_PATH, TITLE_FULL_PATH, 
       IS_LAST_LEVEL, PARENT_APPLICATION_ID, STATUS, 
@@ -48,7 +60,7 @@
       #{createdBy,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, 
       #{updatedTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" keyProperty="functionId" useGeneratedKeys="true" keyColumn="FUNCTION_ID" parameterType="com.ego.services.base.facade.model.Jurisdiction.FunctionManage" >
+  <insert id="insertSelective" keyProperty="functionId" useGeneratedKeys="true" keyColumn="FUNCTION_ID" parameterType="com.ego.services.base.facade.model.jurisdiction.FunctionManage" >
     insert into function_manage
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="functionId != null and functionId != '' " >
@@ -154,7 +166,7 @@
     </trim>
   </insert>
 
-  <update id="updateFunctionIdAll" parameterType="com.ego.services.base.facade.model.Jurisdiction.FunctionManage">
+  <update id="updateFunctionIdAll" parameterType="com.ego.services.base.facade.model.jurisdiction.FunctionManage">
     update function_manage
     set IS_DELETE = 1
     where FUNCTION_ID in
@@ -163,7 +175,7 @@
   </foreach>
   </update>
 
-  <update id="updateByPrimaryKeySelective" parameterType="com.ego.services.base.facade.model.Jurisdiction.FunctionManage" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.ego.services.base.facade.model.jurisdiction.FunctionManage" >
     update function_manage
     <set >
       <if test="functionCode != null and functionCode != '' " >
@@ -214,7 +226,7 @@
     </set>
     where FUNCTION_ID = #{functionId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ego.services.base.facade.model.Jurisdiction.FunctionManage" >
+  <update id="updateByPrimaryKey" parameterType="com.ego.services.base.facade.model.jurisdiction.FunctionManage" >
     update function_manage
     set FUNCTION_CODE = #{functionCode,jdbcType=VARCHAR},
       FUNCTION_TITLE = #{functionTitle,jdbcType=VARCHAR},
@@ -232,25 +244,12 @@
   </update>
 
 
-  <select id="findPath" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.FunctionManage">
+  <select id="findPath" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.FunctionManage">
     select f2.* from ( select
     f.*
     from function_manage f
     where 1=1
       and f.IS_DELETE = 0
-    <!--<if test="orgId != null and orgId !='' " >-->
-      <!--AND f.ORG_ID = #{orgId,jdbcType=BIGINT}-->
-    <!--</if>-->
-    <!--<if test="orgId == null " >-->
-      <!--AND f.ORG_ID is null-->
-    <!--</if>-->
-
-      <if test="orgIdAlls != null">
-          AND f.ORG_ID in
-          <foreach collection="orgIdAlls" close=")" open="(" item="all" separator=",">
-              #{all}
-          </foreach>
-      </if>
     ) as f2 <trim prefix="WHERE" prefixOverrides="AND |OR">
       <if test="parentApplicationName != null and parentApplicationName != '' "  >
         OR f2.FUNCTION_TITLE  LIKE CONCAT(CONCAT('%',#{parentApplicationName},'%'))
@@ -261,7 +260,7 @@
   </trim>
   </select>
 
-  <select id="findParentApplicationId" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.FunctionManage">
+  <select id="findParentApplicationId" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.FunctionManage">
    select
     f.*
     from function_manage f
@@ -270,96 +269,48 @@
     and f.FUNCTION_ID=#{functionId}
   </select>
 
-  <select id="find" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.FunctionManage">
+  <select id="find" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.FunctionManage">
     select
-    f.*,o.org_name as orgName
+    f.*
     from function_manage f
-    LEFT JOIN org_info o on o.id=f.ORG_ID  <if test="orgIdAlls != null">
-    AND o.id in
-    <foreach collection="orgIdAlls" close=")" open="(" item="all" separator=",">
-      #{all}
-    </foreach>
-  </if>
+    LEFT JOIN acct_function_sys afs on afs.function_id=f.function_id
     where
     f.PARENT_APPLICATION_ID is null
     and f.IS_DELETE = 0
 
-    <!--<if test="orgId != null and orgId !='' " >-->
-      <!--AND f.ORG_ID = #{orgId,jdbcType=BIGINT}-->
-    <!--</if>-->
-    <!--<if test="orgId == null " >-->
-      <!--AND f.ORG_ID is null-->
-    <!--</if>-->
-    <if test="allIds != null">
-
-      AND f.FUNCTION_ID in
-      <foreach collection="allIds" close=")" open="(" item="all" separator=",">
-        #{all}
-      </foreach>
-    </if>
-
-    <if test="orgIdAlls != null">
-
-      AND f.org_id in
-      <foreach collection="orgIdAlls" close=")" open="(" item="all" separator=",">
-        #{all}
-      </foreach>
-    </if>
-
     <if test="status != null and status != '' " >
       AND f.STATUS = #{status}
     </if>
+    <if test="sysId != null and sysId != '' " >
+      AND afs.SYS_ID = #{sysId}
+    </if>
 
   </select>
-  <select id="findThree" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.FunctionManage">
+  <select id="findThree" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.FunctionManage">
     select
-    f.*,o.org_name as orgName
+    f.*
     from function_manage f
-    LEFT JOIN org_info o on o.id=f.ORG_ID <if test="orgIdAlls != null">
-
-    AND o.id in
-    <foreach collection="orgIdAlls" close=")" open="(" item="all" separator=",">
-      #{all}
-    </foreach>
-  </if>
+    LEFT JOIN acct_function_sys afs on afs.function_id=f.function_id
     where
      1=1
     and f.IS_DELETE = 0
 
-    <!--<if test="orgId != null and orgId !='' " >-->
-      <!--AND f.ORG_ID = #{orgId,jdbcType=BIGINT}-->
-    <!--</if>-->
-    <!--<if test="orgId == null " >-->
-      <!--AND f.ORG_ID is null-->
-    <!--</if>-->
       <if test="parentApplicationId != null and parentApplicationId != '' ">
         AND f.PARENT_APPLICATION_ID = #{parentApplicationId}
       </if>
       <if test="status != null and status != '' " >
          AND f.STATUS = #{status}
       </if>
-
-    <if test="orgIdAlls != null">
-
-      AND f.org_id in
-      <foreach collection="orgIdAlls" close=")" open="(" item="all" separator=",">
-        #{all}
-      </foreach>
+    <if test="sysId != null and sysId != '' " >
+      AND afs.SYS_ID = #{sysId}
     </if>
 
-    <if test="allIds != null">
-
-      AND f.FUNCTION_ID in
-      <foreach collection="allIds" close=")" open="(" item="all" separator=",">
-        #{all}
-      </foreach>
-    </if>
   </select>
 
 
 
 
-  <select id="findRole" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.FunctionManage">
+  <select id="findRole" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.FunctionManage">
     SELECT
     CASE f2.functionstatus
     WHEN 0 THEN
@@ -392,16 +343,14 @@
     WHERE
     f1. STATUS = 1
     ) AS f2
+    LEFT JOIN acct_function_sys afs on afs.function_id=f2.function_id
     WHERE
     f2.PARENT_APPLICATION_ID IS NULL
     AND f2. STATUS = 1
     AND f2.IS_DELETE = 0
-    <if test="orgId != null and orgId !='' " >
-      AND f2.ORG_ID = #{orgId,jdbcType=VARCHAR}
-    </if>
-
+    and afs.sys_id = #{sysId}
   </select>
-  <select id="findRoleThree" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.FunctionManage">
+  <select id="findRoleThree" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.FunctionManage">
     SELECT
     CASE f2.functionstatus
     WHEN 0 THEN
@@ -434,20 +383,18 @@
     WHERE
     f1. STATUS = 1
     ) AS f2
+    LEFT JOIN acct_function_sys afs on afs.function_id=f2.function_id
     WHERE 1=1
     AND f2. STATUS = 1
     AND f2.IS_DELETE = 0
     <if test="parentApplicationId != null and parentApplicationId != '' ">
       AND f2.PARENT_APPLICATION_ID = #{parentApplicationId}
     </if>
-
-    <if test="orgId != null and orgId !='' " >
-      AND f2.ORG_ID = #{orgId,jdbcType=VARCHAR}
-    </if>
+    and afs.sys_id = #{sysId}
   </select>
 
 
-  <select id="verificationDeleteFunction" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.FunctionManage">
+  <select id="verificationDeleteFunction" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.FunctionManage">
     select * from function_manage f
     LEFT JOIN acct_oper_priv_rela ao ON ao.FUNCTION_ID = f.function_id
     LEFT JOIN role_info ri ON ri.ROLE_ID = ao.ROLE_ID
@@ -457,18 +404,18 @@
     </if>
   </select>
 
-  <select id="verificationFunIsTtitle" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.FunctionManage">
+  <select id="verificationFunIsTtitle" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.FunctionManage">
     select * from function_manage f
+      LEFT JOIN acct_function_sys afs on afs.function_id=f.function_id
     where 1=1 and f.IS_DELETE=0
+
     <if test="functionTitle != null and functionTitle != '' ">
       AND f.FUNCTION_TITLE = #{functionTitle}
     </if>
-    <if test="orgId != null and orgId != '' " >
-      AND f.ORG_ID = #{orgId}
-    </if>
+    and afs.sys_id = #{sysId}
   </select>
   
-  <select id="selsctUserFunctionAll" parameterType="com.ego.services.base.facade.model.Jurisdiction.AcctInfo" resultMap="BaseResultMap">
+  <select id="selsctUserFunctionAll" parameterType="com.ego.services.base.facade.model.jurisdiction.AcctInfo" resultMap="BaseResultMap">
   	SELECT
   	DISTINCT
 		fm.FUNCTION_ID,

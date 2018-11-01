@@ -1,13 +1,13 @@
-package com.ego.services.base.facade.controller.Jurisdiction;
+package com.ego.services.base.facade.controller.jurisdiction;
 
 
 
 import com.ebase.core.exception.BusinessException;
 import com.ebase.core.service.ServiceResponse;
 import com.ebase.utils.JsonUtil;
-import com.ego.services.base.api.vo.Jurisdiction.FunctionManageVO;
+import com.ego.services.base.api.vo.jurisdiction.FunctionManageVO;
 import com.ego.services.base.facade.common.SysPramType;
-import com.ego.services.base.facade.service.Jurisdiction.FunctionManageService;
+import com.ego.services.base.facade.service.jurisdiction.FunctionManageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -65,8 +64,6 @@ public class FunctionManageController {
         try {
             LOG.info("list 参数 = {}",JsonUtil.toJson(functionManageVO));
             List<FunctionManageVO> page = functionManageService.functionManageList(functionManageVO);
-            HashMap objData = new HashMap();
-            objData.put("resultData",page);
             response.setRetContent(page);
         } catch (Exception e) {
             response.setException(new BusinessException("0102001", new Object[]{functionManageVO}));

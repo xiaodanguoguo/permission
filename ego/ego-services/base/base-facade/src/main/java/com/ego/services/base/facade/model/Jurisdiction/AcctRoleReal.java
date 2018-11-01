@@ -1,4 +1,4 @@
-package com.ego.services.base.facade.model.Jurisdiction;
+package com.ego.services.base.facade.model.jurisdiction;
 
 import java.util.Date;
 

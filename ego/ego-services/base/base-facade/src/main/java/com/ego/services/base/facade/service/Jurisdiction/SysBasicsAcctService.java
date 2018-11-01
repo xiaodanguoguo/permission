@@ -1,10 +1,9 @@
-package com.ego.services.base.facade.service.Jurisdiction;
+package com.ego.services.base.facade.service.jurisdiction;
 
-import com.ebase.core.page.PageDTO;
 import com.ebase.core.page.PageInfo;
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
-import com.ego.services.base.api.vo.Jurisdiction.*;
+import com.ego.services.base.api.vo.jurisdiction.*;
 
 import java.util.List;
 
@@ -57,6 +56,9 @@ public interface SysBasicsAcctService {
 
     //根据用户查询角色和组织信息
     AcctInfoVO getAcctInfo(AcctInfoVO acctInfoVO);
+
+    //用户添加验证信息
+    String verAcctInfo(AcctInfoVO acctInfoVO);
 
 //    //供应商自建修改用户
 //    void updateNoseAcctInfo(AcctInfoVO acctInfoVO);

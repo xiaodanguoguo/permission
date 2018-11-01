@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ego.services.base.facade.dao.Jurisdiction.AcctRoleRealMapper" >
-  <resultMap id="BaseResultMap" type="com.ego.services.base.facade.model.Jurisdiction.AcctRoleReal" >
+<mapper namespace="com.ego.services.base.facade.dao.jurisdiction.AcctRoleRealMapper" >
+  <resultMap id="BaseResultMap" type="com.ego.services.base.facade.model.jurisdiction.AcctRoleReal" >
     <id column="RELA_ID" property="relaId" jdbcType="BIGINT" />
     <result column="ACCT_ID" property="acctId" jdbcType="BIGINT" />
     <result column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
@@ -24,7 +24,7 @@
     delete from acct_role_real
     where ACCT_ID = #{acctId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.ego.services.base.facade.model.Jurisdiction.AcctRoleReal" >
+  <insert id="insert" parameterType="com.ego.services.base.facade.model.jurisdiction.AcctRoleReal" >
     insert into acct_role_real (RELA_ID, ACCT_ID, ROLE_ID, 
       STATUS, CREATED_BY, CREATED_TIME, 
       UPDATED_BY, UPDATED_TIME)
@@ -32,7 +32,7 @@
       #{status,jdbcType=TINYINT}, #{createdBy,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
       #{updatedBy,jdbcType=VARCHAR}, #{updatedTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.ego.services.base.facade.model.Jurisdiction.AcctRoleReal" >
+  <insert id="insertSelective" parameterType="com.ego.services.base.facade.model.jurisdiction.AcctRoleReal" >
     insert into acct_role_real
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="relaId != null" >
@@ -87,7 +87,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ego.services.base.facade.model.Jurisdiction.AcctRoleReal" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.ego.services.base.facade.model.jurisdiction.AcctRoleReal" >
     update acct_role_real
     <set >
       <if test="acctId != null" >
@@ -114,7 +114,7 @@
     </set>
     where RELA_ID = #{relaId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ego.services.base.facade.model.Jurisdiction.AcctRoleReal" >
+  <update id="updateByPrimaryKey" parameterType="com.ego.services.base.facade.model.jurisdiction.AcctRoleReal" >
     update acct_role_real
     set ACCT_ID = #{acctId,jdbcType=BIGINT},
       ROLE_ID = #{roleId,jdbcType=BIGINT},
@@ -127,7 +127,7 @@
   </update>
 
   <!-- 中间表 添加 来源：zhaoyichen-->
-  <insert id="addSysAcct2Role" parameterType="com.ego.services.base.facade.model.Jurisdiction.AcctRoleReal">
+  <insert id="addSysAcct2Role" parameterType="com.ego.services.base.facade.model.jurisdiction.AcctRoleReal">
 		insert into acct_role_real(ACCT_ID,ROLE_ID) values(#{acctId},#{roleId})
 	</insert>
   <!-- 中间表 删除 来源：zhaoyichen-->
@@ -136,7 +136,7 @@
 	</delete>
 
   <!--删除中间表 按用户id  来源：zhaoyichen-->
-  <delete id="deleteByPrimaryKey3" parameterType="com.ego.services.base.facade.model.Jurisdiction.AcctRoleReal">
+  <delete id="deleteByPrimaryKey3" parameterType="com.ego.services.base.facade.model.jurisdiction.AcctRoleReal">
     delete from acct_role_real where ACCT_ID = #{acctId,jdbcType=BIGINT} and ROLE_ID = #{roleId,jdbcType=BIGINT}</delete>
 
 
@@ -149,7 +149,7 @@
 
 
     <!--添加 用户角色中间-->
-  <insert id="insertAcctRole" parameterType="com.ego.services.base.facade.model.Jurisdiction.AcctRoleReal">
+  <insert id="insertAcctRole" parameterType="com.ego.services.base.facade.model.jurisdiction.AcctRoleReal">
     <!--添加 用户角色中间   映射有问题！谁的代码记得改一下-->
 
   insert into acct_role_real
@@ -197,7 +197,7 @@
 
 </insert>
 
-  <delete id="deleteAcctRole" parameterType="com.ego.services.base.facade.model.Jurisdiction.AcctRoleReal" >
+  <delete id="deleteAcctRole" parameterType="com.ego.services.base.facade.model.jurisdiction.AcctRoleReal" >
 
     delete from acct_role_real where ACCT_ID = #{acctId,jdbcType=BIGINT}
   </delete>

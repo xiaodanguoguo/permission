@@ -1,4 +1,4 @@
-package com.ego.services.base.facade.model.Jurisdiction;
+package com.ego.services.base.facade.model.jurisdiction;
 
 import com.ego.services.base.facade.common.IsDelete;
 import com.ego.services.base.facade.common.Status;
@@ -56,6 +56,36 @@ public class FunctionManage {
     private String orgIdAll;                //机构idall
 
     private List<String> orgIdAlls;         //机构idall
+
+    private Long acctType;                  //用户类型  0 超级管理员  1 管理员  2 用户
+
+    private Long acctId;                    //用户ID
+
+    private Long sysId;                    //系统ID
+
+    public Long getSysId() {
+        return sysId;
+    }
+
+    public void setSysId(Long sysId) {
+        this.sysId = sysId;
+    }
+
+    public Long getAcctType() {
+        return acctType;
+    }
+
+    public void setAcctType(Long acctType) {
+        this.acctType = acctType;
+    }
+
+    public Long getAcctId() {
+        return acctId;
+    }
+
+    public void setAcctId(Long acctId) {
+        this.acctId = acctId;
+    }
 
     public String getOrgId() {
         return orgId;

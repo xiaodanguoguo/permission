@@ -1,6 +1,6 @@
-package com.ego.services.base.facade.dao.Jurisdiction;
+package com.ego.services.base.facade.dao.jurisdiction;
 
-import com.ego.services.base.facade.model.Jurisdiction.AcctRoleReal;
+import com.ego.services.base.facade.model.jurisdiction.AcctRoleReal;
 
 import java.util.List;
 

@@ -1,5 +1,6 @@
-package com.ebase.ego.webapps.op.controller.Jurisdiction;
+package com.ebase.ego.webapps.op.controller.jurisdiction;
 
+import com.ebase.core.AssertContext;
 import com.ebase.core.page.PageInfo;
 import com.ebase.core.service.ServiceResponse;
 import feign.FeignException;
@@ -14,11 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
-import com.ego.services.base.api.controller.Jurisdiction.AcctOperPrivRelaAPI;
-import com.ego.services.base.api.controller.Jurisdiction.RoleInfoAPI;
-import com.ego.services.base.api.vo.Jurisdiction.AcctOperPrivRelaVO;
-import com.ego.services.base.api.vo.Jurisdiction.RoleInfoVO;
+import com.ego.services.base.api.controller.jurisdiction.AcctOperPrivRelaAPI;
+import com.ego.services.base.api.controller.jurisdiction.RoleInfoAPI;
+import com.ego.services.base.api.vo.jurisdiction.AcctOperPrivRelaVO;
+import com.ego.services.base.api.vo.jurisdiction.RoleInfoVO;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -82,7 +84,9 @@ public class RoleInfoController {
         JsonResponse<Map> result = new JsonResponse<>();
         try {
             //根据service层返回的编码做不同的操作
-            ServiceResponse<Map> response=roleInfoAPI.roleInfoTree(jsonRequest.getReqBody());
+            RoleInfoVO roleInfoVO=jsonRequest.getReqBody();
+            roleInfoVO.setOrgId(AssertContext.getOrgId());
+            ServiceResponse<Map> response=roleInfoAPI.roleInfoTree(roleInfoVO);
             if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode())) {
                 result.setRspBody(response.getRetContent());
                 //如果需要异常信息
@@ -116,6 +120,74 @@ public class RoleInfoController {
         try {
             //根据service层返回的编码做不同的操作
             ServiceResponse<String> response=roleInfoAPI.verificationDeleteRoelInfo(jsonRequest.getReqBody());
+            if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode())) {
+                result.setRspBody(response.getRetContent());
+                //如果需要异常信息
+            } else {
+                if (response.isHasError()) {
+                    //系统异常
+                    result.setRetCode(JsonResponse.SYS_EXCEPTION);
+                    //如果需要的话, 这个方法可以获取异常信息 response.getErrorMessage()
+                } else {
+                    //根据业务的不同确定返回的业务信息是否正常,是否需要执行下一步操作
+                    result.setRetCode(response.getRetCode());
+                }
+            }
+        } catch (FeignException e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            result.setRetCode(JsonResponse.SYS_EXCEPTION);
+        }
+        return result;
+    }
+
+
+    /**
+     *  验证引用时角色名是否重复
+     * @param jsonRequest
+     * @return
+     */
+    @RequestMapping(value = "/verQuoteRoleTitle",method = RequestMethod.POST)
+    public JsonResponse<String> verQuoteRoleTitle(@RequestBody JsonRequest<RoleInfoVO> jsonRequest){
+        JsonResponse<String> result = new JsonResponse<>();
+        try {
+            //根据service层返回的编码做不同的操作
+            ServiceResponse<String> response=roleInfoAPI.verQuoteRoleTitle(jsonRequest.getReqBody());
+            if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode())) {
+                result.setRspBody(response.getRetContent());
+                //如果需要异常信息
+            } else {
+                if (response.isHasError()) {
+                    //系统异常
+                    result.setRetCode(JsonResponse.SYS_EXCEPTION);
+                    //如果需要的话, 这个方法可以获取异常信息 response.getErrorMessage()
+                } else {
+                    //根据业务的不同确定返回的业务信息是否正常,是否需要执行下一步操作
+                    result.setRetCode(response.getRetCode());
+                }
+            }
+        } catch (FeignException e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            result.setRetCode(JsonResponse.SYS_EXCEPTION);
+        }
+        return result;
+    }
+
+
+
+    /**
+     *  验证引用时角色名是否重复
+     *  一个组织引用多个角色名
+     * @param jsonRequest
+     * @return
+     */
+    @RequestMapping(value = "/verQuoteRoleIds",method = RequestMethod.POST)
+    public JsonResponse<String> verQuoteRoleIds(@RequestBody JsonRequest<RoleInfoVO> jsonRequest){
+        JsonResponse<String> result = new JsonResponse<>();
+        try {
+            //根据service层返回的编码做不同的操作
+            ServiceResponse<String> response=roleInfoAPI.verQuoteRoleIds(jsonRequest.getReqBody());
             if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode())) {
                 result.setRspBody(response.getRetContent());
                 //如果需要异常信息
@@ -191,7 +263,10 @@ public class RoleInfoController {
         JsonResponse<List<RoleInfoVO>> result = new JsonResponse<>();
         try {
             //根据service层返回的编码做不同的操作
-            ServiceResponse<List<RoleInfoVO>> response=roleInfoAPI.roleInfoAllLike(jsonRequest.getReqBody());
+            RoleInfoVO roleInfoVO=jsonRequest.getReqBody();
+//            roleInfoVO.setOrgId(AssertContext.getOrgId());
+            roleInfoVO.setAcctId(Long.parseLong(AssertContext.getAcctId()));
+            ServiceResponse<List<RoleInfoVO>> response=roleInfoAPI.roleInfoAllLike(roleInfoVO);
             if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode())) {
                 result.setRspBody(response.getRetContent());
                 //如果需要异常信息
@@ -335,6 +410,79 @@ public class RoleInfoController {
         try {
             //根据service层返回的编码做不同的操作
             ServiceResponse<RoleInfoVO> response=roleInfoAPI.keepRoleInfo(jsonRequest.getReqBody());
+            if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode())) {
+                result.setRspBody(response.getRetContent());
+                //如果需要异常信息
+            } else {
+                if (response.isHasError()) {
+                    //系统异常
+                    result.setRetCode(JsonResponse.SYS_EXCEPTION);
+                    //如果需要的话, 这个方法可以获取异常信息 response.getErrorMessage()
+                } else {
+                    //根据业务的不同确定返回的业务信息是否正常,是否需要执行下一步操作
+                    result.setRetCode(response.getRetCode());
+                }
+            }
+        } catch (FeignException e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            result.setRetCode(JsonResponse.SYS_EXCEPTION);
+        }
+        return result;
+    }
+
+
+
+    /**
+     *  组织引用多个角色
+     * @param jsonRequest
+     * @return
+     */
+    @RequestMapping(value = "/orgQuoteRoleInfo",method = RequestMethod.POST)
+    public JsonResponse<List<RoleInfoVO>> orgQuoteRoleInfo(@RequestBody JsonRequest<RoleInfoVO> jsonRequest){
+        JsonResponse<List<RoleInfoVO>> result = new JsonResponse<>();
+        try {
+            //根据service层返回的编码做不同的操作
+            RoleInfoVO roleInfoVO=jsonRequest.getReqBody();
+            roleInfoVO.setOrgId(AssertContext.getOrgId());
+            ServiceResponse<List<RoleInfoVO>> response=roleInfoAPI.orgQuoteRoleInfo(roleInfoVO);
+            if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode())) {
+                result.setRspBody(response.getRetContent());
+                //如果需要异常信息
+            } else {
+                if (response.isHasError()) {
+                    //系统异常
+                    result.setRetCode(JsonResponse.SYS_EXCEPTION);
+                    //如果需要的话, 这个方法可以获取异常信息 response.getErrorMessage()
+                } else {
+                    //根据业务的不同确定返回的业务信息是否正常,是否需要执行下一步操作
+                    result.setRetCode(response.getRetCode());
+                }
+            }
+        } catch (FeignException e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            result.setRetCode(JsonResponse.SYS_EXCEPTION);
+        }
+        return result;
+    }
+
+
+
+    /**
+     *  系统角色定义 修改
+     * @param jsonRequest
+     * @return
+     */
+    @RequestMapping(value = "/saveCopyRole",method = RequestMethod.POST)
+    public JsonResponse<RoleInfoVO> saveCopyRole(@RequestBody JsonRequest<RoleInfoVO> jsonRequest){
+        JsonResponse<RoleInfoVO> result = new JsonResponse<>();
+        try {
+            //根据service层返回的编码做不同的操作
+            RoleInfoVO roleInfoVO=jsonRequest.getReqBody();
+            roleInfoVO.setCreatedBy(AssertContext.getAcctTitle());
+            roleInfoVO.setCreatedTime(new Date());
+            ServiceResponse<RoleInfoVO> response=roleInfoAPI.saveCopyRole(roleInfoVO);
             if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode())) {
                 result.setRspBody(response.getRetContent());
                 //如果需要异常信息

@@ -1,10 +1,9 @@
-package com.ego.services.base.api.controller.Jurisdiction;
+package com.ego.services.base.api.controller.jurisdiction;
 
 
-import com.ebase.core.page.PageDTO;
 import com.ebase.core.page.PageInfo;
 import com.ebase.core.service.ServiceResponse;
-import com.ego.services.base.api.vo.Jurisdiction.RoleInfoVO;
+import com.ego.services.base.api.vo.jurisdiction.RoleInfoVO;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,6 +45,14 @@ public interface RoleInfoAPI {
     ServiceResponse<List<RoleInfoVO>> roleInfoAllLike(@RequestBody RoleInfoVO jsonRequest);
 
     /**
+     * 组织引用多个角色
+     * @param jsonRequest
+     * @return
+     */
+    @RequestMapping(value = "/orgQuoteRoleInfo",method = RequestMethod.POST)
+    ServiceResponse<List<RoleInfoVO>> orgQuoteRoleInfo(@RequestBody RoleInfoVO jsonRequest);
+
+    /**
      * 所有用户关联角色返回状态
      * @param jsonRequest
      * @return
@@ -71,12 +78,38 @@ public interface RoleInfoAPI {
     ServiceResponse<String> verificationDeleteRoelInfo(@RequestBody RoleInfoVO jsonRequest);
 
     /**
+     * 验证引用时角色名是否重复
+     * @param jsonRequest
+     * @return
+     */
+    @RequestMapping(value = "/verQuoteRoleTitle",method = RequestMethod.POST)
+    ServiceResponse<String> verQuoteRoleTitle(@RequestBody RoleInfoVO jsonRequest);
+
+    /**
+     * 验证引用时角色名是否重复
+     * 一个组织引用多个角色
+     * @param jsonRequest
+     * @return
+     */
+    @RequestMapping(value = "/verQuoteRoleIds",method = RequestMethod.POST)
+    ServiceResponse<String> verQuoteRoleIds(@RequestBody RoleInfoVO jsonRequest);
+
+    /**
      * 角色停用或删除
      * @param jsonRequest
      * @return
      */
     @RequestMapping(value = "/keepRoleInfoStatus",method = RequestMethod.POST)
     ServiceResponse<Integer> keepRoleInfoStatus(@RequestBody RoleInfoVO jsonRequest);
+
+
+    /**
+     * 增加复制角色
+     * @param jsonRequest
+     * @return
+     */
+    @RequestMapping(value = "/saveCopyRole",method = RequestMethod.POST)
+    ServiceResponse<RoleInfoVO> saveCopyRole(@RequestBody RoleInfoVO jsonRequest);
 
     /**
      * 增加，删除，修改

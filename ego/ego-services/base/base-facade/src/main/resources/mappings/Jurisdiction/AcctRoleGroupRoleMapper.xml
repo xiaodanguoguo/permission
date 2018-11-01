@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ego.services.base.facade.dao.Jurisdiction.AcctRoleGroupRoleMapper" >
-  <resultMap id="BaseResultMap" type="com.ego.services.base.facade.model.Jurisdiction.AcctRoleGroupRole" >
+<mapper namespace="com.ego.services.base.facade.dao.jurisdiction.AcctRoleGroupRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.ego.services.base.facade.model.jurisdiction.AcctRoleGroupRole" >
     <id column="RELA_ID" property="relaId" jdbcType="BIGINT" />
     <result column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
     <result column="ROLE_GROUP_ID" property="roleGroupId" jdbcType="BIGINT" />
@@ -32,7 +32,7 @@
     where ROLE_ID = #{roleId,jdbcType=BIGINT}
   </delete>
 
-  <insert id="insert" parameterType="com.ego.services.base.facade.model.Jurisdiction.AcctRoleGroupRole" >
+  <insert id="insert" parameterType="com.ego.services.base.facade.model.jurisdiction.AcctRoleGroupRole" >
     insert into acct_role_group_role (RELA_ID, ROLE_ID, ROLE_GROUP_ID, 
       STATUS, CREATED_BY, CREATED_TIME
       )
@@ -40,7 +40,7 @@
       #{status,jdbcType=TINYINT}, #{createdBy,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.ego.services.base.facade.model.Jurisdiction.AcctRoleGroupRole" >
+  <insert id="insertSelective" parameterType="com.ego.services.base.facade.model.jurisdiction.AcctRoleGroupRole" >
     insert into acct_role_group_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="relaId != null" >
@@ -83,7 +83,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ego.services.base.facade.model.Jurisdiction.AcctRoleGroupRole" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.ego.services.base.facade.model.jurisdiction.AcctRoleGroupRole" >
     update acct_role_group_role
     <set >
       <if test="roleId != null" >
@@ -104,7 +104,7 @@
     </set>
     where RELA_ID = #{relaId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ego.services.base.facade.model.Jurisdiction.AcctRoleGroupRole" >
+  <update id="updateByPrimaryKey" parameterType="com.ego.services.base.facade.model.jurisdiction.AcctRoleGroupRole" >
     update acct_role_group_role
     set ROLE_ID = #{roleId,jdbcType=BIGINT},
       ROLE_GROUP_ID = #{roleGroupId,jdbcType=BIGINT},

@@ -1,8 +1,8 @@
-package com.ego.services.base.facade.dao.Jurisdiction;
+package com.ego.services.base.facade.dao.jurisdiction;
 
-import com.ego.services.base.facade.model.Jurisdiction.AcctInfo;
-import com.ego.services.base.facade.model.Jurisdiction.FunctionManage;
-
+import com.ego.services.base.facade.model.jurisdiction.AcctInfo;
+import com.ego.services.base.facade.model.jurisdiction.FunctionManage;
+import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface FunctionManageMapper {
@@ -13,6 +13,8 @@ public interface FunctionManageMapper {
     int insertSelective(FunctionManage record);
 
     FunctionManage selectByPrimaryKey(Long functionId);
+
+    FunctionManage maxCode(@Param(value="parentApplicationId")Long parentApplicationId);
 
     int updateByPrimaryKeySelective(FunctionManage record);
 

@@ -1,13 +1,13 @@
-package com.ego.services.base.api.controller.Jurisdiction;
+package com.ego.services.base.api.controller.jurisdiction;
 
 import com.ebase.core.page.PageDTO;
 import com.ebase.core.service.ServiceResponse;
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
-import com.ego.services.base.api.vo.Jurisdiction.AcctInfoExcel;
-import com.ego.services.base.api.vo.Jurisdiction.AcctInfoVO;
-import com.ego.services.base.api.vo.Jurisdiction.AcctRoleRealVO;
-import com.ego.services.base.api.vo.Jurisdiction.AcctToRoleInfoVO;
+import com.ego.services.base.api.vo.jurisdiction.AcctInfoExcel;
+import com.ego.services.base.api.vo.jurisdiction.AcctInfoVO;
+import com.ego.services.base.api.vo.jurisdiction.AcctRoleRealVO;
+import com.ego.services.base.api.vo.jurisdiction.AcctToRoleInfoVO;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +37,14 @@ public interface SysAccInfoAPI {
      */
     @RequestMapping(value = "/getAcctInfo",method = RequestMethod.POST)
     ServiceResponse<AcctInfoVO> getAcctInfo(@RequestBody AcctInfoVO jsonRequest);
+
+    /**
+     * 用户添加验证
+     * @param jsonRequest
+     * @return
+     */
+    @RequestMapping(value = "/verAcctInfo",method = RequestMethod.POST)
+    ServiceResponse<String> verAcctInfo(@RequestBody AcctInfoVO jsonRequest);
 
     /**
      * 根据角色查询用户

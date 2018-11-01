@@ -1,7 +1,7 @@
-package com.ego.services.base.facade.dao.Jurisdiction;
+package com.ego.services.base.facade.dao.jurisdiction;
 
-import com.ego.services.base.api.vo.Jurisdiction.AcctInfoVO;
-import com.ego.services.base.facade.model.Jurisdiction.AcctInfo;
+import com.ego.services.base.api.vo.jurisdiction.AcctInfoVO;
+import com.ego.services.base.facade.model.jurisdiction.AcctInfo;
 
 import java.util.List;
 
@@ -22,6 +22,15 @@ public interface AcctInfoMapper {
 
     //查询用户列表
     List<AcctInfo> find(AcctInfoVO reqBody);
+
+    //验证用户名是否重复
+    List<AcctInfo> verAcctInfo(AcctInfo reqBody);
+
+    //验证是否有多个管理员
+    List<AcctInfo> verAcctInfoType(AcctInfo reqBody);
+
+    //验证是否有多个系统管理员
+    List<AcctInfo> verAcctInfoSysId(AcctInfo reqBody);
 
     //查询用户分页列表
     List<AcctInfo> findPage(AcctInfo reqBody);

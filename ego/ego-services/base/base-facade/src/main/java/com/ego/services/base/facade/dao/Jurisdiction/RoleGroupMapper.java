@@ -1,7 +1,7 @@
-package com.ego.services.base.facade.dao.Jurisdiction;
+package com.ego.services.base.facade.dao.jurisdiction;
 
 
-import com.ego.services.base.facade.model.Jurisdiction.RoleGroup;
+import com.ego.services.base.facade.model.jurisdiction.RoleGroup;
 
 import java.util.List;
 

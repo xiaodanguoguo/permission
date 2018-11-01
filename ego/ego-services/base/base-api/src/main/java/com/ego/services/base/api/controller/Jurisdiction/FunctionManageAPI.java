@@ -1,15 +1,14 @@
-package com.ego.services.base.api.controller.Jurisdiction;
+package com.ego.services.base.api.controller.jurisdiction;
 
 
 import com.ebase.core.service.ServiceResponse;
-import com.ego.services.base.api.vo.Jurisdiction.FunctionManageVO;
+import com.ego.services.base.api.vo.jurisdiction.FunctionManageVO;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**

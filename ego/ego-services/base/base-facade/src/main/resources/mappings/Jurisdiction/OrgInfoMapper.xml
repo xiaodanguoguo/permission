@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ego.services.base.facade.dao.Jurisdiction.OrgInfoMapper" >
+<mapper namespace="com.ego.services.base.facade.dao.jurisdiction.OrgInfoMapper" >
 
 
-  <resultMap id="BaseResultMap" type="com.ego.services.base.facade.model.Jurisdiction.OrgInfo" >
+  <resultMap id="BaseResultMap" type="com.ego.services.base.facade.model.jurisdiction.OrgInfo" >
     <id column="ID" property="id" jdbcType="BIGINT" />
     <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
     <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
@@ -16,7 +16,7 @@
     <result column="UPDATED_TIME" property="updatedTime" jdbcType="TIMESTAMP" />
   </resultMap>
   
-  <insert id="insertOrgInfo" keyProperty="id" useGeneratedKeys="true" keyColumn="ID" parameterType="com.ego.services.base.facade.model.Jurisdiction.OrgInfo">
+  <insert id="insertOrgInfo" keyProperty="id" useGeneratedKeys="true" keyColumn="ID" parameterType="com.ego.services.base.facade.model.jurisdiction.OrgInfo">
   	INSERT INTO org_info (
   		ID,
 		ORG_CODE,
@@ -43,7 +43,7 @@
 		
   </insert>
   
-  <update id="updateOrgInfo" parameterType="com.ego.services.base.facade.model.Jurisdiction.OrgInfo">
+  <update id="updateOrgInfo" parameterType="com.ego.services.base.facade.model.jurisdiction.OrgInfo">
   	UPDATE org_info
   	<set >
       <if test="orgCode != null" >
@@ -77,7 +77,7 @@
     where ID = #{id,jdbcType=BIGINT}
   </update>
   
-  <select id="queryChildOrgInfo" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.OrgInfo">
+  <select id="queryChildOrgInfo" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.OrgInfo">
   	SELECT
 		ID,
 		ORG_CODE,
@@ -106,7 +106,7 @@
 	</foreach>
   </delete>
   
-  <select id="selectListOrgInfoAll" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.OrgInfo">
+  <select id="selectListOrgInfoAll" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.OrgInfo">
   	SELECT
 		ID,
 		ORG_CODE,
@@ -133,7 +133,7 @@
   
   
   
-  <select id="selectOrgInfo" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.OrgInfo">
+  <select id="selectOrgInfo" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.OrgInfo">
   	SELECT
 		ID,
 		ORG_CODE,
@@ -150,7 +150,7 @@
 	WHERE
 		ID = #{id,jdbcType=VARCHAR}
   </select>
-	<select id="selectOrgInfo1" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.OrgInfo">
+	<select id="selectOrgInfo1" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.OrgInfo">
   	SELECT
 		ID,
 		ORG_CODE,
@@ -168,7 +168,7 @@
 		ORG_CODE = #{parentId,jdbcType=VARCHAR}
   </select>
 
-	<select id="selectOrgInfo2" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.OrgInfo">
+	<select id="selectOrgInfo2" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.OrgInfo">
 		SELECT
 		ID,
 		ORG_CODE,
@@ -184,9 +184,12 @@
 		org_info
 		WHERE
 		ID = #{parentId,jdbcType=VARCHAR}
+		<if test="id != null " >
+			and ID like CONCAT(CONCAT('%',#{id}),'%')
+		</if>
 	</select>
 
-	<select id="selectOrgInfoAcctInfo" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.OrgInfo">
+	<select id="selectOrgInfoAcctInfo" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.OrgInfo">
 		SELECT
 		ID,
 		ORG_CODE,
@@ -202,9 +205,12 @@
 		org_info
 		WHERE
 		ID = #{parentId,jdbcType=INTEGER}
+		<if test="id != null " >
+			and ID like CONCAT(CONCAT('%',#{id}),'%')
+		</if>
 	</select>
   
-  <select id="selectListOrgInfo" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.OrgInfo">
+  <select id="selectListOrgInfo" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.OrgInfo">
     SELECT
 		ID,
 		ORG_CODE,
@@ -220,7 +226,7 @@
 		org_info	
   </select>
 
-	<select id="selectOrgInfoListById" parameterType="com.ego.services.base.facade.model.Jurisdiction.OrgInfo" resultMap="BaseResultMap">
+	<select id="selectOrgInfoListById" parameterType="com.ego.services.base.facade.model.jurisdiction.OrgInfo" resultMap="BaseResultMap">
 	  SELECT
 		ID,
 		ORG_CODE,
@@ -237,7 +243,7 @@
   
   
   
-  <select id="getChildOrgInfo" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.Jurisdiction.OrgInfo" >
+  <select id="getChildOrgInfo" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.OrgInfo" >
   	SELECT
 		ID,
 		ORG_CODE,
@@ -264,7 +270,7 @@
 		PARENT_ID = #{id,jdbcType=VARCHAR}
   </select >
   
-  <select id="getOrgInfoIdAll" resultType="java.lang.String" parameterType="com.ego.services.base.facade.model.Jurisdiction.OrgInfo">
+  <select id="getOrgInfoIdAll" resultType="java.lang.String" parameterType="com.ego.services.base.facade.model.jurisdiction.OrgInfo">
   	SELECT
 	 ID
 	FROM
@@ -272,7 +278,7 @@
 	WHERE
 		ID LIKE CONCAT( #{id,jdbcType=VARCHAR}, '%')
   </select>
-  
+
   <select id="getMaterielOrginfo" resultMap="BaseResultMap" resultType="java.lang.String" >
     SELECT
 	    ID,
@@ -290,8 +296,28 @@
 	WHERE
 		ID = #{acctInfoId,jdbcType=VARCHAR}
   </select>
-  
-  <select id="getOrgInfo" resultType="com.ego.services.base.facade.model.Jurisdiction.OrgInfo" parameterType="com.ego.services.base.facade.model.Jurisdiction.OrgInfo">
+
+
+	<select id="selectSysQuoteOrgInof" resultType="com.ego.services.base.facade.model.jurisdiction.OrgInfo" parameterType="com.ego.services.base.facade.model.jurisdiction.SysInfo">
+		SELECT
+		o.ID,
+		o.ORG_CODE,
+		o.ORG_NAME,
+		o.PARENT_ID,
+		o.REMARK,
+		o.`STATUS`,
+		o.CREATED_BY,
+		o.CREATED_TIME,
+		o.UPDATED_BY,
+		o.UPDATED_TIME
+		FROM
+		org_info o
+		LEFT JOIN acct_org_sys aos on aos.org_id=o.id
+		LEFT JOIN sys_info s on s.sys_id=aos.sys_id
+		where 1=1 and aos.sys_id=#{sysId} and s.is_delete=0 and s.status=1 and aos.status=1
+	</select>
+
+  <select id="getOrgInfo" resultType="com.ego.services.base.facade.model.jurisdiction.OrgInfo" parameterType="com.ego.services.base.facade.model.jurisdiction.OrgInfo">
   	SELECT
 		ID,
 		ORG_CODE,
@@ -318,7 +344,7 @@
 	ORG_NAME = #{orgName,jdbcType=VARCHAR}
   </select>
   
-  <select id="selectParityOrgName" resultType="java.lang.Integer" parameterType="com.ego.services.base.facade.model.Jurisdiction.OrgInfo">
+  <select id="selectParityOrgName" resultType="java.lang.Integer" parameterType="com.ego.services.base.facade.model.jurisdiction.OrgInfo">
   	SELECT
 		COUNT(*)
 	FROM
@@ -326,5 +352,28 @@
 	WHERE
 		ORG_NAME = #{orgName,jdbcType=VARCHAR}
   </select>
-  
+
+	<select id="selectRoleQuoteOrg" resultType="com.ego.services.base.facade.model.jurisdiction.OrgInfo" parameterType="com.ego.services.base.facade.model.jurisdiction.OrgInfo">
+		select o.id,o.org_name from org_info o
+		LEFT JOIN acct_role_org aro on aro.org_id=o.id
+		where aro.role_id = #{roleId} and aro.status=1
+		and o.id like CONCAT( #{orgId}, '%') and o.id !=#{orgId}
+	</select>
+
+	<select id="selectRoleYesQuote" resultType="com.ego.services.base.facade.model.jurisdiction.OrgInfo" parameterType="com.ego.services.base.facade.model.jurisdiction.OrgInfo">
+		select o.id,o.org_name from org_info o
+		LEFT JOIN acct_org_sys aos on aos.org_id=o.id
+		where o.id like CONCAT( #{orgId}, '%')
+		and o.id not in (
+		select aro.ORG_ID from acct_role_org aro
+		where aro.role_id = #{roleId}
+		) and aos.SYS_ID=#{sysId} and o.id != #{orgId}
+		<if test="orgIds != null and orgIds.length>0 " >
+			AND o.id not in
+			<foreach collection="orgIds" close=")" open="(" item="all" separator=",">
+				#{all}
+			</foreach>
+		</if>
+	</select>
+
 </mapper>

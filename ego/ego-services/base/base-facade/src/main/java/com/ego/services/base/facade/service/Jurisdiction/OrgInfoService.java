@@ -1,13 +1,12 @@
-package com.ego.services.base.facade.service.Jurisdiction;
+package com.ego.services.base.facade.service.jurisdiction;
 
 import java.util.List;
 
-import com.ebase.core.page.PageDTO;
 import com.ebase.core.page.PageInfo;
-import com.ebase.core.web.json.JsonRequest;
-import com.ego.services.base.api.vo.Jurisdiction.OrgInfoVO;
-import com.ego.services.base.facade.model.Jurisdiction.AcctInfo;
-import com.ego.services.base.facade.model.Jurisdiction.OrgInfo;
+import com.ego.services.base.api.vo.jurisdiction.OrgInfoVO;
+import com.ego.services.base.api.vo.jurisdiction.SysInfoVO;
+import com.ego.services.base.facade.model.jurisdiction.AcctInfo;
+import com.ego.services.base.facade.model.jurisdiction.OrgInfo;
 
 /**
  * 
@@ -28,9 +27,15 @@ public interface OrgInfoService {
 	
 	OrgInfo getOrgInfo(OrgInfo orgInfo);
 
-	PageInfo<OrgInfoVO> getListOrgInfo(OrgInfo orgInfo);
+	PageInfo<OrgInfoVO> getListOrgInfo(OrgInfoVO orgInfo);
+
+	PageInfo<OrgInfoVO> selectRoleYesQuote(OrgInfoVO orgInfo);
 
 	List<OrgInfo> getMaterielOrginfo(AcctInfo acctInfo);
+
+	List<OrgInfoVO> selectSysQuoteOrgInof(SysInfoVO acctInfo);
+
+	List<OrgInfoVO> selectRoleQuoteOrg(OrgInfoVO acctInfo);
 
 	Boolean getParityOrgName(OrgInfo orgInfo);
 

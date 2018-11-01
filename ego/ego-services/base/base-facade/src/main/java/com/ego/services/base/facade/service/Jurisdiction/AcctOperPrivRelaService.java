@@ -1,8 +1,8 @@
-package com.ego.services.base.facade.service.Jurisdiction;
+package com.ego.services.base.facade.service.jurisdiction;
 
 
 
-import com.ego.services.base.api.vo.Jurisdiction.AcctOperPrivRelaVO;
+import com.ego.services.base.api.vo.jurisdiction.AcctOperPrivRelaVO;
 
 /**
  * @Auther: zhaoyuhang

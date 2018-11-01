@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ego.services.base.facade.dao.Jurisdiction.AcctOperPrivRelaMapper" >
-  <resultMap id="BaseResultMap" type="com.ego.services.base.facade.model.Jurisdiction.AcctOperPrivRela" >
+<mapper namespace="com.ego.services.base.facade.dao.jurisdiction.AcctOperPrivRelaMapper" >
+  <resultMap id="BaseResultMap" type="com.ego.services.base.facade.model.jurisdiction.AcctOperPrivRela" >
     <id column="RELA_ID" property="relaId" jdbcType="BIGINT" />
     <result column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
     <result column="FUNCTION_ID" property="functionId" jdbcType="BIGINT" />
@@ -29,7 +29,7 @@
     where FUNCTION_ID = #{functionId,jdbcType=BIGINT}
   </delete>
 
-  <delete id="deleteFunctionIdAll" parameterType="com.ego.services.base.facade.model.Jurisdiction.FunctionManage">
+  <delete id="deleteFunctionIdAll" parameterType="com.ego.services.base.facade.model.jurisdiction.FunctionManage">
     delete from acct_oper_priv_rela
     where FUNCTION_ID in
     <foreach collection="allIds" close=")" open="(" item="all" separator=",">
@@ -41,7 +41,7 @@
     delete from acct_oper_priv_rela
     where RELA_ID = #{relaId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.ego.services.base.facade.model.Jurisdiction.AcctOperPrivRela" >
+  <insert id="insert" parameterType="com.ego.services.base.facade.model.jurisdiction.AcctOperPrivRela" >
     insert into acct_oper_priv_rela (RELA_ID, ROLE_ID, FUNCTION_ID, 
       STATUS, CREATED_BY, CREATED_TIME, 
       UPDATED_BY, UPDATED_TIME)
@@ -49,7 +49,14 @@
       #{status,jdbcType=TINYINT}, #{createdBy,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
       #{updatedBy,jdbcType=VARCHAR}, #{updatedTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.ego.services.base.facade.model.Jurisdiction.AcctOperPrivRela" >
+
+  <insert id="insertCopy" parameterType="com.ego.services.base.facade.model.jurisdiction.RoleInfo" >
+    insert into acct_oper_priv_rela (ROLE_ID, FUNCTION_ID,
+    STATUS)
+    select #{roleId}, FUNCTION_ID,
+    STATUS from acct_oper_priv_rela where ROLE_ID=#{copyId}
+  </insert>
+  <insert id="insertSelective" parameterType="com.ego.services.base.facade.model.jurisdiction.AcctOperPrivRela" >
     insert into acct_oper_priv_rela
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="relaId != null" >
@@ -104,7 +111,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ego.services.base.facade.model.Jurisdiction.AcctOperPrivRela" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.ego.services.base.facade.model.jurisdiction.AcctOperPrivRela" >
     update acct_oper_priv_rela
     <set >
       <if test="roleId != null" >
@@ -131,7 +138,7 @@
     </set>
     where RELA_ID = #{relaId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ego.services.base.facade.model.Jurisdiction.AcctOperPrivRela" >
+  <update id="updateByPrimaryKey" parameterType="com.ego.services.base.facade.model.jurisdiction.AcctOperPrivRela" >
     update acct_oper_priv_rela
     set ROLE_ID = #{roleId,jdbcType=BIGINT},
       FUNCTION_ID = #{functionId,jdbcType=BIGINT},

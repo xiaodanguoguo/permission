@@ -1,21 +1,20 @@
-package com.ego.services.base.facade.service.Jurisdiction.impl;
+package com.ego.services.base.facade.service.jurisdiction.impl;
 
 
-import com.ebase.core.page.PageDTO;
 import com.ebase.core.page.PageDTOUtil;
 import com.ebase.core.page.PageInfo;
 import com.ebase.utils.BeanCopyUtil;
-import com.ego.services.base.api.vo.Jurisdiction.RoleInfoVO;
+import com.ego.services.base.api.vo.jurisdiction.RoleInfoVO;
 import com.ego.services.base.facade.common.IsDelete;
 import com.ego.services.base.facade.common.Status;
 import com.ego.services.base.facade.common.SysPramType;
-import com.ego.services.base.facade.dao.Jurisdiction.AcctOperPrivRelaMapper;
-import com.ego.services.base.facade.dao.Jurisdiction.AcctRoleGroupRoleMapper;
-import com.ego.services.base.facade.dao.Jurisdiction.AcctRoleRealMapper;
-import com.ego.services.base.facade.dao.Jurisdiction.RoleInfoMapper;
-import com.ego.services.base.facade.model.Jurisdiction.AcctRoleGroupRole;
-import com.ego.services.base.facade.model.Jurisdiction.RoleInfo;
-import com.ego.services.base.facade.service.Jurisdiction.RoleInfoService;
+import com.ego.services.base.facade.dao.jurisdiction.AcctOperPrivRelaMapper;
+import com.ego.services.base.facade.dao.jurisdiction.AcctRoleGroupRoleMapper;
+import com.ego.services.base.facade.dao.jurisdiction.AcctRoleRealMapper;
+import com.ego.services.base.facade.dao.jurisdiction.RoleInfoMapper;
+import com.ego.services.base.facade.model.jurisdiction.AcctRoleGroupRole;
+import com.ego.services.base.facade.model.jurisdiction.RoleInfo;
+import com.ego.services.base.facade.service.jurisdiction.RoleInfoService;
 import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -115,6 +114,21 @@ public class RoleInfoServiceImpl implements RoleInfoService {
         return list;
     }
 
+
+    @Override
+    public List<RoleInfoVO> orgQuoteRoleInfo(RoleInfoVO jsonRequest) {
+        RoleInfo roleInfo=new RoleInfo();
+        BeanCopyUtil.copy(jsonRequest,roleInfo);
+
+        roleInfo.setIsDelete(IsDelete.NO.getCode());
+        roleInfo.setStatus(Status.START.getCode());
+
+        //查询所有数据
+        List<RoleInfo> list = roleInfoMapper.orgQuoteRoleInfo(roleInfo);
+        List<RoleInfoVO> result = BeanCopyUtil.copyList(list, RoleInfoVO.class);
+        return result;
+    }
+
     @Override
     public List<RoleInfoVO> roleInfoAll(RoleInfoVO jsonRequest) {
         RoleInfo roleInfo=new RoleInfo();
@@ -177,27 +191,21 @@ public class RoleInfoServiceImpl implements RoleInfoService {
     public PageInfo<RoleInfoVO> roleInfoList(RoleInfoVO jsonRequest) {
         RoleInfo roleInfo=new RoleInfo();
         BeanCopyUtil.copy(jsonRequest,roleInfo);
-        try {
-            PageDTOUtil.startPage(jsonRequest);
+        roleInfo.setRoleTitle(roleInfo.getRoleCode());
+        roleInfo.setIsDelete(IsDelete.NO.getCode());
+        //查询分页数据
+        PageHelper.startPage(jsonRequest.getPageNum(), jsonRequest.getPageSize());
+        List<RoleInfo> list = roleInfoMapper.find(roleInfo);
 
-            roleInfo.setRoleTitle(roleInfo.getRoleCode());
-            roleInfo.setIsDelete(IsDelete.NO.getCode());
-            //查询分页数据
-            PageHelper.startPage(jsonRequest.getPageNum(), jsonRequest.getPageSize());
-            List<RoleInfo> list = roleInfoMapper.find(roleInfo);
+        PageInfo<RoleInfo> pageInfo = new PageInfo<>(list);
 
-            PageInfo<RoleInfo> pageInfo = new PageInfo<>(list);
-
-            List<RoleInfoVO> roleInfoVo= BeanCopyUtil.copyList(list, RoleInfoVO.class);
-            PageInfo<RoleInfoVO> pageVo = new PageInfo(roleInfoVo);
-            pageVo.setTotal(pageInfo.getTotal());
-            pageVo.setPages(pageInfo.getPages());
-            pageVo.setPageNum(pageInfo.getPageNum());
-            pageVo.setPageSize(pageInfo.getPageSize());
-            return pageVo;
-        } finally {
-            PageDTOUtil.endPage();
-        }
+        List<RoleInfoVO> roleInfoVo= BeanCopyUtil.copyList(list, RoleInfoVO.class);
+        PageInfo<RoleInfoVO> pageVo = new PageInfo(roleInfoVo);
+        pageVo.setTotal(pageInfo.getTotal());
+        pageVo.setPages(pageInfo.getPages());
+        pageVo.setPageNum(pageInfo.getPageNum());
+        pageVo.setPageSize(pageInfo.getPageSize());
+        return pageVo;
     }
 
 
@@ -211,6 +219,48 @@ public class RoleInfoServiceImpl implements RoleInfoService {
         }else{
             return "角色与用户有关联，请先解除关联再删除";
         }
+    }
+
+
+    @Override
+    public String verQuoteRoleTitle(RoleInfoVO jsonRequest) {
+        RoleInfo roleInfo=new RoleInfo();
+        BeanCopyUtil.copy(jsonRequest,roleInfo);
+        List<RoleInfo> list=roleInfoMapper.verQuoteRoleTitle(roleInfo);
+        if(CollectionUtils.isEmpty(list)){
+            return "0";
+        }else{
+            return "1";
+        }
+    }
+
+    @Override
+    public String verQuoteRoleIds(RoleInfoVO jsonRequest) {
+        RoleInfo roleInfo=new RoleInfo();
+        BeanCopyUtil.copy(jsonRequest,roleInfo);
+        List<RoleInfo> list=roleInfoMapper.verQuoteRoleIds(roleInfo);
+        if(CollectionUtils.isEmpty(list)){
+            return "0";
+        }else{
+            return "1";
+        }
+    }
+
+
+    /**
+     * 复制引用的角色
+     * @param jsonRequest
+     * @return
+     */
+    @Override
+    public RoleInfoVO saveCopyRole(RoleInfoVO jsonRequest) {
+        RoleInfo roleInfo=BeanCopyUtil.copy(jsonRequest,RoleInfo.class);
+        roleInfo.setIsDelete(IsDelete.NO.getCode());
+        roleInfo.setStatus(Status.START.getCode());
+        roleInfoMapper.insertSelective(roleInfo);
+        acctOperPrivRelaMapper.insertCopy(roleInfo);
+        RoleInfoVO roleInfoVO=BeanCopyUtil.copy(roleInfo,RoleInfoVO.class);
+        return roleInfoVO;
     }
 
     @Override

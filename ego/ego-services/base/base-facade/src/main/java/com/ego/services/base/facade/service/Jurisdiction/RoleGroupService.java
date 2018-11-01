@@ -1,10 +1,9 @@
-package com.ego.services.base.facade.service.Jurisdiction;
+package com.ego.services.base.facade.service.jurisdiction;
 
 
 
-import com.ebase.core.page.PageDTO;
 import com.ebase.core.page.PageInfo;
-import com.ego.services.base.api.vo.Jurisdiction.RoleGroupVO;
+import com.ego.services.base.api.vo.jurisdiction.RoleGroupVO;
 
 import java.util.List;
 

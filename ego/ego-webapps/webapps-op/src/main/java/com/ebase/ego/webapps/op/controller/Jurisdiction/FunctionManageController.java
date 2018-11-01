@@ -1,9 +1,10 @@
-package com.ebase.ego.webapps.op.controller.Jurisdiction;
+package com.ebase.ego.webapps.op.controller.jurisdiction;
 
 
 import java.util.HashMap;
 import java.util.List;
 
+import com.ebase.core.AssertContext;
 import com.ebase.core.service.ServiceResponse;
 import feign.FeignException;
 import org.slf4j.Logger;
@@ -17,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
-import com.ego.services.base.api.controller.Jurisdiction.FunctionManageAPI;
-import com.ego.services.base.api.vo.Jurisdiction.FunctionManageVO;
+import com.ego.services.base.api.controller.jurisdiction.FunctionManageAPI;
+import com.ego.services.base.api.vo.jurisdiction.FunctionManageVO;
 
 /**
  * 系统基础模块-  系统功能管理  -  系统功能定义
@@ -43,13 +44,10 @@ public class FunctionManageController {
     public JsonResponse<HashMap<String, List<FunctionManageVO>>> functionManageList(@RequestBody JsonRequest<FunctionManageVO> jsonRequest){
         JsonResponse<HashMap<String, List<FunctionManageVO>>> result = new JsonResponse<>();
 		try {
-			// //组织ID
-			// if(StringUtils.isEmpty(jsonRequest.getReqBody().getOrgIdAll())){
-			// result.setRetCode("0102005");
-			// return result;
-			// }
-			// 根据service层返回的编码做不同的操作
-			ServiceResponse<List<FunctionManageVO>> response = functionManageAPI.functionManageList(jsonRequest.getReqBody());
+            FunctionManageVO functionManageVO=jsonRequest.getReqBody();
+            functionManageVO.setOrgId(AssertContext.getOrgId());
+            functionManageVO.setAcctType(AssertContext.getAcctType());
+			ServiceResponse<List<FunctionManageVO>> response = functionManageAPI.functionManageList(functionManageVO);
 			if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode())) {
 				HashMap<String, List<FunctionManageVO>> objData = new HashMap<>();
 				objData.put("resultData", response.getRetContent());
@@ -208,7 +206,8 @@ public class FunctionManageController {
                 return result;
             }
             //根据service层返回的编码做不同的操作
-            ServiceResponse<FunctionManageVO> response=functionManageAPI.keepFunctionManage(jsonRequest.getReqBody());
+            FunctionManageVO functionManageVO=jsonRequest.getReqBody();
+            ServiceResponse<FunctionManageVO> response=functionManageAPI.keepFunctionManage(functionManageVO);
             if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode())) {
                 result.setRspBody(response.getRetContent());
                 //如果需要异常信息
@@ -254,8 +253,10 @@ public class FunctionManageController {
                 result.setRetCode("0102005");
                 return result;
             }
+            FunctionManageVO functionManageVO=jsonRequest.getReqBody();
+            functionManageVO.setCreatedBy(AssertContext.getAcctTitle());
             //根据service层返回的编码做不同的操作
-            ServiceResponse<FunctionManageVO> response=functionManageAPI.keepFunctionManage(jsonRequest.getReqBody());
+            ServiceResponse<FunctionManageVO> response=functionManageAPI.keepFunctionManage(functionManageVO);
             if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode())) {
                 result.setRspBody(response.getRetContent());
                 //如果需要异常信息
@@ -306,8 +307,10 @@ public class FunctionManageController {
                 result.setRetCode("0102005");
                 return result;
             }
+            FunctionManageVO functionManageVO=jsonRequest.getReqBody();
+            functionManageVO.setUpdatedBy(AssertContext.getAcctTitle());
             //根据service层返回的编码做不同的操作
-            ServiceResponse<FunctionManageVO> response=functionManageAPI.keepFunctionManage(jsonRequest.getReqBody());
+            ServiceResponse<FunctionManageVO> response=functionManageAPI.keepFunctionManage(functionManageVO);
             if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode())) {
                 result.setRspBody(response.getRetContent());
                 //如果需要异常信息

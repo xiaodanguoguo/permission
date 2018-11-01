@@ -1,10 +1,12 @@
-package com.ego.services.base.facade.dao.Jurisdiction;
+package com.ego.services.base.facade.dao.jurisdiction;
 
 import java.util.List;
+
+import com.ego.services.base.facade.model.jurisdiction.SysInfo;
 import org.apache.ibatis.annotations.Param;
 
 
-import com.ego.services.base.facade.model.Jurisdiction.OrgInfo;
+import com.ego.services.base.facade.model.jurisdiction.OrgInfo;
 
 
 
@@ -30,6 +32,10 @@ public interface OrgInfoMapper {
 	
 	List<OrgInfo> getMaterielOrginfo(@Param("acctInfoId")String acctInfoId);
 
+	List<OrgInfo> selectSysQuoteOrgInof(SysInfo sysInfo);
+
+	List<OrgInfo> selectRoleQuoteOrg(OrgInfo orgInfo);
+
 	//根据当前parentId查询组织
 	OrgInfo getOrgInfo(OrgInfo orgInfo);
 	
@@ -39,7 +45,9 @@ public interface OrgInfoMapper {
 	OrgInfo selectOrgInfo(OrgInfo record);
 
 	List<OrgInfo> selectListOrgInfo(OrgInfo reqBody);
-	
+
+	List<OrgInfo> selectRoleYesQuote(OrgInfo reqBody);
+
 	Integer selectParityOrgName(OrgInfo orgInfo);
 	
 	

@@ -1,18 +1,17 @@
-package com.ego.services.base.facade.controller.Jurisdiction;
+package com.ego.services.base.facade.controller.jurisdiction;
 
 
 import com.ebase.core.exception.BusinessException;
 import com.ebase.core.service.ServiceResponse;
 import com.ebase.utils.BeanCopyUtil;
 import com.ebase.utils.JsonUtil;
-import com.ego.services.base.api.vo.Jurisdiction.RoleInfoVO;
+import com.ego.services.base.api.vo.jurisdiction.RoleInfoVO;
 import com.ego.services.base.facade.common.SysPramType;
-import com.ego.services.base.facade.dao.Jurisdiction.RoleInfoMapper;
-import com.ego.services.base.facade.model.Jurisdiction.RoleInfo;
-import com.ego.services.base.facade.service.Jurisdiction.RoleInfoService;
+import com.ego.services.base.facade.dao.jurisdiction.RoleInfoMapper;
+import com.ego.services.base.facade.model.jurisdiction.RoleInfo;
+import com.ego.services.base.facade.service.jurisdiction.RoleInfoService;
 import com.github.pagehelper.PageHelper;
 import com.ebase.core.page.PageInfo;
-import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,6 +97,24 @@ public class RoleInfoController {
     }
 
     /**
+     * 系统引用多个角色
+     * @param jsonRequest
+     * @return
+     */
+    @RequestMapping("/orgQuoteRoleInfo")
+    public ServiceResponse<List<RoleInfoVO>> orgQuoteRoleInfo(@RequestBody RoleInfoVO jsonRequest){
+        ServiceResponse<List<RoleInfoVO>> jsonResponse = new ServiceResponse();
+        try {
+            LOG.info("list 参数 = {}",JsonUtil.toJson(jsonRequest));
+            List<RoleInfoVO> roleInfoVO = roleInfoService.orgQuoteRoleInfo(jsonRequest);
+            jsonResponse.setRetContent(roleInfoVO);
+        } catch (Exception e) {
+            throw new BusinessException("0103001");
+        }
+        return jsonResponse;
+    }
+
+    /**
      * 系统参数 角色关联用户查询
      * @param jsonRequest
      * @return
@@ -146,7 +163,7 @@ public class RoleInfoController {
 
 
     /**
-     * 系统参数 list 接口
+     * 分页修改查询测试
      * @param roleInfoc
      * @return
      */
@@ -166,6 +183,23 @@ public class RoleInfoController {
         pageVo.setPages(pageInfo.getPages());
 
         jsonResponse.setRetContent(pageVo);
+        return jsonResponse;
+    }
+
+
+    /**
+     * 不同数据库sql测试
+     * @param roleInfoc
+     * @return
+     */
+    @RequestMapping("/sqlmysql")
+    public ServiceResponse<List<RoleInfoVO>> sqlmysql(@RequestBody RoleInfo roleInfoc){
+        ServiceResponse<List<RoleInfoVO>> jsonResponse = new ServiceResponse();
+        List<RoleInfo> list=roleInfoMapper.sqlmysql(roleInfoc);
+
+        List<RoleInfoVO> roleInfoVo= BeanCopyUtil.copyList(list, RoleInfoVO.class);
+
+        jsonResponse.setRetContent(roleInfoVo);
         return jsonResponse;
     }
 
@@ -192,6 +226,28 @@ public class RoleInfoController {
         }
         return jsonResponse;
     }
+
+
+    @RequestMapping("/saveCopyRole")
+    public ServiceResponse<RoleInfoVO> saveCopyRole(@RequestBody RoleInfoVO jsonRequest){
+        ServiceResponse<RoleInfoVO> jsonResponse = new ServiceResponse();
+        try {
+            LOG.info("list 参数 = {}",JsonUtil.toJson(jsonRequest));
+            List<RoleInfoVO> roleInfoVOS = roleInfoService.verificationIsTtitleRole(jsonRequest);
+            if(CollectionUtils.isEmpty(roleInfoVOS)){
+
+            }else{
+                jsonResponse.setRetCode("0103004");
+                return jsonResponse;
+            }
+            RoleInfoVO roleInfoVO = roleInfoService.saveCopyRole(jsonRequest);
+            jsonResponse.setRetContent(roleInfoVO);
+        } catch (Exception e) {
+            throw new BusinessException("0103003");
+        }
+        return jsonResponse;
+    }
+
 
     @RequestMapping("/keepRoleInfo")
     public ServiceResponse<RoleInfoVO> keepRoleInfo(@RequestBody RoleInfoVO jsonRequest){
@@ -249,4 +305,43 @@ public class RoleInfoController {
         }
         return jsonResponse;
     }
+
+
+    /**
+     * 引用时角色名是否重复
+     * @param jsonRequest
+     * @return
+     */
+    @RequestMapping("/verQuoteRoleTitle")
+    public ServiceResponse<String> verQuoteRoleTitle(@RequestBody RoleInfoVO jsonRequest){
+        ServiceResponse<String> jsonResponse = new ServiceResponse();
+        try {
+            LOG.info("list 参数 = {}",JsonUtil.toJson(jsonRequest));
+            String ver= roleInfoService.verQuoteRoleTitle(jsonRequest);
+            jsonResponse.setRetContent(ver);
+        } catch (Exception e) {
+            throw new BusinessException("0103002");
+        }
+        return jsonResponse;
+    }
+
+    /**
+     * 引用时角色名是否重复
+     * 一个组织引用多个角色
+     * @param jsonRequest
+     * @return
+     */
+    @RequestMapping("/verQuoteRoleIds")
+    public ServiceResponse<String> verQuoteRoleIds(@RequestBody RoleInfoVO jsonRequest){
+        ServiceResponse<String> jsonResponse = new ServiceResponse();
+        try {
+            LOG.info("list 参数 = {}",JsonUtil.toJson(jsonRequest));
+            String ver= roleInfoService.verQuoteRoleIds(jsonRequest);
+            jsonResponse.setRetContent(ver);
+        } catch (Exception e) {
+            throw new BusinessException("0103002");
+        }
+        return jsonResponse;
+    }
+
 }

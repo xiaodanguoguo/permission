@@ -1,4 +1,4 @@
-package com.ebase.ego.webapps.op.controller.Jurisdiction;
+package com.ebase.ego.webapps.op.controller.jurisdiction;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ebase.core.page.PageInfo;
+import com.ego.services.base.api.vo.jurisdiction.SysInfoVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ebase.core.AssertContext;
 import com.ebase.core.exception.BusinessException;
-import com.ebase.core.page.PageDTO;
 import com.ebase.core.service.ServiceResponse;
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
-import com.ebase.utils.BeanCopyUtil;
 import com.ebase.utils.JsonUtil;
-import com.ego.services.base.api.controller.Jurisdiction.OrgInfoServiceAPI;
-import com.ego.services.base.api.vo.Jurisdiction.AcctInfoVO;
-import com.ego.services.base.api.vo.Jurisdiction.OrgInfoVO;
+import com.ego.services.base.api.controller.jurisdiction.OrgInfoServiceAPI;
+import com.ego.services.base.api.vo.jurisdiction.AcctInfoVO;
+import com.ego.services.base.api.vo.jurisdiction.OrgInfoVO;
 
 
 
@@ -260,42 +259,79 @@ public class OrgInfoController {
 		}
 		return jsonResponse;
 	 }
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 /**
-	  * 组织机构信息递归查詢
-	  * @param id
-	  * @return
-	  */
-	/* @RequestMapping(value="/getListRecursionOrgInfo", method = RequestMethod.POST)
-	 public JsonResponse<Map> getListRecursionOrgInfo(@RequestBody JsonRequest<OrgInfoVO> jsonRequest) {
-		 LOG.info(" www 系统编码list 参数 = {}",JsonUtil.toJson(jsonRequest));
-		 JsonResponse<Map> jsonResponse = new JsonResponse<>();
-		 try {
-			 JsonResponse jsonResponse2 = orgInfoServiceAPI.getListRecursionOrgInfo(jsonRequest);
-			Map map=new HashMap();
-			map.put("children",jsonResponse2.getRspBody());
+
+
+
+
+
+
+
+
+
+	/**
+	 * 根据系统查询关联组织信息
+	 * @return
+	 */
+	@RequestMapping(value = "/selectSysQuoteOrgInof")
+	public JsonResponse<List<OrgInfoVO>> selectSysQuoteOrgInof(@RequestBody JsonRequest<SysInfoVO> jsonRequest) {
+		logger.info(" www 系统编码list 参数 = {}",JsonUtil.toJson(jsonRequest));
+		JsonResponse<List<OrgInfoVO>> jsonResponse = new JsonResponse<List<OrgInfoVO>>();
+		try {
+			ServiceResponse<List<OrgInfoVO>> materielOrginfo = orgInfoServiceAPI.selectSysQuoteOrgInof(jsonRequest.getReqBody());
+			List<OrgInfoVO> retContent = materielOrginfo.getRetContent();
+			jsonResponse.setRspBody(retContent);
+		} catch (BusinessException e) {
+			jsonResponse.setRetCode(e.getErrorCode());
+			jsonResponse.setRetDesc(e.getMessage());
+		}
+		return jsonResponse;
+	}
+
+
+
+
+	/**
+	 * 角色引用多个组织 角色已引用组织
+	 * @return
+	 */
+	@RequestMapping(value = "/selectRoleQuoteOrg")
+	public JsonResponse<HashMap<String,List<OrgInfoVO>>> selectRoleQuoteOrg(@RequestBody JsonRequest<OrgInfoVO> jsonRequest) {
+		logger.info(" www 系统编码list 参数 = {}",JsonUtil.toJson(jsonRequest));
+		JsonResponse<HashMap<String,List<OrgInfoVO>>> jsonResponse = new JsonResponse<HashMap<String,List<OrgInfoVO>>>();
+		try {
+			OrgInfoVO orgInfoVO=jsonRequest.getReqBody();
+			orgInfoVO.setOrgId(AssertContext.getOrgId());
+			ServiceResponse<List<OrgInfoVO>> materielOrginfo = orgInfoServiceAPI.selectRoleQuoteOrg(orgInfoVO);
+			List<OrgInfoVO> retContent = materielOrginfo.getRetContent();
+			HashMap map=new HashMap();
+			map.put("resultData", retContent);
 			jsonResponse.setRspBody(map);
 		} catch (BusinessException e) {
 			jsonResponse.setRetCode(e.getErrorCode());
 			jsonResponse.setRetDesc(e.getMessage());
 		}
 		return jsonResponse;
-	 }*/
+	}
+
+
+	/**
+	 * 角色未引用并且可以引用的组织
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/selectRoleYesQuote", method = RequestMethod.POST)
+	public JsonResponse<PageInfo<OrgInfoVO>> selectRoleYesQuote(@RequestBody JsonRequest<OrgInfoVO> jsonRequest) {
+		logger.info(" www 系统编码list 参数 = {}",JsonUtil.toJson(jsonRequest));
+
+		OrgInfoVO orgInfoVO = jsonRequest.getReqBody();
+		JsonResponse<PageInfo<OrgInfoVO>> jsonResponse = new JsonResponse<PageInfo<OrgInfoVO>>();
+		try {
+			jsonResponse = orgInfoServiceAPI.selectRoleYesQuote(orgInfoVO);
+		} catch (BusinessException e) {
+			jsonResponse.setRetCode(e.getErrorCode());
+			jsonResponse.setRetDesc(e.getMessage());
+		}
+		return jsonResponse;
+	}
 
 }

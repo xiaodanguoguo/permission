@@ -1,8 +1,8 @@
-package com.ego.services.base.facade.service.Jurisdiction;
+package com.ego.services.base.facade.service.jurisdiction;
 
 
 
-import com.ego.services.base.api.vo.Jurisdiction.AcctRoleGroupRoleVO;
+import com.ego.services.base.api.vo.jurisdiction.AcctRoleGroupRoleVO;
 
 /**
  * @Auther: zhaoyuhang

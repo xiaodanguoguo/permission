@@ -1,4 +1,4 @@
-package com.ego.services.base.facade.controller.Jurisdiction;
+package com.ego.services.base.facade.controller.jurisdiction;
 
 import com.ebase.core.exception.BusinessException;
 import com.ebase.core.page.PageInfo;
@@ -6,8 +6,8 @@ import com.ebase.core.service.ServiceResponse;
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
 import com.ebase.utils.JsonUtil;
-import com.ego.services.base.api.vo.Jurisdiction.*;
-import com.ego.services.base.facade.service.Jurisdiction.SysBasicsAcctService;
+import com.ego.services.base.api.vo.jurisdiction.*;
+import com.ego.services.base.facade.service.jurisdiction.SysBasicsAcctService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +45,25 @@ public class SysBasicsAcctController {
             LOG.info("list 参数 = {}",JsonUtil.toJson(jsonRequest));
 
             AcctInfoVO ver= sysBasicsAcctService.getAcctInfo(jsonRequest);
+            jsonResponse.setRetContent(ver);
+        } catch (Exception e) {
+            throw new BusinessException("0103002");
+        }
+        return jsonResponse;
+    }
+
+    /**
+     * 用户修改时查询角色和组织信息
+     * @param jsonRequest
+     * @return
+     */
+    @RequestMapping("/verAcctInfo")
+    public ServiceResponse<String> verAcctInfo(@RequestBody AcctInfoVO jsonRequest){
+        ServiceResponse<String> jsonResponse = new ServiceResponse();
+        try {
+            LOG.info("list 参数 = {}",JsonUtil.toJson(jsonRequest));
+
+            String ver= sysBasicsAcctService.verAcctInfo(jsonRequest);
             jsonResponse.setRetContent(ver);
         } catch (Exception e) {
             throw new BusinessException("0103002");

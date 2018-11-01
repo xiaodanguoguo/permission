@@ -1,4 +1,4 @@
-package com.ego.services.base.facade.model.Jurisdiction;
+package com.ego.services.base.facade.model.jurisdiction;
 
 import com.ego.services.base.facade.common.IsDelete;
 import com.ego.services.base.facade.common.Status;
@@ -50,6 +50,16 @@ public class RoleGroup {
     private String orgTitle;
 
     private Long acctId;
+
+    private Long sysId;
+
+    public Long getSysId() {
+        return sysId;
+    }
+
+    public void setSysId(Long sysId) {
+        this.sysId = sysId;
+    }
 
     public Long getAcctId() {
         return acctId;

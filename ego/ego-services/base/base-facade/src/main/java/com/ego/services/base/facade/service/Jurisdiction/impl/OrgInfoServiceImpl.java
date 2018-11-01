@@ -1,25 +1,26 @@
-package com.ego.services.base.facade.service.Jurisdiction.impl;
+package com.ego.services.base.facade.service.jurisdiction.impl;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.ebase.core.page.PageInfo;
+import com.ego.services.base.api.vo.jurisdiction.SysInfoVO;
+import com.ego.services.base.facade.model.jurisdiction.SysInfo;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ebase.core.StringHelper;
-import com.ebase.core.page.PageDTO;
 import com.ebase.core.page.PageDTOUtil;
-import com.ebase.core.web.json.JsonRequest;
 import com.ebase.utils.BeanCopyUtil;
 import com.ebase.utils.math.MathHelper;
-import com.ego.services.base.api.vo.Jurisdiction.OrgInfoVO;
-import com.ego.services.base.facade.dao.Jurisdiction.AcctInfoMapper;
-import com.ego.services.base.facade.dao.Jurisdiction.OrgInfoMapper;
-import com.ego.services.base.facade.model.Jurisdiction.AcctInfo;
-import com.ego.services.base.facade.model.Jurisdiction.OrgInfo;
-import com.ego.services.base.facade.service.Jurisdiction.OrgInfoService;
+import com.ego.services.base.api.vo.jurisdiction.OrgInfoVO;
+import com.ego.services.base.facade.dao.jurisdiction.AcctInfoMapper;
+import com.ego.services.base.facade.dao.jurisdiction.OrgInfoMapper;
+import com.ego.services.base.facade.model.jurisdiction.AcctInfo;
+import com.ego.services.base.facade.model.jurisdiction.OrgInfo;
+import com.ego.services.base.facade.service.jurisdiction.OrgInfoService;
 
 
 
@@ -74,8 +75,9 @@ public class OrgInfoServiceImpl implements OrgInfoService{
     	int a = acctInfoMapper.getAcctOrgid(cascadeDeletionOrgInfo);
     	//批量删除组织
     	int i = 0;
+    	System.out.println((a==0));
     	if(a == 0) {
-    		i = orgInfoMapper.deleteOrgInfo(cascadeDeletionOrgInfo);	
+    		i = orgInfoMapper.deleteOrgInfo(cascadeDeletionOrgInfo);
     	}
     	return i;
 	}
@@ -156,6 +158,31 @@ public class OrgInfoServiceImpl implements OrgInfoService{
 		List<OrgInfo> listOrgInfo= orgInfoMapper.getMaterielOrginfo(acctInfoId);
 		return listOrgInfo;
 	}
+
+	/**
+	 * 根据当前用户的组织id，查询出当前用户及当前用户一下的组织
+	 * 物料综合查询用
+	 * @return
+	 */
+	@Override
+	public List<OrgInfoVO> selectSysQuoteOrgInof(SysInfoVO acctInfo) {
+		SysInfo sysInfo=BeanCopyUtil.copy(acctInfo, SysInfo.class);
+		List<OrgInfo> listOrgInfo= orgInfoMapper.selectSysQuoteOrgInof(sysInfo);
+		return BeanCopyUtil.copyList(listOrgInfo, OrgInfoVO.class);
+	}
+
+	/**
+	 * 角色引用多个组织 角色已引用组织
+	 * @return
+	 */
+	@Override
+	public List<OrgInfoVO> selectRoleQuoteOrg(OrgInfoVO acctInfo) {
+		OrgInfo orgInfo=BeanCopyUtil.copy(acctInfo, OrgInfo.class);
+		List<OrgInfo> listOrgInfo= orgInfoMapper.selectRoleQuoteOrg(orgInfo);
+		//转换
+		List<OrgInfoVO> roleInfoVo= BeanCopyUtil.copyList(listOrgInfo, OrgInfoVO.class);
+		return roleInfoVo;
+	}
 	
 	/**
 	 * 组织名称唯一性校验
@@ -179,12 +206,15 @@ public class OrgInfoServiceImpl implements OrgInfoService{
 	 * 组织机构信息查詢分页
 	 */
 	@Override
-	public PageInfo<OrgInfoVO> getListOrgInfo(OrgInfo orgInfo) {
+	public PageInfo<OrgInfoVO> getListOrgInfo(OrgInfoVO orgInfoVO) {
 		OrgInfoVO reqBody = new OrgInfoVO();
+
+		OrgInfo orgInfo = new OrgInfo();
+		BeanCopyUtil.copy(orgInfoVO, orgInfo);
 		try {
 			
             //可能还有更多参数
-
+			PageHelper.startPage(orgInfoVO.getPageNum(), orgInfoVO.getPageSize());
 			List<OrgInfo> list = orgInfoMapper.selectListOrgInfo(orgInfo);
 			PageInfo<OrgInfo> pageInfo = new PageInfo<>(list);
 
@@ -200,6 +230,32 @@ public class OrgInfoServiceImpl implements OrgInfoService{
             PageDTOUtil.endPage();
         }
 	}
+
+	/**
+	 * 角色未引用并且可以引用的组织
+	 */
+	@Override
+	public PageInfo<OrgInfoVO> selectRoleYesQuote(OrgInfoVO orgInfoVO) {
+
+		OrgInfo orgInfo = new OrgInfo();
+		BeanCopyUtil.copy(orgInfoVO, orgInfo);
+		try {
+			PageHelper.startPage(orgInfoVO.getPageNum(), orgInfoVO.getPageSize());
+			List<OrgInfo> list = orgInfoMapper.selectRoleYesQuote(orgInfo);
+			PageInfo<OrgInfo> pageInfo = new PageInfo<>(list);
+			//转换
+			List<OrgInfoVO> roleInfoVo= BeanCopyUtil.copyList(list, OrgInfoVO.class);
+			PageInfo<OrgInfoVO> pageVo = new PageInfo(roleInfoVo);
+			pageVo.setTotal(pageInfo.getTotal());
+			pageVo.setPages(pageInfo.getPages());
+			pageVo.setPageNum(pageInfo.getPageNum());
+			pageVo.setPageSize(pageInfo.getPageSize());
+			return pageVo;
+		} finally {
+			PageDTOUtil.endPage();
+		}
+	}
+
 
 	/**
 	 * 在内存中拼接出查询树

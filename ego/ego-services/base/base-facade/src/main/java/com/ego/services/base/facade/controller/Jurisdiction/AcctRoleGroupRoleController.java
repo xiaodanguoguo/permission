@@ -1,12 +1,12 @@
-package com.ego.services.base.facade.controller.Jurisdiction;
+package com.ego.services.base.facade.controller.jurisdiction;
 
 
 
 import com.ebase.core.exception.BusinessException;
 import com.ebase.core.service.ServiceResponse;
 import com.ebase.utils.JsonUtil;
-import com.ego.services.base.api.vo.Jurisdiction.AcctRoleGroupRoleVO;
-import com.ego.services.base.facade.service.Jurisdiction.AcctRoleGroupRoleService;
+import com.ego.services.base.api.vo.jurisdiction.AcctRoleGroupRoleVO;
+import com.ego.services.base.facade.service.jurisdiction.AcctRoleGroupRoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,6 @@
-package com.ego.services.base.facade.dao.Jurisdiction;
+package com.ego.services.base.facade.dao.jurisdiction;
 
-import com.ebase.core.page.Page;
-import com.ego.services.base.facade.model.Jurisdiction.RoleInfo;
-import org.apache.ibatis.session.RowBounds;
+import com.ego.services.base.facade.model.jurisdiction.RoleInfo;
 
 import java.util.List;
 
@@ -25,6 +23,8 @@ public interface RoleInfoMapper {
 
     List<RoleInfo> findAll(RoleInfo roleInfo);
 
+    List<RoleInfo> orgQuoteRoleInfo(RoleInfo roleInfo);
+
     List<RoleInfo> findAllLike(RoleInfo roleInfo);
 
     List<RoleInfo> findRoleDetailed(RoleInfo roleInfo);
@@ -40,12 +40,18 @@ public interface RoleInfoMapper {
 
     RoleInfo selectListByRoleId(Long roleId);
 
+    List<RoleInfo> sqlmysql(RoleInfo roleInfo);
+
     //验证是否名称重复
     List<RoleInfo> verificationIsTtitle(RoleInfo roleInfo);
 
     List<RoleInfo> roleGroupParentTree(RoleInfo roleInfo);
 
     List<RoleInfo> verificationDeleteRoelInfo(RoleInfo roleInfo);
+
+    List<RoleInfo> verQuoteRoleTitle(RoleInfo roleInfo);
+
+    List<RoleInfo> verQuoteRoleIds(RoleInfo roleInfo);
 
     RoleInfo selectInitializationRole(RoleInfo roleInfo);
 }

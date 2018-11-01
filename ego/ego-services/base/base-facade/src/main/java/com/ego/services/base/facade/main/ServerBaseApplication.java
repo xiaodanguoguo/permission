@@ -25,7 +25,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 //事务
 @EnableTransactionManagement
 @MapperScan({"com.ego.services.base.facade.dao", "com.ego.services.base.facade**.mapper"})
-@ComponentScan(basePackages = {"com.ebase.core.cache", "com.ego.services.base.facade","com.ebase.core.conf"})
+@EnableFeignClients(basePackages = {/*"com.ebase.core.dict.interfaces", */})
+@ComponentScan(basePackages = {/*"com.ebase.core.dict.cache", "com.ebase.core.conf", */"com.ebase.core.cache", "com.ego.services.base.facade","com.ebase.core.conf"})
 //断路器
 @EnableCircuitBreaker
 @EnableScheduling
@@ -41,5 +42,9 @@ public class ServerBaseApplication {
         application.run(args);
         logger.info("service-base start success");
     }
+
+
+
+
 
 }
