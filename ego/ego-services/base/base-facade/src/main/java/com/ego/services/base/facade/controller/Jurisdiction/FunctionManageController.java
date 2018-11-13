@@ -4,6 +4,7 @@ package com.ego.services.base.facade.controller.jurisdiction;
 
 import com.ebase.core.exception.BusinessException;
 import com.ebase.core.service.ServiceResponse;
+import com.ebase.core.web.json.JsonRequest;
 import com.ebase.utils.JsonUtil;
 import com.ego.services.base.api.vo.jurisdiction.FunctionManageVO;
 import com.ego.services.base.facade.common.SysPramType;
@@ -197,5 +198,26 @@ public class FunctionManageController {
             LOG.error(e.getMessage());
         }
         return jsonResponse;
+    }
+
+
+
+    /**
+     * 登录获取资源code
+     * @param jsonRequest
+     * @return
+     */
+    @RequestMapping("/ListFunctionCode")
+    public ServiceResponse<List<FunctionManageVO>> ListFunctionCode(@RequestBody JsonRequest<FunctionManageVO> jsonRequest){
+        ServiceResponse<List<FunctionManageVO>> response = new ServiceResponse<>();
+        try {
+            LOG.info("list 参数 = {}",JsonUtil.toJson(jsonRequest));
+            List<FunctionManageVO> page = functionManageService.ListFunctionCode(jsonRequest.getReqBody());
+            response.setRetContent(page);
+        } catch (Exception e) {
+            response.setException(new BusinessException("0102001", new Object[]{jsonRequest.getReqBody()}));
+            LOG.error(e.getMessage());
+        }
+        return response;
     }
 }

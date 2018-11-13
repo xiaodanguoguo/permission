@@ -31,6 +31,12 @@
         delete from priv_condition_config
         where ID = #{id,jdbcType=BIGINT}
     </delete>
+
+    <delete id="deletePowerId" parameterType="java.lang.Long">
+        delete from priv_condition_config
+        where POWER_EXPRESSION_ID = #{powerExpressionId,jdbcType=BIGINT}
+    </delete>
+
     <insert id="insert" parameterType="com.ego.services.base.facade.model.dataauthority.PrivConditionConfig">
         insert into priv_condition_config (ID, TABLE_NAME, EXPRESSION, 
             CREATED_BY, CREATED_DATE, UPDATED_BY, 
@@ -43,7 +49,7 @@
             #{status,jdbcType=TINYINT}, #{expressionType,jdbcType=TINYINT}, #{fieldId,jdbcType=BIGINT}, 
             #{fieldValue,jdbcType=VARCHAR}, #{powerExpressionId,jdbcType=BIGINT})
     </insert>
-    <insert id="insertSelective" parameterType="com.ego.services.base.facade.model.dataauthority.PrivConditionConfig">
+    <insert id="insertSelective" keyProperty="id" useGeneratedKeys="true" keyColumn="ID"  parameterType="com.ego.services.base.facade.model.dataauthority.PrivConditionConfig">
         insert into priv_condition_config
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

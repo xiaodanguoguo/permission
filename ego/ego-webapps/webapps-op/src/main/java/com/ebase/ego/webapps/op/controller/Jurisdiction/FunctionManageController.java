@@ -332,4 +332,39 @@ public class FunctionManageController {
         return result;
     }
 
+
+    /**
+     * 登录获取资源code
+     * @param jsonRequest
+     * @return
+     */
+    @RequestMapping(value = "/ListFunctionCode",method = RequestMethod.POST)
+    public JsonResponse<List<FunctionManageVO>> ListFunctionCode(@RequestBody JsonRequest<FunctionManageVO> jsonRequest){
+        JsonResponse<List<FunctionManageVO>> result = new JsonResponse<>();
+        try {
+            FunctionManageVO functionManageVO=jsonRequest.getReqBody();
+            functionManageVO.setAcctId(Long.parseLong(AssertContext.getAcctId()));
+            jsonRequest.setReqBody(functionManageVO);
+            //根据service层返回的编码做不同的操作
+            ServiceResponse<List<FunctionManageVO>> response=functionManageAPI.ListFunctionCode(jsonRequest);
+            if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode())) {
+                result.setRspBody(response.getRetContent());
+                //如果需要异常信息
+            } else {
+                if (response.isHasError()) {
+                    //系统异常
+                    result.setRetCode(JsonResponse.SYS_EXCEPTION);
+                    //如果需要的话, 这个方法可以获取异常信息 response.getErrorMessage()
+                } else {
+                    //根据业务的不同确定返回的业务信息是否正常,是否需要执行下一步操作
+                    result.setRetCode(response.getRetCode());
+                }
+            }
+        } catch (FeignException e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            result.setRetCode(JsonResponse.SYS_EXCEPTION);
+        }
+        return result;
+    }
 }

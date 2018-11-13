@@ -173,6 +173,7 @@ public class AcctController {
                 BeanCopyUtil.copy(vo,acct);
                 acct.setAcctId(Long.valueOf(vo.getAcctId()));
                 acct.setName(vo.getAcctTitle());
+
                 jsonResponse.setRspBody(acct);
                 jsonResponse.setRetDesc("操作成功");
 //            }else {
@@ -188,7 +189,7 @@ public class AcctController {
 
 
     @RequestMapping("/remSession")
-    public String logOut() {
+    public JsonResponse<Boolean> logOut() {
         JsonResponse<Boolean> jsonResponse = new JsonResponse<Boolean>();
 
         Subject subject = SecurityUtils.getSubject();
@@ -196,10 +197,9 @@ public class AcctController {
 //        System.out.println(id);
         subject.logout();
         jsonResponse.setRspBody(true);
-        System.out.println(jsonResponse.toString());
 //        session.removeAttribute("user");
 
-        return String.valueOf(jsonResponse);
+        return jsonResponse;
     }
 
     /**

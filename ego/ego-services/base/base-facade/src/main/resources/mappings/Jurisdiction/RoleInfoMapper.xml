@@ -369,7 +369,7 @@
   </select>
 
   <select id="findRoleDetailed" resultMap="BaseResultMap" parameterType="com.ego.services.base.facade.model.jurisdiction.RoleInfo">
-    select r.*,'角色' as orRole,rg.role_group_id,rg.role_group_title,1 type from role_info r
+    select r.*,'角色' as orRole,rg.role_group_id,0 type from role_info r
     LEFT JOIN acct_role_group_role ar on ar.role_id=r.role_id
     LEFT JOIN role_group rg on rg.role_group_id=ar.role_group_id
     where r.is_delete=0 and  rg.is_delete=0 AND ar.role_id IS not NULL

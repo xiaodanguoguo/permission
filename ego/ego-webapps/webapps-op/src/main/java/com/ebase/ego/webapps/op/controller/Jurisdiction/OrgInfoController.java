@@ -224,6 +224,9 @@ public class OrgInfoController {
 		 logger.info(" www 系统编码list 参数 = {}",JsonUtil.toJson(jsonRequest));
 		 JsonResponse<Map<String, List<OrgInfoVO>>> jsonResponse = new JsonResponse<Map<String, List<OrgInfoVO>>>();
 		 try {
+			 OrgInfoVO orgInfoVO=jsonRequest.getReqBody();
+			 orgInfoVO.setParentId(AssertContext.getOrgId());
+			 jsonRequest.setReqBody(orgInfoVO);
 			ServiceResponse<OrgInfoVO> childTreeOrgInfo = orgInfoServiceAPI.getChildTreeOrgInfo(jsonRequest);
 			OrgInfoVO retContent = childTreeOrgInfo.getRetContent();
 			Map<String, List<OrgInfoVO>> map=new HashMap<String, List<OrgInfoVO>>();
@@ -327,6 +330,88 @@ public class OrgInfoController {
 		JsonResponse<PageInfo<OrgInfoVO>> jsonResponse = new JsonResponse<PageInfo<OrgInfoVO>>();
 		try {
 			jsonResponse = orgInfoServiceAPI.selectRoleYesQuote(orgInfoVO);
+		} catch (BusinessException e) {
+			jsonResponse.setRetCode(e.getErrorCode());
+			jsonResponse.setRetDesc(e.getMessage());
+		}
+		return jsonResponse;
+	}
+
+
+
+
+
+	/**
+	 * 组织机构信息树查詢
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/getPwerTreeOrgInfo")
+	public JsonResponse<Map<String, List<OrgInfoVO>>> getPwerTreeOrgInfo(@RequestBody JsonRequest<OrgInfoVO> jsonRequest) {
+		logger.info(" www 系统编码list 参数 = {}",JsonUtil.toJson(jsonRequest));
+		JsonResponse<Map<String, List<OrgInfoVO>>> jsonResponse = new JsonResponse<Map<String, List<OrgInfoVO>>>();
+		try {
+			OrgInfoVO orgInfoVO=jsonRequest.getReqBody();
+			orgInfoVO.setParentId(AssertContext.getOrgId());
+			jsonRequest.setReqBody(orgInfoVO);
+			ServiceResponse<OrgInfoVO> childTreeOrgInfo = orgInfoServiceAPI.getPwerTreeOrgInfo(jsonRequest);
+			OrgInfoVO retContent = childTreeOrgInfo.getRetContent();
+			Map<String, List<OrgInfoVO>> map=new HashMap<String, List<OrgInfoVO>>();
+			map.put("children", Arrays.asList(retContent));
+			jsonResponse.setRspBody(map);
+		} catch (BusinessException e) {
+			jsonResponse.setRetCode(e.getErrorCode());
+			jsonResponse.setRetDesc(e.getMessage());
+		}
+		return jsonResponse;
+	}
+
+
+
+	/**
+	 * 组织机构信息树查詢 角色
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/getPwerTreeRoleInfo")
+	public JsonResponse<Map<String, List<OrgInfoVO>>> getPwerTreeRoleInfo(@RequestBody JsonRequest<OrgInfoVO> jsonRequest) {
+		logger.info(" www 系统编码list 参数 = {}",JsonUtil.toJson(jsonRequest));
+		JsonResponse<Map<String, List<OrgInfoVO>>> jsonResponse = new JsonResponse<Map<String, List<OrgInfoVO>>>();
+		try {
+			OrgInfoVO orgInfoVO=jsonRequest.getReqBody();
+			orgInfoVO.setParentId(AssertContext.getOrgId());
+			jsonRequest.setReqBody(orgInfoVO);
+			ServiceResponse<OrgInfoVO> childTreeOrgInfo = orgInfoServiceAPI.getPwerTreeRoleInfo(jsonRequest);
+			OrgInfoVO retContent = childTreeOrgInfo.getRetContent();
+			Map<String, List<OrgInfoVO>> map=new HashMap<String, List<OrgInfoVO>>();
+			map.put("children", Arrays.asList(retContent));
+			jsonResponse.setRspBody(map);
+		} catch (BusinessException e) {
+			jsonResponse.setRetCode(e.getErrorCode());
+			jsonResponse.setRetDesc(e.getMessage());
+		}
+		return jsonResponse;
+	}
+
+
+	/**
+	 * 组织机构信息树查詢 角色
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/getPwerTreeAcctInfo")
+	public JsonResponse<Map<String, List<OrgInfoVO>>> getPwerTreeAcctInfo(@RequestBody JsonRequest<OrgInfoVO> jsonRequest) {
+		logger.info(" www 系统编码list 参数 = {}",JsonUtil.toJson(jsonRequest));
+		JsonResponse<Map<String, List<OrgInfoVO>>> jsonResponse = new JsonResponse<Map<String, List<OrgInfoVO>>>();
+		try {
+			OrgInfoVO orgInfoVO=jsonRequest.getReqBody();
+			orgInfoVO.setParentId(AssertContext.getOrgId());
+			jsonRequest.setReqBody(orgInfoVO);
+			ServiceResponse<OrgInfoVO> childTreeOrgInfo = orgInfoServiceAPI.getPwerTreeAcctInfo(jsonRequest);
+			OrgInfoVO retContent = childTreeOrgInfo.getRetContent();
+			Map<String, List<OrgInfoVO>> map=new HashMap<String, List<OrgInfoVO>>();
+			map.put("children", Arrays.asList(retContent));
+			jsonResponse.setRspBody(map);
 		} catch (BusinessException e) {
 			jsonResponse.setRetCode(e.getErrorCode());
 			jsonResponse.setRetDesc(e.getMessage());

@@ -2,6 +2,7 @@ package com.ego.services.base.facade.controller.dataauthority;
 
 import java.util.List;
 
+import com.ebase.core.page.PageInfo;
 import com.ego.services.base.api.vo.dataauthority.PowerExpressionVO;
 import com.ego.services.base.facade.service.dataauthority.PowerExpressionService;
 import org.slf4j.Logger;
@@ -40,10 +41,10 @@ public class PowerExpressionController {
 	 * @return
 	 */
 	@RequestMapping("/save")
-	public ServiceResponse<Integer> save(@RequestBody PowerExpressionVO jsonRequest) {
+	public ServiceResponse<Integer> save(@RequestBody JsonRequest<PowerExpressionVO> jsonRequest) {
 		ServiceResponse<Integer> serviceResponse = new ServiceResponse<>();
 		logger.info("save 参数 = {}", JsonUtil.toJson(jsonRequest));
-		Integer result = powerExpressionService.insertSelective(jsonRequest);
+		Integer result = powerExpressionService.insertSelective(jsonRequest.getReqBody());
 		serviceResponse.setRetContent(result);
 		return serviceResponse;
 	}
@@ -60,10 +61,7 @@ public class PowerExpressionController {
 		logger.info("update 参数 = {}", JsonUtil.toJson(jsonRequest));
 		PowerExpressionVO vo = jsonRequest.getReqBody();
 		Integer result = powerExpressionService.updateByPrimaryKeySelective(vo);
-		if(result > 0)
-			serviceResponse.setRetContent(result);
-		else
-			throw new BusinessException("204");
+		serviceResponse.setRetContent(result);
 		return serviceResponse;
 	}
 	
@@ -79,10 +77,7 @@ public class PowerExpressionController {
 		logger.info("delete 参数 = {}", JsonUtil.toJson(jsonRequest));
 		PowerExpressionVO vo = jsonRequest.getReqBody();
 		Integer result = powerExpressionService.deleteByPrimaryKey(vo.getPowerExpressionId());
-		if(result > 0)
-			serviceResponse.setRetContent(result);
-		else
-			throw new BusinessException("204");
+		serviceResponse.setRetContent(result);
 		return serviceResponse;
 	}
 	
@@ -109,8 +104,8 @@ public class PowerExpressionController {
 	 * @return
 	 */
 	@RequestMapping("/findpageresult")
-	public ServiceResponse<PageDTO<PowerExpressionVO>> findPageResult(@RequestBody JsonRequest<PowerExpressionVO> jsonRequest) {
-		ServiceResponse<PageDTO<PowerExpressionVO>> serviceResponse = new ServiceResponse<>();
+	public ServiceResponse<PageInfo<PowerExpressionVO>> findPageResult(@RequestBody JsonRequest<PowerExpressionVO> jsonRequest) {
+		ServiceResponse<PageInfo<PowerExpressionVO>> serviceResponse = new ServiceResponse<>();
 		try {
 			logger.info("queryPagedResult 参数 = {}", JsonUtil.toJson(jsonRequest));
 			PowerExpressionVO vo = jsonRequest.getReqBody();
@@ -119,9 +114,7 @@ public class PowerExpressionController {
 			}else{
 				PageDTOUtil.startPage(Pagination.PAGENUM.getValue(),Pagination.PAGESIZE.getValue());
 			}*/
-			PageDTOUtil.startPage(Pagination.PAGENUM.getValue(),Pagination.PAGESIZE.getValue());
-			List<PowerExpressionVO> powerExpressionVOs = powerExpressionService.findSelective(vo);
-			PageDTO<PowerExpressionVO> pages = PageDTOUtil.transform(powerExpressionVOs);
+			PageInfo<PowerExpressionVO> pages = powerExpressionService.findSelective(vo);
 			serviceResponse.setRetContent(pages);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -156,5 +149,30 @@ public class PowerExpressionController {
 			throw new BusinessException("204");
 		return serviceResponse;
 	}
-    
+
+
+
+	/**
+	 * 用户查询数据权限
+	 *
+	 * @param acctId
+	 * @return
+	 */
+	@RequestMapping("/selectAcctConfig")
+	public ServiceResponse<PowerExpressionVO> selectAcctConfig(@RequestBody Long acctId) {
+		ServiceResponse<PowerExpressionVO> serviceResponse = new ServiceResponse<>();
+		try {
+			logger.info("queryPagedResult 参数 = {}", JsonUtil.toJson(acctId));
+			PowerExpressionVO pages = powerExpressionService.selectAcctConfig(acctId);
+			serviceResponse.setRetContent(pages);
+		} catch (Exception e) {
+			e.printStackTrace();
+			serviceResponse.setException(new BusinessException("500", new Object[] {}));
+			serviceResponse.setRetCode("500");
+			logger.error(e.getMessage());
+		} finally {
+			PageDTOUtil.endPage();
+		}
+		return serviceResponse;
+	}
 }

@@ -196,11 +196,53 @@
             STATUS = #{status,jdbcType=BIT}
         where FIELD_ID = #{fieldId,jdbcType=BIGINT}
     </update>
-    <select id="select" resultMap="BaseResultMap">
-        select 
-        <include refid="Base_Column_List" />
-        from metadata_field
-        <include refid="Base_Where_Column_List" />
+    <select id="select" resultType="com.ego.services.base.facade.model.dataauthority.MetadataField">
+        select *,t.TABLE_NAME_CODE as tableName
+        from metadata_field m
+        LEFT JOIN THE_METADATA t on t.id=m.TABLE_ID
+        where 1=1
+        <if test="fieldId != null">
+            and m.FIELD_ID = #{fieldId,jdbcType=BIGINT}
+        </if>
+        <if test="tableId != null">
+            and m.TABLE_ID = #{tableId,jdbcType=BIGINT}
+        </if>
+        <if test="fieldName != null">
+            and m.FIELD_NAME = #{fieldName,jdbcType=VARCHAR}
+        </if>
+        <if test="fieldDescribe != null">
+            and m.FIELD_DESCRIBE = #{fieldDescribe,jdbcType=VARCHAR}
+        </if>
+        <if test="fieldLength != null">
+            and m.FIELD_LENGTH = #{fieldLength,jdbcType=INTEGER}
+        </if>
+        <if test="fieldType != null">
+            and m.FIELD_TYPE = #{fieldType,jdbcType=TINYINT}
+        </if>
+        <if test="fieldCode != null">
+            and m.FIELD_CODE = #{fieldCode,jdbcType=VARCHAR}
+        </if>
+        <if test="createdBy != null">
+            and m.CREATED_BY = #{createdBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createdDate != null">
+            and m.CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updatedBy != null">
+            and m.UPDATED_BY = #{updatedBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updatedTime != null">
+            and m.UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="deleteStatus != null">
+            and m.DELETE_STATUS = #{deleteStatus,jdbcType=TINYINT}
+        </if>
+        <if test="remark != null">
+            and m.REMARK = #{remark,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            and m.STATUS = #{status,jdbcType=TINYINT}
+        </if>
     </select>
     <sql id="Base_Where_Column_List">
         <trim prefix="where" prefixOverrides="and | or">

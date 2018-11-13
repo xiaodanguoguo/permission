@@ -2,6 +2,7 @@ package com.ego.services.base.facade.model.dataauthority;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  */
@@ -76,9 +77,29 @@ public class AccountPrivRelation implements Serializable {
      */
     private Long powerExpressionId;
 
+    private String acctTitle;
+
+    private List<PrivConditionConfig> children;
+
     /**
      */
     private static final long serialVersionUID = 1L;
+
+    public String getAcctTitle() {
+        return acctTitle;
+    }
+
+    public void setAcctTitle(String acctTitle) {
+        this.acctTitle = acctTitle;
+    }
+
+    public List<PrivConditionConfig> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<PrivConditionConfig> children) {
+        this.children = children;
+    }
 
     public Long getId() {
         return id;

@@ -72,13 +72,33 @@ public class RolePrivRelation implements Serializable {
      */
     private Byte status;
 
+    private String roleName;
+
     /**
      */
     private Long powerExpressionId;
 
+    private String roleTitle;
+
     /**
      */
     private static final long serialVersionUID = 1L;
+
+    public String getRoleTitle() {
+        return roleTitle;
+    }
+
+    public void setRoleTitle(String roleTitle) {
+        this.roleTitle = roleTitle;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
 
     public Long getId() {
         return id;

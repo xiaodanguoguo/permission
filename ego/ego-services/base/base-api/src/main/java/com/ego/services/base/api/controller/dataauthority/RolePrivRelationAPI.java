@@ -2,7 +2,7 @@ package com.ego.services.base.api.controller.dataauthority;
 
 import java.util.List;
 
-import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -17,7 +17,7 @@ import com.ego.services.base.api.vo.dataauthority.RolePrivRelationVO;
  * @date 2018-11-1
  */
  
-@FeignClient(value = "${ser.name.order}") // 这个是服务名
+@FeignClient(value = "${ser.name.base}") // 这个是服务名
 public interface RolePrivRelationAPI {
     
     /**

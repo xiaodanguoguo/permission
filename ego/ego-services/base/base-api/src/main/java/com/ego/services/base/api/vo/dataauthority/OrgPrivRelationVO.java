@@ -78,9 +78,18 @@ public class OrgPrivRelationVO implements Serializable {
 
     private String opt;
 
+    private String orgName;
     /**
      */
     private static final long serialVersionUID = 1L;
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
 
     public String getOpt() {
         return opt;

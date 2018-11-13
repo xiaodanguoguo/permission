@@ -1,5 +1,6 @@
 package com.ego.services.base.facade.model.dataauthority;
 
+import com.ego.services.base.api.vo.dataauthority.AccountPrivRelationVO;
 import com.ego.services.base.api.vo.dataauthority.PrivConditionConfigVO;
 
 import java.io.Serializable;
@@ -83,9 +84,77 @@ public class PowerExpression implements Serializable {
 
     private List<PrivConditionConfig> orgConfig;
 
+    private List<RolePrivRelation> rolePrivRelations;
+
+    private List<AccountPrivRelation> accountPrivRelations;
+
+    private List<OrgPrivOrgId> orgPrivRelations;
+
+    private List<PrivRelation> children;
+
+    private int num;
+
+    private int size;
+    private String fieldName;
     /**
      */
     private static final long serialVersionUID = 1L;
+
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
+
+    public List<OrgPrivOrgId> getOrgPrivRelations() {
+        return orgPrivRelations;
+    }
+
+    public void setOrgPrivRelations(List<OrgPrivOrgId> orgPrivRelations) {
+        this.orgPrivRelations = orgPrivRelations;
+    }
+
+    public List<RolePrivRelation> getRolePrivRelations() {
+        return rolePrivRelations;
+    }
+
+    public void setRolePrivRelations(List<RolePrivRelation> rolePrivRelations) {
+        this.rolePrivRelations = rolePrivRelations;
+    }
+
+    public List<AccountPrivRelation> getAccountPrivRelations() {
+        return accountPrivRelations;
+    }
+
+    public void setAccountPrivRelations(List<AccountPrivRelation> accountPrivRelations) {
+        this.accountPrivRelations = accountPrivRelations;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public List<PrivRelation> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<PrivRelation> children) {
+        this.children = children;
+    }
 
     public Long getPowerExpressionId() {
         return powerExpressionId;

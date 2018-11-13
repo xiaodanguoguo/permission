@@ -46,10 +46,7 @@ public class MetadataFieldController {
 		logger.info("save 参数 = {}", JsonUtil.toJson(jsonRequest));
 		MetadataFieldVO vo = jsonRequest.getReqBody();
 		Integer result = metadataFieldService.insertSelective(vo);
-		if(result > 0)
-			serviceResponse.setRetContent(result);
-		else
-			throw new BusinessException("204");
+		serviceResponse.setRetContent(result);
 		return serviceResponse;
 	}
 	

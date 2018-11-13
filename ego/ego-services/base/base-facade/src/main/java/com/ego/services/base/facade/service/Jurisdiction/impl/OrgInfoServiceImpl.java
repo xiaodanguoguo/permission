@@ -1,5 +1,6 @@
 package com.ego.services.base.facade.service.jurisdiction.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ import com.ego.services.base.facade.dao.jurisdiction.OrgInfoMapper;
 import com.ego.services.base.facade.model.jurisdiction.AcctInfo;
 import com.ego.services.base.facade.model.jurisdiction.OrgInfo;
 import com.ego.services.base.facade.service.jurisdiction.OrgInfoService;
-
+import org.springframework.util.CollectionUtils;
 
 
 @Service
@@ -105,7 +106,8 @@ public class OrgInfoServiceImpl implements OrgInfoService{
 		}
 		return childorgInfoMapper;
 	}
-	
+
+
 	/**
 	 * 组织机构信息递归查询
 	 */
@@ -289,8 +291,104 @@ public class OrgInfoServiceImpl implements OrgInfoService{
 		}
 		jsonResponse.setRspBody(orgInfos);
 		return jsonResponse;
-	}*/	
+	}*/
 
+
+
+
+	/**
+	 * 组织机构信息递归查询
+	 */
+	@Override
+	public OrgInfo getPwerTreeOrgInfo(OrgInfo orgInfo) {
+
+		List<OrgInfo> childorgInfoMapper = orgInfoMapper.getPwerTreeOrgInfo(orgInfo);
+		Map<String, OrgInfo> map = new HashMap<>();
+		OrgInfo rootOrg = null;
+
+		childorgInfoMapper.forEach(org -> map.put(org.getId(), org));
+
+		for (OrgInfo org : childorgInfoMapper) {
+			OrgInfo parent = map.get(org.getParentId());
+			if (parent != null)
+				parent.addChild(org);
+			else
+				rootOrg = org;
+		}
+		return rootOrg;
+	}
+
+    /**
+     * 组织机构信息递归查询
+     */
+    @Override
+    public OrgInfo getPwerTreeRoleInfo(OrgInfo orgInfo) {
+
+        List<OrgInfo> childorgInfoMapper = orgInfoMapper.getPwerTreeRoleInfo(orgInfo);
+        Map<String, OrgInfo> map = new HashMap<>();
+        OrgInfo rootOrg = null;
+
+        childorgInfoMapper.forEach(org -> map.put(org.getId(), org));
+
+        for (OrgInfo org : childorgInfoMapper) {
+            OrgInfo parent = map.get(org.getParentId());
+            if(!CollectionUtils.isEmpty(org.getRoleInfos())) {
+                for (int i = 0; i < org.getRoleInfos().size(); i++) {
+                    OrgInfo o = new OrgInfo();
+                    o.setType(0);
+                    o.setRoleTitle(org.getRoleInfos().get(i).getRoleTitle());
+                    //o.setOrgName(org.getRoleInfos().get(i).getRoleTitle());
+                    o.setId(org.getRoleInfos().get(i).getRoleId().toString());
+                    org.getChildren().add(o);
+                }
+            }
+            org.setRoleInfos(null);
+            if (parent != null) {
+				parent.setRoleInfos(org.getRoleInfos());
+				parent.addChild(org);
+			}else {
+				rootOrg = org;
+			}
+        }
+        return rootOrg;
+    }
+
+    /**
+     * 组织机构信息递归查询
+     */
+    @Override
+    public OrgInfo getPwerTreeAcctInfo(OrgInfo orgInfo) {
+
+        List<OrgInfo> childorgInfoMapper = orgInfoMapper.getPwerTreeAcctInfo(orgInfo);
+
+        Map<String, OrgInfo> map = new HashMap<>();
+        OrgInfo rootOrg = null;
+
+        childorgInfoMapper.forEach(org -> map.put(org.getId(), org));
+
+        for (OrgInfo org : childorgInfoMapper) {
+            OrgInfo parent = map.get(org.getParentId());
+            if(!CollectionUtils.isEmpty(org.getAcctInfos())) {
+                for(int i=0;i<org.getAcctInfos().size();i++){
+                    OrgInfo o=new OrgInfo();
+                    o.setType(0);
+                    o.setAcctTitle(org.getAcctInfos().get(i).getAcctTitle());
+                    //o.setOrgName(org.getAcctInfos().get(i).getAcctTitle());
+                    o.setId(org.getAcctInfos().get(i).getAcctId().toString());
+                    org.getChildren().add(o);
+                }
+            }
+            org.setAcctInfos(null);
+            if (parent != null) {
+                parent.addChild(org);
+			}else {
+
+				rootOrg = org;
+			}
+
+        }
+        return rootOrg;
+    }
 }
 
 

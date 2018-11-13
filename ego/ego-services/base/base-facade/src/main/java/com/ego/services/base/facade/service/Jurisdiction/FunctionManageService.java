@@ -21,5 +21,7 @@ public interface FunctionManageService {
 
     FunctionManageVO keepFunctionManage(FunctionManageVO jsonRequest);
 
+    List<FunctionManageVO> ListFunctionCode(FunctionManageVO jsonRequest);
+
     String verificationDeleteFunction(FunctionManageVO jsonRequest);
 }

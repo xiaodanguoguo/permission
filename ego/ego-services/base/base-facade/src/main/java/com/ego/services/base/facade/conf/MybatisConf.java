@@ -1,13 +1,17 @@
 package com.ego.services.base.facade.conf;
 
+import com.ego.services.base.facade.filter.LoginStatusFilter;
 import com.github.pagehelper.PageHelper;
+import feign.RequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.Properties;
 
 @Configuration
-public class MybatisConf {
+public class MybatisConf extends WebMvcConfigurerAdapter {
     @Bean
     public PageHelper pageHelper() {
         PageHelper pageHelper = new PageHelper();
@@ -19,4 +23,14 @@ public class MybatisConf {
         pageHelper.setProperties(p);
         return pageHelper;
     }
+
+//    /**
+//     * feign请求拦截器
+//     *
+//     * @return
+//     */
+//    @Bean
+//    public RequestInterceptor requestInterceptor(){
+//        return new LoginStatusFilter();
+//    }
 }

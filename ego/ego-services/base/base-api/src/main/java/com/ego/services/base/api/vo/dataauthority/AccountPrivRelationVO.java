@@ -74,9 +74,19 @@ public class AccountPrivRelationVO implements Serializable {
 
     private String opt;
 
+    private String acctTitle;
+
     /**
      */
     private static final long serialVersionUID = 1L;
+
+    public String getAcctTitle() {
+        return acctTitle;
+    }
+
+    public void setAcctTitle(String acctTitle) {
+        this.acctTitle = acctTitle;
+    }
 
     public String getOpt() {
         return opt;

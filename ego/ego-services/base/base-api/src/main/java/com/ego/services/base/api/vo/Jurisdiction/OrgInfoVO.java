@@ -42,6 +42,56 @@ public class OrgInfoVO implements Serializable {
 
 	private Long sysId;
 
+	private Integer type;
+
+	private String acctTitle;
+
+	private String roleTitle;
+
+	private List<com.ego.services.base.api.vo.jurisdiction.RoleInfoVO> roleInfos;
+
+	private List<com.ego.services.base.api.vo.jurisdiction.AcctInfoVO> acctInfos;
+
+	public String getAcctTitle() {
+		return acctTitle;
+	}
+
+	public void setAcctTitle(String acctTitle) {
+		this.acctTitle = acctTitle;
+	}
+
+	public String getRoleTitle() {
+		return roleTitle;
+	}
+
+	public void setRoleTitle(String roleTitle) {
+		this.roleTitle = roleTitle;
+	}
+
+	public List<com.ego.services.base.api.vo.jurisdiction.RoleInfoVO> getRoleInfos() {
+		return roleInfos;
+	}
+
+	public void setRoleInfos(List<com.ego.services.base.api.vo.jurisdiction.RoleInfoVO> roleInfos) {
+		this.roleInfos = roleInfos;
+	}
+
+	public List<com.ego.services.base.api.vo.jurisdiction.AcctInfoVO> getAcctInfos() {
+		return acctInfos;
+	}
+
+	public void setAcctInfos(List<com.ego.services.base.api.vo.jurisdiction.AcctInfoVO> acctInfos) {
+		this.acctInfos = acctInfos;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
 	public String getOrgId() {
 		return orgId;
 	}

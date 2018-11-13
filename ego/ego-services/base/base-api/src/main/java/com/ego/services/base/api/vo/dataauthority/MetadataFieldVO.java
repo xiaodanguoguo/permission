@@ -92,6 +92,8 @@ public class MetadataFieldVO implements Serializable {
 
     private String opt;
 
+    private String tableName;
+
     private int pageSize =10;
 
     private int pageNum = 1;
@@ -99,6 +101,14 @@ public class MetadataFieldVO implements Serializable {
     /**
      */
     private static final long serialVersionUID = 1L;
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
 
     public int getPageSize() {
         return pageSize;

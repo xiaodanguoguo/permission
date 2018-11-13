@@ -2,9 +2,14 @@ package com.ebase.ego.webapps.op.shiro;
 
 import com.alibaba.fastjson.JSON;
 import com.ebase.core.StringHelper;
+import com.ebase.core.cache.CacheService;
+import com.ebase.core.session.TableCondition;
 import com.ebase.core.session.User;
 import com.ebase.utils.BeanCopyUtil;
+import com.ebase.utils.secret.Md5Util;
+import com.ego.services.base.api.controller.dataauthority.PowerExpressionAPI;
 import com.ego.services.base.api.controller.jurisdiction.AcctAPI;
+import com.ego.services.base.api.vo.dataauthority.PowerExpressionVO;
 import com.ego.services.base.api.vo.jurisdiction.AcctInfoVO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -12,11 +17,15 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.SimpleSession;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,6 +36,12 @@ public class EgoShiroRealm extends AuthorizingRealm {
 	public static final String USER_SESSION_KEY = "userSessionKey";
     @Autowired
     private AcctAPI acctAPI;
+
+    @Autowired
+    private PowerExpressionAPI powerExpressionAPI;
+
+    @Autowired
+    private CacheService cacheService;
 
 
     //TODO 菜单校验
@@ -54,12 +69,20 @@ public class EgoShiroRealm extends AuthorizingRealm {
 			throw new UnknownAccountException();
 		}
         AcctInfoVO acct = acctAPI.getAcct(acctName).getRetContent();
+        if (acct == null){
+            throw new UnknownAccountException();
+        }
+//        Session session = SecurityUtils.getSubject().getSession();
+//        acct.setId(session.getId());
         Session session = SecurityUtils.getSubject().getSession();
+       // SimpleSession session = (SimpleSession) SecurityUtils.getSubject().getSession();
         acct.setId(session.getId());
-//        acct.setId(session);
-		if (acct == null){
-			throw new UnknownAccountException();
-		}
+        Long acctId = acct.getAcctId();
+        String encrpt = Md5Util.encrpt(String.valueOf(acctId));
+
+
+        //acct.setId(session);
+
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
         		acct, //用户
         		acct.getAcctPassword(),
@@ -78,12 +101,73 @@ public class EgoShiroRealm extends AuthorizingRealm {
         user.setAcctTitle(acct.getAcctTitle());
         user.setAcctType(acct.getAcctType());
         user.setCompanyId(acct.getCompanyId());
+        List<TableCondition> tableConditions=new ArrayList<>();
+        PowerExpressionVO powerExpressionVO = powerExpressionAPI.selectAcctConfig(acct.getAcctId()).getRetContent();
+        if(powerExpressionVO!=null){
+            if(!CollectionUtils.isEmpty(powerExpressionVO.getRoleConfig())) {
+                for (int i=0;i<powerExpressionVO.getRoleConfig().size();i++) {
+                    TableCondition tableCondition=new TableCondition();
+                    tableCondition.setFieldValue(powerExpressionVO.getRoleConfig().get(i).getFieldValue());
+                    tableCondition.setTableName(powerExpressionVO.getRoleConfig().get(i).getTableName());
+                    tableCondition.setFieldName(powerExpressionVO.getRoleConfig().get(i).getFieldName());
+                    tableCondition.setOperator(operator(powerExpressionVO.getRoleConfig().get(i).getExpressionType()));
+                    tableConditions.add(tableCondition);
+                }
+            }
+            if(!CollectionUtils.isEmpty(powerExpressionVO.getAcctConfig())) {
+                for (int i=0;i<powerExpressionVO.getAcctConfig().size();i++) {
+                    TableCondition tableCondition=new TableCondition();
+                    tableCondition.setFieldValue(powerExpressionVO.getAcctConfig().get(i).getFieldValue());
+                    tableCondition.setTableName(powerExpressionVO.getAcctConfig().get(i).getTableName());
+                    tableCondition.setFieldName(powerExpressionVO.getAcctConfig().get(i).getFieldName());
+                    tableCondition.setOperator(operator(powerExpressionVO.getAcctConfig().get(i).getExpressionType()));
+                    tableConditions.add(tableCondition);
+                }
+            }
+            if(!CollectionUtils.isEmpty(powerExpressionVO.getOrgConfig())) {
+                for (int i=0;i<powerExpressionVO.getOrgConfig().size();i++) {
+                    TableCondition tableCondition=new TableCondition();
+                    tableCondition.setFieldValue(powerExpressionVO.getOrgConfig().get(i).getFieldValue());
+                    tableCondition.setTableName(powerExpressionVO.getOrgConfig().get(i).getTableName());
+                    tableCondition.setFieldName(powerExpressionVO.getOrgConfig().get(i).getFieldName());
+                    tableCondition.setOperator(operator(powerExpressionVO.getOrgConfig().get(i).getExpressionType()));
+                    tableConditions.add(tableCondition);
+                }
+            }
+        }
+//        user.setTableConditions(tableConditions);
+//        TableCondition t=new TableCondition();
+//        t.setFieldValue("a");
+//        tableConditions.add(t);
+        cacheService.setList("a_"+user.getAcctId().toString(),tableConditions,7200);
         session.setAttribute(USER_SESSION_KEY, JSON.toJSONString(user));
+
+
 
         return authenticationInfo;
     }
 
 
-
+    private static String operator(Byte type){
+        if(type==1 || type.equals(1)){
+            return " > ";
+        }
+        if(type==2 || type.equals(2)){
+            return " < ";
+        }
+        if(type==3 || type.equals(3)){
+            return " = ";
+        }
+        if(type==4 || type.equals(4)){
+            return " <= ";
+        }
+        if(type==5 || type.equals(5)){
+            return " >= ";
+        }
+        if(type==6 || type.equals(6)){
+            return " != ";
+        }
+        return "  ";
+    }
 
 }

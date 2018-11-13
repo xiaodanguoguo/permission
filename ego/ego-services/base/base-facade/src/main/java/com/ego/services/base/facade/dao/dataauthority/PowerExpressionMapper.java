@@ -12,6 +12,10 @@ public interface PowerExpressionMapper {
 
     PowerExpression selectByPrimaryKey(Long powerExpressionId);
 
+    PowerExpression selectqueryPower(Long powerExpressionId);
+
+    PowerExpression selectAcctConfig(Long acctId);
+
     int updateByPrimaryKeySelective(PowerExpression record);
 
     int updateByPrimaryKeyWithBLOBs(PowerExpression record);
@@ -19,4 +23,6 @@ public interface PowerExpressionMapper {
     int updateByPrimaryKey(PowerExpression record);
 
     List<PowerExpression> select(PowerExpression record);
+
+    Integer selectCount(PowerExpression record);
 }

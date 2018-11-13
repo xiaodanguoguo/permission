@@ -6,6 +6,8 @@ import java.util.List;
 public interface AccountPrivRelationMapper {
     int deleteByPrimaryKey(Long id);
 
+    int deletePowerId(Long powerExpressionId);
+
     int insert(AccountPrivRelation record);
 
     int insertSelective(AccountPrivRelation record);

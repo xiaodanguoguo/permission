@@ -1,7 +1,9 @@
 package com.ebase.ego.webapps.op.controller.dataauthority;
 
+import java.util.Date;
 import java.util.List;
 
+import com.ebase.core.AssertContext;
 import com.ebase.core.page.PageInfo;
 import com.ego.services.base.api.controller.dataauthority.MetadataFieldAPI;
 import com.ego.services.base.api.vo.dataauthority.MetadataFieldVO;
@@ -38,6 +40,10 @@ public class MetadataFieldController {
 	public JsonResponse<Integer> save(@RequestBody JsonRequest<MetadataFieldVO> jsonRequest) {
 		JsonResponse<Integer> jsonResponse = new JsonResponse<>();
 		// 根据service层返回的编码做不同的操作
+		MetadataFieldVO metadataFieldVO=jsonRequest.getReqBody();
+		metadataFieldVO.setCreatedBy(AssertContext.getAcctTitle());
+		metadataFieldVO.setCreatedDate(new Date());
+		jsonRequest.setReqBody(metadataFieldVO);
 		ServiceResponse<Integer> response = metadataFieldAPI.save(jsonRequest);
 		if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode()))
 			jsonResponse.setRspBody(response.getRetContent());
@@ -64,6 +70,10 @@ public class MetadataFieldController {
 	public JsonResponse<Integer> update(@RequestBody JsonRequest<MetadataFieldVO> jsonRequest) {
 		JsonResponse<Integer> jsonResponse = new JsonResponse<>();
 		// 根据service层返回的编码做不同的操作
+		MetadataFieldVO metadataFieldVO=jsonRequest.getReqBody();
+		metadataFieldVO.setUpdatedBy(AssertContext.getAcctTitle());
+		metadataFieldVO.setUpdatedTime(new Date());
+		jsonRequest.setReqBody(metadataFieldVO);
 		ServiceResponse<Integer> response = metadataFieldAPI.update(jsonRequest);
 		if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode()))
 			jsonResponse.setRspBody(response.getRetContent());

@@ -2,6 +2,7 @@ package com.ego.services.base.facade.controller.dataauthority;
 
 import java.util.List;
 
+import com.ebase.core.AssertContext;
 import com.ebase.core.page.PageInfo;
 import com.ego.services.base.api.vo.dataauthority.TheMetadataVO;
 import com.ego.services.base.facade.service.dataauthority.TheMetadataService;
@@ -20,6 +21,9 @@ import com.ebase.core.page.PageDTOUtil;
 import com.ebase.core.service.ServiceResponse;
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.utils.JsonUtil;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * controller :TheMetadata
@@ -47,10 +51,7 @@ public class TheMetadataController {
 		logger.info("save 参数 = {}", JsonUtil.toJson(jsonRequest));
 		TheMetadataVO vo = jsonRequest.getReqBody();
 		Integer result = theMetadataService.insertSelective(vo);
-		if(result > 0)
-			serviceResponse.setRetContent(result);
-		else
-			throw new BusinessException("204");
+		serviceResponse.setRetContent(result);
 		return serviceResponse;
 	}
 	
@@ -66,10 +67,7 @@ public class TheMetadataController {
 		logger.info("update 参数 = {}", JsonUtil.toJson(jsonRequest));
 		TheMetadataVO vo = jsonRequest.getReqBody();
 		Integer result = theMetadataService.updateByPrimaryKeySelective(vo);
-		if(result > 0)
-			serviceResponse.setRetContent(result);
-		else
-			throw new BusinessException("204");
+		serviceResponse.setRetContent(result);
 		return serviceResponse;
 	}
 	
@@ -85,10 +83,7 @@ public class TheMetadataController {
 		logger.info("delete 参数 = {}", JsonUtil.toJson(jsonRequest));
 		TheMetadataVO vo = jsonRequest.getReqBody();
 		Integer result = theMetadataService.deleteByPrimaryKey(vo.getId());
-		if(result > 0)
-			serviceResponse.setRetContent(result);
-		else
-			throw new BusinessException("204");
+		serviceResponse.setRetContent(result);
 		return serviceResponse;
 	}
 	
@@ -118,6 +113,7 @@ public class TheMetadataController {
 	public ServiceResponse<PageInfo<TheMetadataVO>> findPageResult(@RequestBody JsonRequest<TheMetadataVO> jsonRequest) {
 		ServiceResponse<PageInfo<TheMetadataVO>> serviceResponse = new ServiceResponse<>();
 		try {
+			//jsonRequest.getReqHeader().setAcctId(AssertContext.getAcctId());
 			logger.info("queryPagedResult 参数 = {}", JsonUtil.toJson(jsonRequest));
 			TheMetadataVO vo = jsonRequest.getReqBody();
 			PageInfo<TheMetadataVO> pages = theMetadataService.findSelective(vo);

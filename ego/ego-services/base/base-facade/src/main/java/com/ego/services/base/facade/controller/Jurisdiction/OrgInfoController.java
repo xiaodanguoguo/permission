@@ -296,4 +296,75 @@ public class OrgInfoController {
 		}
 		return response;
 	}
+
+
+
+	/**
+	 * 组织机构信息树查詢
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/getPwerTreeOrgInfo")
+	public ServiceResponse<OrgInfoVO> getPwerTreeOrgInfo(@RequestBody JsonRequest<OrgInfo> jsonRequest) {
+		ServiceResponse<OrgInfoVO> response = new ServiceResponse<OrgInfoVO>();
+
+		OrgInfo reqBody = jsonRequest.getReqBody();
+		OrgInfo orgInfo = new OrgInfo();
+		BeanCopyUtil.copy(reqBody, orgInfo);
+		try {
+			OrgInfo childTreeOrgInfo = orgInfoService.getPwerTreeOrgInfo(orgInfo);
+			OrgInfoVO copy = BeanCopyUtil.copy(childTreeOrgInfo, OrgInfoVO.class);
+			response.setRetContent(copy);
+		} catch (BusinessException e) {
+			response.setException(new BusinessException("异常编码", new Object[]{"参数"}));
+			logger.error(e.getMessage());
+		}
+		return response;
+	}
+
+    /**
+     * 组织机构信息树查詢
+     * @param id
+     * @return
+     */
+    @RequestMapping("/getPwerTreeRoleInfo")
+    public ServiceResponse<OrgInfoVO> getPwerTreeRoleInfo(@RequestBody JsonRequest<OrgInfo> jsonRequest) {
+        ServiceResponse<OrgInfoVO> response = new ServiceResponse<OrgInfoVO>();
+
+        OrgInfo reqBody = jsonRequest.getReqBody();
+        OrgInfo orgInfo = new OrgInfo();
+        BeanCopyUtil.copy(reqBody, orgInfo);
+        try {
+            OrgInfo childTreeOrgInfo = orgInfoService.getPwerTreeRoleInfo(orgInfo);
+            OrgInfoVO copy = BeanCopyUtil.copy(childTreeOrgInfo, OrgInfoVO.class);
+            response.setRetContent(copy);
+        } catch (BusinessException e) {
+            response.setException(new BusinessException("异常编码", new Object[]{"参数"}));
+            logger.error(e.getMessage());
+        }
+        return response;
+    }
+
+    /**
+     * 组织机构信息树查詢
+     * @param id
+     * @return
+     */
+    @RequestMapping("/getPwerTreeAcctInfo")
+    public ServiceResponse<OrgInfoVO> getPwerTreeAcctInfo(@RequestBody JsonRequest<OrgInfo> jsonRequest) {
+        ServiceResponse<OrgInfoVO> response = new ServiceResponse<OrgInfoVO>();
+
+        OrgInfo reqBody = jsonRequest.getReqBody();
+        OrgInfo orgInfo = new OrgInfo();
+        BeanCopyUtil.copy(reqBody, orgInfo);
+        try {
+            OrgInfo childTreeOrgInfo = orgInfoService.getPwerTreeAcctInfo(orgInfo);
+            OrgInfoVO copy = BeanCopyUtil.copy(childTreeOrgInfo, OrgInfoVO.class);
+            response.setRetContent(copy);
+        } catch (BusinessException e) {
+            response.setException(new BusinessException("异常编码", new Object[]{"参数"}));
+            logger.error(e.getMessage());
+        }
+        return response;
+    }
 }

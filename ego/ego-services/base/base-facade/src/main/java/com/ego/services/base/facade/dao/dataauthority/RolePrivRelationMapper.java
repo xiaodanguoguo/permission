@@ -6,6 +6,8 @@ import java.util.List;
 public interface RolePrivRelationMapper {
     int deleteByPrimaryKey(Long id);
 
+    int deletePowerId(Long powerExpressionId);
+
     int insert(RolePrivRelation record);
 
     int insertSelective(RolePrivRelation record);

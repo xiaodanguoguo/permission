@@ -14,6 +14,80 @@
         <result column="TITLE" jdbcType="VARCHAR" property="title" />
         <result column="ORG_ID" jdbcType="VARCHAR" property="orgId" />
     </resultMap>
+
+
+    <resultMap id="BaseResultMapTwo" type="com.ego.services.base.facade.model.dataauthority.PowerExpression">
+        <id column="POWER_EXPRESSION_ID" jdbcType="BIGINT" property="powerExpressionId" />
+        <result column="TABLE_ID" jdbcType="BIGINT" property="tableId" />
+        <result column="TITLE" jdbcType="VARCHAR" property="title" />
+        <collection property="children"  ofType="com.ego.services.base.facade.model.dataauthority.PrivRelation" >
+            <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+            <result column="type" jdbcType="BIGINT" property="type" />
+            <collection property="children" ofType="com.ego.services.base.facade.model.dataauthority.PrivConditionConfig">
+                <result column="EXPRESSION" jdbcType="VARCHAR" property="roleExpression" />
+            </collection>
+        </collection>
+
+    </resultMap>
+
+    <resultMap id="BaseResultMapThree" type="com.ego.services.base.facade.model.dataauthority.PowerExpression">
+        <id column="POWER_EXPRESSION_ID" jdbcType="BIGINT" property="powerExpressionId" />
+        <result column="TABLE_ID" jdbcType="BIGINT" property="tableId" />
+        <result column="TITLE" jdbcType="VARCHAR" property="title" />
+        <collection property="acctConfig"  ofType="com.ego.services.base.facade.model.dataauthority.PrivConditionConfig" >
+            <id column="ac_ID" jdbcType="BIGINT" property="id" />
+            <result column="ac_TABLE_NAME" jdbcType="VARCHAR" property="tableName" />
+            <result column="ac_EXPRESSION" jdbcType="VARCHAR" property="expression" />
+            <result column="ac_EXPRESSION_TYPE" jdbcType="TINYINT" property="expressionType" />
+            <result column="ac_FIELD_ID" jdbcType="BIGINT" property="fieldId" />
+            <result column="ac_FIELD_VALUE" jdbcType="VARCHAR" property="fieldValue" />
+            <result column="ac_FIELD_NAME" jdbcType="VARCHAR" property="fieldName" />
+            <result column="ac_FIELD_type" jdbcType="VARCHAR" property="fieldType" />
+            <result column="ac_POWER_EXPRESSION_ID" jdbcType="BIGINT" property="powerExpressionId" />
+        </collection>
+        <collection property="roleConfig"  ofType="com.ego.services.base.facade.model.dataauthority.PrivConditionConfig" >
+            <id column="rc_ID" jdbcType="BIGINT" property="id" />
+            <result column="rc_TABLE_NAME" jdbcType="VARCHAR" property="tableName" />
+            <result column="rc_EXPRESSION" jdbcType="VARCHAR" property="expression" />
+            <result column="rc_EXPRESSION_TYPE" jdbcType="TINYINT" property="expressionType" />
+            <result column="rc_FIELD_ID" jdbcType="BIGINT" property="fieldId" />
+            <result column="rc_FIELD_VALUE" jdbcType="VARCHAR" property="fieldValue" />
+            <result column="rc_FIELD_type" jdbcType="VARCHAR" property="fieldType" />
+            <result column="rc_FIELD_NAME" jdbcType="VARCHAR" property="fieldName" />
+            <result column="rc_POWER_EXPRESSION_ID" jdbcType="BIGINT" property="powerExpressionId" />
+        </collection>
+        <collection property="orgConfig"  ofType="com.ego.services.base.facade.model.dataauthority.PrivConditionConfig" >
+            <id column="oc_ID" jdbcType="BIGINT" property="id" />
+            <result column="oc_TABLE_NAME" jdbcType="VARCHAR" property="tableName" />
+            <result column="oc_EXPRESSION" jdbcType="VARCHAR" property="expression" />
+            <result column="oc_EXPRESSION_TYPE" jdbcType="TINYINT" property="expressionType" />
+            <result column="oc_FIELD_ID" jdbcType="BIGINT" property="fieldId" />
+            <result column="oc_FIELD_type" jdbcType="TINYINT" property="fieldType" />
+            <result column="oc_FIELD_VALUE" jdbcType="VARCHAR" property="fieldValue" />
+            <result column="oc_FIELD_NAME" jdbcType="VARCHAR" property="fieldName" />
+            <result column="oc_POWER_EXPRESSION_ID" jdbcType="BIGINT" property="powerExpressionId" />
+        </collection>
+
+
+        <collection property="orgPrivRelations"  ofType="com.ego.services.base.facade.model.dataauthority.OrgPrivOrgId" >
+            <id column="opr_ID" jdbcType="BIGINT" property="id" />
+            <result column="opr_ORG_ID" jdbcType="VARCHAR" property="orgId" />
+            <result column="opr_ORG_NAME" jdbcType="VARCHAR" property="orgName" />
+        </collection>
+
+        <collection property="rolePrivRelations"  ofType="com.ego.services.base.facade.model.dataauthority.RolePrivRelation" >
+            <id column="rpr_ID" jdbcType="BIGINT" property="id" />
+            <result column="rpr_ROLE_ID" jdbcType="BIGINT" property="roleId" />
+            <result column="rpr_ROLE_TITLE" jdbcType="VARCHAR" property="roleTitle" />
+        </collection>
+
+        <collection property="accountPrivRelations"  ofType="com.ego.services.base.facade.model.dataauthority.AccountPrivRelation" >
+            <id column="apr_ID" jdbcType="BIGINT" property="id" />
+            <result column="apr_ACCT_ID" jdbcType="BIGINT" property="acctId" />
+            <result column="apr_ACCT_TITLE" jdbcType="VARCHAR" property="acctTitle" />
+        </collection>
+    </resultMap>
+
     <sql id="Base_Column_List">
         POWER_EXPRESSION_ID, TABLE_ID, CREATED_BY, CREATED_DATE, UPDATED_BY, UPDATED_TIME, 
         DELETE_STATUS, REMARK, STATUS, TITLE
@@ -21,14 +95,129 @@
     <sql id="Blob_Column_List">
         ORG_ID
     </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
-        select 
-        <include refid="Base_Column_List" />
-        ,
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
         <include refid="Blob_Column_List" />
         from power_expression
         where POWER_EXPRESSION_ID = #{powerExpressionId,jdbcType=BIGINT}
     </select>
+
+    <select id="selectqueryPower" parameterType="java.lang.Long" resultMap="BaseResultMapThree">
+        select pe.*,
+        r.role_title as rpr_ROLE_TITLE,r.role_id as rpr_ROLE_ID,r.role_id as rpr_ID,
+        a.acct_title as apr_ACCT_TITLE,a.acct_id as apr_ACCT_ID,a.acct_id as apr_ID,
+        o.id as opr_ORG_ID,o.org_name as opr_ORG_NAME,o.id as opr_ID,
+
+        accpc.id as ac_id,
+        accpc.TABLE_NAME as ac_TABLE_NAME,
+        accpc.EXPRESSION as ac_EXPRESSION,
+        accpc.EXPRESSION_TYPE as ac_EXPRESSION_TYPE,
+        accpc.FIELD_ID as ac_FIELD_ID,
+        accpc.FIELD_VALUE as ac_FIELD_VALUE,
+        accpc.POWER_EXPRESSION_ID as ac_POWER_EXPRESSION_ID,
+        acctm.FIELD_NAME as ac_FIELD_NAME,
+        acctm.FIELD_type as ac_FIELD_type,
+
+        rolepc.id as rc_id,
+        rolepc.TABLE_NAME as rc_TABLE_NAME,
+        rolepc.EXPRESSION as rc_EXPRESSION,
+        rolepc.EXPRESSION_TYPE as rc_EXPRESSION_TYPE,
+        rolepc.FIELD_ID as rc_FIELD_ID,
+        rolepc.FIELD_VALUE as rc_FIELD_VALUE,
+        rolepc.POWER_EXPRESSION_ID as rc_POWER_EXPRESSION_ID,
+        rprm.FIELD_NAME as rc_FIELD_NAME,
+        rprm.FIELD_type as rc_FIELD_type,
+
+        orgpc.id as oc_id,
+        orgpc.TABLE_NAME as oc_TABLE_NAME,
+        orgpc.EXPRESSION as oc_EXPRESSION,
+        orgpc.EXPRESSION_TYPE as oc_EXPRESSION_TYPE,
+        orgpc.FIELD_ID as oc_FIELD_ID,
+        orgpc.FIELD_VALUE as oc_FIELD_VALUE,
+        orgpc.POWER_EXPRESSION_ID as oc_POWER_EXPRESSION_ID,
+        orgm.FIELD_NAME as oc_FIELD_NAME,
+        orgm.FIELD_type as oc_FIELD_type
+
+        from power_expression pe
+        LEFT JOIN ROLE_PRIV_RELATION rpr ON rpr.POWER_EXPRESSION_id = pe.POWER_EXPRESSION_id
+		LEFT JOIN PRIV_CONDITION_CONFIG rolepc ON rolepc.id = rpr.RELATION_ID
+		LEFT JOIN METADATA_FIELD rprm on rprm.FIELD_ID=rolepc.FIELD_ID
+		LEFT JOIN role_info r on r.role_id=rpr.role_id
+        LEFT JOIN ORG_PRIV_RELATION opr ON opr.POWER_EXPRESSION_id = pe.POWER_EXPRESSION_id
+		LEFT JOIN PRIV_CONDITION_CONFIG orgpc ON orgpc.id = opr.RELATION_ID
+		LEFT JOIN METADATA_FIELD orgm on orgm.FIELD_ID=orgpc.FIELD_ID
+		LEFT JOIN org_info o on o.id=opr.org_id
+        LEFT JOIN ACCOUNT_PRIV_RELATION apr ON apr.POWER_EXPRESSION_id = pe.POWER_EXPRESSION_id
+		LEFT JOIN PRIV_CONDITION_CONFIG accpc ON accpc.id = apr.RELATION_ID
+		LEFT JOIN acct_info a on a.acct_id=apr.acct_id
+		LEFT JOIN METADATA_FIELD acctm on acctm.FIELD_ID=accpc.FIELD_ID
+        where
+
+                pe.POWER_EXPRESSION_ID = #{powerExpressionId,jdbcType=BIGINT}
+    </select>
+
+
+
+    <select id="selectAcctConfig" parameterType="java.lang.Long" resultMap="BaseResultMapThree">
+        				select pe.*,
+        rolepc.id as rc_id,
+        rolepc.TABLE_NAME as rc_TABLE_NAME,
+        rolepc.EXPRESSION as rc_EXPRESSION,
+        rolepc.EXPRESSION_TYPE as rc_EXPRESSION_TYPE,
+        rolepc.FIELD_ID as rc_FIELD_ID,
+        rolepc.FIELD_VALUE as rc_FIELD_VALUE,
+        rolepc.POWER_EXPRESSION_ID as rc_POWER_EXPRESSION_ID,
+        rolem.FIELD_NAME as rc_fieldName
+
+        from power_expression pe
+        LEFT JOIN ROLE_PRIV_RELATION rpr ON rpr.POWER_EXPRESSION_id = pe.POWER_EXPRESSION_id
+        LEFT JOIN PRIV_CONDITION_CONFIG rolepc ON rolepc.id = rpr.RELATION_ID
+        LEFT JOIN role_info r on r.role_id=rpr.role_id and r.role_id in (select arr.role_id from acct_role_real arr where arr.acct_id=#{acctId,jdbcType=BIGINT})
+        LEFT JOIN METADATA_FIELD rolem on rolem.FIELD_ID=rolepc.FIELD_ID
+        where 1=1
+         and r.ROLE_ID is not null
+				union all
+				select pe.*,
+        orgpc.id as oc_id,
+        orgpc.TABLE_NAME as oc_TABLE_NAME,
+        orgpc.EXPRESSION as oc_EXPRESSION,
+        orgpc.EXPRESSION_TYPE as oc_EXPRESSION_TYPE,
+        orgpc.FIELD_ID as oc_FIELD_ID,
+        orgpc.FIELD_VALUE as oc_FIELD_VALUE,
+        orgpc.POWER_EXPRESSION_ID as oc_POWER_EXPRESSION_ID,
+        orgm.FIELD_NAME as oc_fieldName
+        from power_expression pe
+				LEFT JOIN ORG_PRIV_RELATION opr ON opr.POWER_EXPRESSION_id = pe.POWER_EXPRESSION_id
+        LEFT JOIN PRIV_CONDITION_CONFIG orgpc ON orgpc.id = opr.RELATION_ID
+        LEFT JOIN org_info o on o.id=opr.org_id and o.id in (select acct.O_INFO_ID from acct_info acct where acct.acct_id=#{acctId,jdbcType=BIGINT})
+        LEFT JOIN METADATA_FIELD orgm on orgm.FIELD_ID=orgpc.FIELD_ID
+        where 1=1 and o.id is not null
+				union all
+				select pe.*,
+        accpc.id as ac_id,
+        accpc.TABLE_NAME as ac_TABLE_NAME,
+        accpc.EXPRESSION as ac_EXPRESSION,
+        accpc.EXPRESSION_TYPE as ac_EXPRESSION_TYPE,
+        accpc.FIELD_ID as ac_FIELD_ID,
+        accpc.FIELD_VALUE as ac_FIELD_VALUE,
+        accpc.POWER_EXPRESSION_ID as ac_POWER_EXPRESSION_ID,
+        acctm.FIELD_NAME as ac_fieldName
+        from power_expression pe
+				LEFT JOIN ORG_PRIV_RELATION opr ON opr.POWER_EXPRESSION_id = pe.POWER_EXPRESSION_id
+        LEFT JOIN PRIV_CONDITION_CONFIG orgpc ON orgpc.id = opr.RELATION_ID
+        LEFT JOIN org_info o on o.id=opr.org_id and o.id in (select acct.O_INFO_ID from acct_info acct where acct.acct_id=114)
+        LEFT JOIN METADATA_FIELD orgm on orgm.FIELD_ID=orgpc.FIELD_ID
+        LEFT JOIN ACCOUNT_PRIV_RELATION apr ON apr.POWER_EXPRESSION_id = pe.POWER_EXPRESSION_id
+        LEFT JOIN PRIV_CONDITION_CONFIG accpc ON accpc.id = apr.RELATION_ID
+        LEFT JOIN acct_info a on a.acct_id=apr.acct_id and a.acct_id=#{acctId,jdbcType=BIGINT}
+        LEFT JOIN METADATA_FIELD acctm on acctm.FIELD_ID=accpc.FIELD_ID
+				where 1=1 and a.ACCT_ID is not null
+
+
+    </select>
+
+
+<!--a.is_delete=0  and r.is_delete=0 and-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from power_expression
         where POWER_EXPRESSION_ID = #{powerExpressionId,jdbcType=BIGINT}
@@ -179,11 +368,54 @@
             TITLE = #{title,jdbcType=VARCHAR}
         where POWER_EXPRESSION_ID = #{powerExpressionId,jdbcType=BIGINT}
     </update>
-    <select id="select" resultMap="BaseResultMap">
-        select 
-        <include refid="Base_Column_List" />
-        from power_expression
-        <include refid="Base_Where_Column_List" />
+    <select id="select" resultMap="BaseResultMapTwo" parameterType="com.ego.services.base.facade.model.dataauthority.PowerExpression">
+        select c.* from (select pe.*,
+        GROUP_CONCAT(ri.ROLE_title ORDER BY rpr.ROLE_ID) as ROLE_name,
+        rolepc.EXPRESSION as EXPRESSION,3 type
+        from POWER_EXPRESSION pe
+        LEFT JOIN ROLE_PRIV_RELATION rpr on rpr.POWER_EXPRESSION_id=pe.POWER_EXPRESSION_id
+        LEFT JOIN PRIV_CONDITION_CONFIG rolepc on rolepc.id=rpr.RELATION_ID
+        LEFT JOIN role_info ri on ri.role_id=rpr.role_id
+        where 1=1 and pe.TABLE_ID=#{tableId} and rolepc.id is not null
+        GROUP BY rolepc.id
+        union ALL
+        select pe.*,
+        GROUP_CONCAT(oi.org_name ORDER BY opr.ORG_ID) as ROLE_name,
+        orgpc.EXPRESSION as EXPRESSION,1 type
+        from POWER_EXPRESSION pe
+        LEFT JOIN ORG_PRIV_RELATION opr on opr.POWER_EXPRESSION_id=pe.POWER_EXPRESSION_id
+        LEFT JOIN PRIV_CONDITION_CONFIG orgpc on orgpc.id=opr.RELATION_ID
+        LEFT JOIN org_info oi on oi.id=opr.org_id
+        where 1=1 and pe.TABLE_ID=#{tableId} and orgpc.id is not null
+        GROUP BY orgpc.id
+        union ALL
+        select pe.*,
+        GROUP_CONCAT(ai.acct_title ORDER BY apr.acct_id) as ROLE_name,
+        accpc.EXPRESSION as EXPRESSION,2 type
+        from POWER_EXPRESSION pe
+        LEFT JOIN ACCOUNT_PRIV_RELATION apr on apr.POWER_EXPRESSION_id=pe.POWER_EXPRESSION_id
+        LEFT JOIN PRIV_CONDITION_CONFIG accpc on accpc.id=apr.RELATION_ID
+        LEFT JOIN acct_info ai on ai.acct_id=apr.acct_id
+        where 1=1 and pe.TABLE_ID=#{tableId} and accpc.id is not null
+        GROUP BY accpc.id ) as c
+        where 1=1
+        <if test="tableId != null">
+            and c.TABLE_ID = #{tableId,jdbcType=BIGINT}
+        </if>
+        <if test="orgId != null">
+            and c.ORG_ID = #{orgId,jdbcType=VARCHAR}
+        </if>
+       and c.POWER_EXPRESSION_ID in (select d.POWER_EXPRESSION_ID from (select pe.POWER_EXPRESSION_ID
+        from POWER_EXPRESSION pe
+        where 1=1
+        <if test="tableId != null">
+            and pe.TABLE_ID = #{tableId,jdbcType=BIGINT}
+        </if>
+        <if test="orgId != null">
+            and pe.ORG_ID = #{orgId,jdbcType=VARCHAR}
+        </if> limit #{num},#{size}) as d )
+        ORDER BY c.POWER_EXPRESSION_id,c.role_name
+
     </select>
     <sql id="Base_Where_Column_List">
         <trim prefix="where" prefixOverrides="and | or">
@@ -222,4 +454,17 @@
             </if>
         </trim>
     </sql>
+
+
+    <select id="selectCount" resultType="java.lang.Integer" parameterType="com.ego.services.base.facade.model.dataauthority.PowerExpression">
+      select COUNT(pe.POWER_EXPRESSION_ID)
+        from POWER_EXPRESSION pe
+        where 1=1
+        <if test="tableId != null">
+            and pe.TABLE_ID = #{tableId,jdbcType=BIGINT}
+        </if>
+        <if test="orgId != null">
+            and pe.ORG_ID = #{orgId,jdbcType=VARCHAR}
+        </if>
+    </select>
 </mapper>

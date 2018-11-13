@@ -22,6 +22,12 @@ public interface OrgInfoService {
 	List<OrgInfo> getListTreeOrgInfo(OrgInfo orgInfo);
 	
 	OrgInfo getChildTreeOrgInfo(OrgInfo orgInfo);
+
+	OrgInfo getPwerTreeOrgInfo(OrgInfo orgInfo);
+
+    OrgInfo getPwerTreeRoleInfo(OrgInfo orgInfo);
+
+    OrgInfo getPwerTreeAcctInfo(OrgInfo orgInfo);
 	
 	Integer saveOrgInfo(OrgInfo orgInfo);
 	

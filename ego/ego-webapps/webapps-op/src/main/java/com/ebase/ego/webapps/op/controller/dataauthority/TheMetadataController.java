@@ -1,7 +1,9 @@
 package com.ebase.ego.webapps.op.controller.dataauthority;
 
+import java.util.Date;
 import java.util.List;
 
+import com.ebase.core.AssertContext;
 import com.ebase.core.page.PageInfo;
 import com.ego.services.base.api.controller.dataauthority.TheMetadataAPI;
 import com.ego.services.base.api.vo.dataauthority.TheMetadataVO;
@@ -38,6 +40,10 @@ public class TheMetadataController {
 	public JsonResponse<Integer> save(@RequestBody JsonRequest<TheMetadataVO> jsonRequest) {
 		JsonResponse<Integer> jsonResponse = new JsonResponse<>();
 		// 根据service层返回的编码做不同的操作
+		TheMetadataVO theMetadataVO=jsonRequest.getReqBody();
+		theMetadataVO.setCreatedBy(AssertContext.getAcctTitle());
+		theMetadataVO.setCreatedDate(new Date());
+		jsonRequest.setReqBody(theMetadataVO);
 		ServiceResponse<Integer> response = theMetadataAPI.save(jsonRequest);
 		if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode()))
 			jsonResponse.setRspBody(response.getRetContent());
@@ -64,6 +70,11 @@ public class TheMetadataController {
 	public JsonResponse<Integer> update(@RequestBody JsonRequest<TheMetadataVO> jsonRequest) {
 		JsonResponse<Integer> jsonResponse = new JsonResponse<>();
 		// 根据service层返回的编码做不同的操作
+		TheMetadataVO theMetadataVO=jsonRequest.getReqBody();
+		theMetadataVO.setUpdatedBy(AssertContext.getAcctTitle());
+		theMetadataVO.setUpdatedTime(new Date());
+		jsonRequest.setReqBody(theMetadataVO);
+
 		ServiceResponse<Integer> response = theMetadataAPI.update(jsonRequest);
 		if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode()))
 			jsonResponse.setRspBody(response.getRetContent());
@@ -105,7 +116,7 @@ public class TheMetadataController {
 		}
 		return jsonResponse;
 	}
-	
+
 	/**
 	 * 查询单条记录
 	 * 

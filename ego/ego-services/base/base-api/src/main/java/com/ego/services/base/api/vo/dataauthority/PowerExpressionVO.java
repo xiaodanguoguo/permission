@@ -82,9 +82,91 @@ public class PowerExpressionVO implements Serializable {
     private List<PrivConditionConfigVO> roleConfig;
 
     private List<PrivConditionConfigVO> orgConfig;
+
+    private List<OrgPrivOrgIdVO> orgPrivRelations;
+
+    private List<RolePrivRelationVO> rolePrivRelations;
+
+    private List<AccountPrivRelationVO> accountPrivRelations;
+
+
+    private List<PrivRelationVO> children;
+
+    private Long acctId;
+
+    private int pageSize =10;
+
+    private int pageNum = 1;
+
+    private String fieldName;
+
     /**
      */
     private static final long serialVersionUID = 1L;
+
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
+
+    public Long getAcctId() {
+        return acctId;
+    }
+
+    public void setAcctId(Long acctId) {
+        this.acctId = acctId;
+    }
+
+    public List<OrgPrivOrgIdVO> getOrgPrivRelations() {
+        return orgPrivRelations;
+    }
+
+    public void setOrgPrivRelations(List<OrgPrivOrgIdVO> orgPrivRelations) {
+        this.orgPrivRelations = orgPrivRelations;
+    }
+
+    public List<RolePrivRelationVO> getRolePrivRelations() {
+        return rolePrivRelations;
+    }
+
+    public void setRolePrivRelations(List<RolePrivRelationVO> rolePrivRelations) {
+        this.rolePrivRelations = rolePrivRelations;
+    }
+
+    public List<AccountPrivRelationVO> getAccountPrivRelations() {
+        return accountPrivRelations;
+    }
+
+    public void setAccountPrivRelations(List<AccountPrivRelationVO> accountPrivRelations) {
+        this.accountPrivRelations = accountPrivRelations;
+    }
+
+    public List<PrivRelationVO> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<PrivRelationVO> children) {
+        this.children = children;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
 
     public Long[] getAcctIds() {
         return acctIds;

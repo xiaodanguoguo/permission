@@ -24,6 +24,12 @@ public class PrivConditionConfig implements Serializable {
      */
     private String expression;
 
+    private String accExpression;
+
+    private String roleExpression;
+
+    private String orgExpression;
+
     /**
      * Database Column Remarks:
      *   创建人
@@ -76,6 +82,11 @@ public class PrivConditionConfig implements Serializable {
 
     /**
      */
+    private String fieldName;
+
+    private Byte fieldType;
+    /**
+     */
     private String fieldValue;
 
     /**
@@ -85,6 +96,46 @@ public class PrivConditionConfig implements Serializable {
     /**
      */
     private static final long serialVersionUID = 1L;
+
+    public Byte getFieldType() {
+        return fieldType;
+    }
+
+    public void setFieldType(Byte fieldType) {
+        this.fieldType = fieldType;
+    }
+
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
+
+    public String getAccExpression() {
+        return accExpression;
+    }
+
+    public void setAccExpression(String accExpression) {
+        this.accExpression = accExpression;
+    }
+
+    public String getRoleExpression() {
+        return roleExpression;
+    }
+
+    public void setRoleExpression(String roleExpression) {
+        this.roleExpression = roleExpression;
+    }
+
+    public String getOrgExpression() {
+        return orgExpression;
+    }
+
+    public void setOrgExpression(String orgExpression) {
+        this.orgExpression = orgExpression;
+    }
 
     public Long getId() {
         return id;

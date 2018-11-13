@@ -2,9 +2,9 @@ package com.ego.services.base.api.controller.jurisdiction;
 
 
 import com.ebase.core.service.ServiceResponse;
+import com.ebase.core.web.json.JsonRequest;
 import com.ego.services.base.api.vo.jurisdiction.FunctionManageVO;
-
-import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -58,5 +58,13 @@ public interface FunctionManageAPI {
      */
     @RequestMapping(value = "/keepFunctionManage",method = RequestMethod.POST)
     ServiceResponse<FunctionManageVO> keepFunctionManage(@RequestBody FunctionManageVO jsonRequest);
+
+
+    /**
+     * 登录获取资源code
+     * @param jsonRequest
+     */
+    @RequestMapping(value = "/ListFunctionCode",method = RequestMethod.POST)
+    ServiceResponse<List<FunctionManageVO>> ListFunctionCode(@RequestBody JsonRequest<FunctionManageVO> jsonRequest);
 
 }

@@ -778,5 +778,6 @@ and arp.role_id is not null )
       select *,acct_title as name,O_INFO_ID as orgId
     from acct_info
     where ACCT_TITLE = #{acctId,jdbcType=VARCHAR} and is_delete=0
+    and O_INFO_ID is not null
   </select>
 </mapper>

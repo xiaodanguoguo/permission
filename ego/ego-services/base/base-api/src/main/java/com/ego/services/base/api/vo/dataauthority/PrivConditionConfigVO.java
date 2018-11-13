@@ -24,6 +24,12 @@ public class PrivConditionConfigVO implements Serializable {
      */
     private String expression;
 
+    private String accExpression;
+
+    private String roleExpression;
+
+    private String orgExpression;
+
     /**
      * Database Column Remarks:
      *   创建人
@@ -70,7 +76,99 @@ public class PrivConditionConfigVO implements Serializable {
 
     /**
      */
+    private Byte expressionType;
+
+    /**
+     */
+    private Long fieldId;
+
+    /**
+     */
+    private String fieldValue;
+
+    private Byte fieldType;
+
+    /**
+     */
+    private Long powerExpressionId;
+
+    private String fieldName;
+
+    /**
+     */
     private static final long serialVersionUID = 1L;
+
+    public Byte getFieldType() {
+        return fieldType;
+    }
+
+    public void setFieldType(Byte fieldType) {
+        this.fieldType = fieldType;
+    }
+
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
+
+    public Byte getExpressionType() {
+        return expressionType;
+    }
+
+    public void setExpressionType(Byte expressionType) {
+        this.expressionType = expressionType;
+    }
+
+    public Long getFieldId() {
+        return fieldId;
+    }
+
+    public void setFieldId(Long fieldId) {
+        this.fieldId = fieldId;
+    }
+
+    public String getFieldValue() {
+        return fieldValue;
+    }
+
+    public void setFieldValue(String fieldValue) {
+        this.fieldValue = fieldValue;
+    }
+
+    public Long getPowerExpressionId() {
+        return powerExpressionId;
+    }
+
+    public void setPowerExpressionId(Long powerExpressionId) {
+        this.powerExpressionId = powerExpressionId;
+    }
+
+    public String getAccExpression() {
+        return accExpression;
+    }
+
+    public void setAccExpression(String accExpression) {
+        this.accExpression = accExpression;
+    }
+
+    public String getRoleExpression() {
+        return roleExpression;
+    }
+
+    public void setRoleExpression(String roleExpression) {
+        this.roleExpression = roleExpression;
+    }
+
+    public String getOrgExpression() {
+        return orgExpression;
+    }
+
+    public void setOrgExpression(String orgExpression) {
+        this.orgExpression = orgExpression;
+    }
 
     public String getOpt() {
         return opt;

@@ -26,6 +26,13 @@ public interface OrgInfoMapper {
 	List<OrgInfo> selectListOrgInfoAll(OrgInfo orgInfo);
 	
 	List<OrgInfo> queryChildOrgInfo(OrgInfo orgInfo);
+
+	List<OrgInfo> getPwerTreeOrgInfo(OrgInfo orgInfo);
+
+	List<OrgInfo> getPwerTreeRoleInfo(OrgInfo orgInfo);
+
+	List<OrgInfo> getPwerTreeAcctInfo(OrgInfo orgInfo);
+
 	
 	//根据组织id修改组织
 	int updateOrgInfo(OrgInfo record);

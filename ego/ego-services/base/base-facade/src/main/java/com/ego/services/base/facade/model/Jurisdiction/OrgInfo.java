@@ -80,8 +80,10 @@ public class OrgInfo{
 	 */
 	private String orgName;
 	
+	private String acctTitle;
 
-	
+	private String roleTitle;
+
 	/**
 	 * 备注
 	 */
@@ -114,7 +116,63 @@ public class OrgInfo{
 
 	private String[] orgIds;
 
+	private List<RoleInfo> roleInfos;
+
+	private List<AcctInfo> acctInfos;
+
+	private Long powerExpressionId;
+
 	private OrgInfo parent;//parent
+
+	private Integer type;
+
+	public String getRoleTitle() {
+		return roleTitle;
+	}
+
+	public void setRoleTitle(String roleTitle) {
+		this.roleTitle = roleTitle;
+	}
+
+	public String getAcctTitle() {
+		return acctTitle;
+	}
+
+	public void setAcctTitle(String acctTitle) {
+		this.acctTitle = acctTitle;
+	}
+
+	public List<RoleInfo> getRoleInfos() {
+        return roleInfos;
+    }
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	public void setRoleInfos(List<RoleInfo> roleInfos) {
+        this.roleInfos = roleInfos;
+    }
+
+    public List<AcctInfo> getAcctInfos() {
+        return acctInfos;
+    }
+
+    public void setAcctInfos(List<AcctInfo> acctInfos) {
+        this.acctInfos = acctInfos;
+    }
+
+    public Long getPowerExpressionId() {
+		return powerExpressionId;
+	}
+
+	public void setPowerExpressionId(Long powerExpressionId) {
+		this.powerExpressionId = powerExpressionId;
+	}
 
 	public String[] getOrgIds() {
 		return orgIds;

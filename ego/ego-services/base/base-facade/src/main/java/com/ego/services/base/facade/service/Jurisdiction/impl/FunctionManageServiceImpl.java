@@ -8,6 +8,7 @@ import com.ego.services.base.facade.common.IsDelete;
 import com.ego.services.base.facade.common.SysPramType;
 import com.ego.services.base.facade.dao.jurisdiction.*;
 import com.ego.services.base.facade.model.jurisdiction.AcctFunctionSys;
+import com.ego.services.base.facade.model.jurisdiction.AcctInfo;
 import com.ego.services.base.facade.model.jurisdiction.FunctionManage;
 import com.ego.services.base.facade.service.jurisdiction.FunctionManageService;
 import org.slf4j.Logger;
@@ -182,6 +183,16 @@ public class FunctionManageServiceImpl implements FunctionManageService {
         return num;
     }
 
+    @Override
+    public List<FunctionManageVO> ListFunctionCode(FunctionManageVO jsonRequest) {
+        FunctionManage reqBody = new FunctionManage();
+        BeanCopyUtil.copy(jsonRequest,reqBody);
+        AcctInfo acctInfo=new AcctInfo();
+        acctInfo.setAcctId(reqBody.getAcctId());
+        List<FunctionManage> list=functionManageMapper.selsctUserFunctionAll(acctInfo);
+        List<FunctionManageVO> result = BeanCopyUtil.copyList(list, FunctionManageVO.class);
+        return result;
+    }
 
     @Override
     public String verificationDeleteFunction(FunctionManageVO jsonRequest) {

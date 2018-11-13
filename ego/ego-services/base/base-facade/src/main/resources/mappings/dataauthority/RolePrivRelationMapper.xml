@@ -29,6 +29,12 @@
         delete from role_priv_relation
         where ID = #{id,jdbcType=BIGINT}
     </delete>
+
+    <delete id="deletePowerId" parameterType="java.lang.Long">
+        delete from role_priv_relation
+        where POWER_EXPRESSION_ID = #{powerExpressionId,jdbcType=BIGINT}
+    </delete>
+
     <insert id="insert" parameterType="com.ego.services.base.facade.model.dataauthority.RolePrivRelation">
         insert into role_priv_relation (ID, ROLE_ID, RELATION_TYPE, 
             RELATION_ID, CREATED_BY, CREATED_DATE, 

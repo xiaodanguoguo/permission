@@ -5,11 +5,9 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
-import org.springframework.boot.bind.RelaxedPropertyResolver;
-import org.springframework.context.EnvironmentAware;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.alibaba.druid.pool.DruidDataSource;
@@ -24,32 +22,49 @@ import com.alibaba.druid.support.spring.stat.DruidStatInterceptor;
  */
 @Configuration
 @EnableTransactionManagement
-public class DruidDataSourceConfig implements EnvironmentAware {
-
-	//	private static Logger Logger = LoggerFactory.getLogger(DruidDataSourceConfig.class);
-	private RelaxedPropertyResolver propertyResolver;
+public class DruidDataSourceConfig {
+	@Value("${spring.datasource.url}")
+	private String url;
+	@Value("${spring.datasource.driverClassName}")
+	private String driver;
+	@Value("${spring.datasource.username}")
+	private String username;
+	@Value("${spring.datasource.password}")
+	private String password;
+	@Value("${spring.datasource.initialSize}")
+	private String initialSize;
+	@Value("${spring.datasource.minIdle}")
+	private String minIdle;
+	@Value("${spring.datasource.maxWait}")
+	private String maxWait;
+	@Value("${spring.datasource.maxActive}")
+	private String maxActive;
+	@Value("${spring.datasource.minEvictableIdleTimeMillis}")
+	private String minEvictableIdleTimeMillis;
+//	private static Logger Logger = LoggerFactory.getLogger(DruidDataSourceConfig.class);
+//	private RelaxedPropertyResolver propertyResolver;
 	/**
 	 * 加密key
 	 */
 
-	public void setEnvironment(Environment env) {
-		this.propertyResolver = new RelaxedPropertyResolver(env, "spring.datasource.");
-	}
+//	public void setEnvironment(Environment env) {
+//		this.propertyResolver = new RelaxedPropertyResolver(env, "spring.datasource.");
+//	}
 
 	@Bean
 	public DataSource dataSource() {
 		DruidDataSource datasource = new DruidDataSource();
-		datasource.setUrl(propertyResolver.getProperty("url"));
-		datasource.setDriverClassName(propertyResolver.getProperty("driver-class-name"));
-		datasource.setUsername(propertyResolver.getProperty("username"));
+		datasource.setUrl(url);
+		datasource.setDriverClassName(driver);
+		datasource.setUsername(username);
 		//TODO 数据库密码统一加密处理
-		datasource.setPassword(propertyResolver.getProperty("password"));
-		datasource.setInitialSize(Integer.valueOf(propertyResolver.getProperty("initialSize")));
-		datasource.setMinIdle(Integer.valueOf(propertyResolver.getProperty("minIdle")));
-		datasource.setMaxWait(Long.valueOf(propertyResolver.getProperty("maxWait")));
-		datasource.setMaxActive(Integer.valueOf(propertyResolver.getProperty("maxActive")));
+		datasource.setPassword(password);
+		datasource.setInitialSize(Integer.valueOf(initialSize));
+		datasource.setMinIdle(Integer.valueOf(minIdle));
+		datasource.setMaxWait(Long.valueOf(maxWait));
+		datasource.setMaxActive(Integer.valueOf(maxActive));
 		datasource.setMinEvictableIdleTimeMillis(
-				Long.valueOf(propertyResolver.getProperty("minEvictableIdleTimeMillis")));
+				Long.valueOf(minEvictableIdleTimeMillis));
 		try {
 			datasource.setFilters("stat,wall");
 		} catch (SQLException e) {
@@ -74,6 +89,4 @@ public class DruidDataSourceConfig implements EnvironmentAware {
 		beanNameAutoProxyCreator.setInterceptorNames("druid-stat-interceptor");
 		return beanNameAutoProxyCreator;
 	}
-
-
 }

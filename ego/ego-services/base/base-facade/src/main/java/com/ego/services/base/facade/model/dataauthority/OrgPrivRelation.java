@@ -2,6 +2,7 @@ package com.ego.services.base.facade.model.dataauthority;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  */
@@ -76,9 +77,19 @@ public class OrgPrivRelation implements Serializable {
      */
     private Long powerExpressionId;
 
+    private String orgName;
+
     /**
      */
     private static final long serialVersionUID = 1L;
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
 
     public Long getId() {
         return id;

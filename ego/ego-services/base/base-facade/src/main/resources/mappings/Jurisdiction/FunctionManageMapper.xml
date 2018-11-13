@@ -444,6 +444,7 @@
 	WHERE
 		ai.ACCT_ID = #{acctId}
     AND fm.FUNCTION_ID IS NOT NULL
+    and fm.is_delete=0 and ri.is_delete=0 and ri.status=1
   </select>
 
 </mapper>

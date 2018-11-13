@@ -6,6 +6,8 @@ import java.util.List;
 public interface PrivConditionConfigMapper {
     int deleteByPrimaryKey(Long id);
 
+    int deletePowerId(Long powerExpressionId);
+
     int insert(PrivConditionConfig record);
 
     int insertSelective(PrivConditionConfig record);

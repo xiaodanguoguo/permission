@@ -3,6 +3,7 @@ package com.ego.services.base.facade.service.dataauthority;
 import java.util.List;
 import java.util.Set;
 
+import com.ebase.core.page.PageInfo;
 import com.ego.services.base.api.vo.dataauthority.PowerExpressionVO;
 
 /**
@@ -26,7 +27,7 @@ public interface PowerExpressionService {
 	 * @param record
 	 * @return List
 	 */
-    public List<PowerExpressionVO> findSelective(PowerExpressionVO record);
+    public PageInfo<PowerExpressionVO> findSelective(PowerExpressionVO record);
 
 	/**
 	 * 查询一条
@@ -86,9 +87,18 @@ public interface PowerExpressionService {
     
     /**
      * 批量 保存、修改、删除
-     * @param meMaterielTypeVOs
+     * @param powerExpressionVOs
      * @return
      */
     public Integer keep(List<PowerExpressionVO> powerExpressionVOs);
 
+
+
+	/**
+	 * 查询一条
+	 *
+	 * @param acctId
+	 * @return VO
+	 */
+	public PowerExpressionVO selectAcctConfig(Long acctId);
 }

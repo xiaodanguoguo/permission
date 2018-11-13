@@ -74,9 +74,19 @@ public class RolePrivRelationVO implements Serializable {
 
     private String opt;
 
+    private String roleTitle;
+
     /**
      */
     private static final long serialVersionUID = 1L;
+
+    public String getRoleTitle() {
+        return roleTitle;
+    }
+
+    public void setRoleTitle(String roleTitle) {
+        this.roleTitle = roleTitle;
+    }
 
     public String getOpt() {
         return opt;

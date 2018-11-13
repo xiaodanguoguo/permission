@@ -3,6 +3,7 @@ package com.ebase.ego.webapps.op.controller.dataauthority;
 import java.util.List;
 
 import com.ebase.core.AssertContext;
+import com.ebase.core.page.PageInfo;
 import com.ego.services.base.api.controller.dataauthority.PowerExpressionAPI;
 import com.ego.services.base.api.vo.dataauthority.PowerExpressionVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +37,14 @@ public class PowerExpressionController {
 	 */
 	@RequestMapping("/save")
 	public JsonResponse<Integer> save(@RequestBody JsonRequest<PowerExpressionVO> jsonRequest) {
+		//jsonRequest.getReqHeader().setAcctId(AssertContext.getAcctId());
 		JsonResponse<Integer> jsonResponse = new JsonResponse<>();
 		// 根据service层返回的编码做不同的操作
 		PowerExpressionVO powerExpressionVO=jsonRequest.getReqBody();
 		powerExpressionVO.setOrgId(AssertContext.getOrgId());
-		ServiceResponse<Integer> response = powerExpressionAPI.save(powerExpressionVO);
+		powerExpressionVO.setCreatedBy(AssertContext.getAcctTitle());
+		jsonRequest.setReqBody(powerExpressionVO);
+		ServiceResponse<Integer> response = powerExpressionAPI.save(jsonRequest);
 		if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode()))
 			jsonResponse.setRspBody(response.getRetContent());
 		// 如果需要异常信息
@@ -141,10 +145,13 @@ public class PowerExpressionController {
 	 * @return
 	 */
 	@RequestMapping("/findpageresult")
-	public JsonResponse<PageDTO<PowerExpressionVO>> findPageResult(@RequestBody JsonRequest<PowerExpressionVO> jsonRequest) {
-		JsonResponse<PageDTO<PowerExpressionVO>> jsonResponse = new JsonResponse<>();
+	public JsonResponse<PageInfo<PowerExpressionVO>> findPageResult(@RequestBody JsonRequest<PowerExpressionVO> jsonRequest) {
+		JsonResponse<PageInfo<PowerExpressionVO>> jsonResponse = new JsonResponse<>();
 		// 根据service层返回的编码做不同的操作
-		ServiceResponse<PageDTO<PowerExpressionVO>> response = powerExpressionAPI.findPageResult(jsonRequest);
+		PowerExpressionVO powerExpressionVO=jsonRequest.getReqBody();
+		powerExpressionVO.setOrgId(AssertContext.getOrgId());
+		jsonRequest.setReqBody(powerExpressionVO);
+		ServiceResponse<PageInfo<PowerExpressionVO>> response = powerExpressionAPI.findPageResult(jsonRequest);
 		if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode()))
 			jsonResponse.setRspBody(response.getRetContent());
 		// 如果需要异常信息

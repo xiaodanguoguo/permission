@@ -5,48 +5,30 @@ import java.util.Date;
 
 /**
  */
-public class MetadataField implements Serializable {
+public class OrgPrivOrgId implements Serializable {
     /**
      * Database Column Remarks:
-     *   字段标识
+     *   ID
      */
-    private Long fieldId;
+    private String id;
 
     /**
      * Database Column Remarks:
-     *   表ID
+     *   角色标识
      */
-    private Long tableId;
+    private String orgId;
 
     /**
      * Database Column Remarks:
-     *   字段名
+     *   关系类型
      */
-    private String fieldName;
+    private Byte relationType;
 
     /**
      * Database Column Remarks:
-     *   字段描述
+     *   关系标识
      */
-    private String fieldDescribe;
-
-    /**
-     * Database Column Remarks:
-     *   字段长度
-     */
-    private Integer fieldLength;
-
-    /**
-     * Database Column Remarks:
-     *   字段类型
-     */
-    private Byte fieldType;
-
-    /**
-     * Database Column Remarks:
-     *   字段编码
-     */
-    private String fieldCode;
+    private Long relationId;
 
     /**
      * Database Column Remarks:
@@ -90,74 +72,54 @@ public class MetadataField implements Serializable {
      */
     private Byte status;
 
-    private String tableName;
+    /**
+     */
+    private Long powerExpressionId;
+
+    private String orgName;
 
     /**
      */
     private static final long serialVersionUID = 1L;
 
-    public String getTableName() {
-        return tableName;
+    public String getOrgName() {
+        return orgName;
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 
-    public Long getFieldId() {
-        return fieldId;
+    public String getId() {
+        return id;
     }
 
-    public void setFieldId(Long fieldId) {
-        this.fieldId = fieldId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public Long getTableId() {
-        return tableId;
+    public String getOrgId() {
+        return orgId;
     }
 
-    public void setTableId(Long tableId) {
-        this.tableId = tableId;
+    public void setOrgId(String orgId) {
+        this.orgId = orgId == null ? null : orgId.trim();
     }
 
-    public String getFieldName() {
-        return fieldName;
+    public Byte getRelationType() {
+        return relationType;
     }
 
-    public void setFieldName(String fieldName) {
-        this.fieldName = fieldName == null ? null : fieldName.trim();
+    public void setRelationType(Byte relationType) {
+        this.relationType = relationType;
     }
 
-    public String getFieldDescribe() {
-        return fieldDescribe;
+    public Long getRelationId() {
+        return relationId;
     }
 
-    public void setFieldDescribe(String fieldDescribe) {
-        this.fieldDescribe = fieldDescribe == null ? null : fieldDescribe.trim();
-    }
-
-    public Integer getFieldLength() {
-        return fieldLength;
-    }
-
-    public void setFieldLength(Integer fieldLength) {
-        this.fieldLength = fieldLength;
-    }
-
-    public Byte getFieldType() {
-        return fieldType;
-    }
-
-    public void setFieldType(Byte fieldType) {
-        this.fieldType = fieldType;
-    }
-
-    public String getFieldCode() {
-        return fieldCode;
-    }
-
-    public void setFieldCode(String fieldCode) {
-        this.fieldCode = fieldCode == null ? null : fieldCode.trim();
+    public void setRelationId(Long relationId) {
+        this.relationId = relationId;
     }
 
     public String getCreatedBy() {
@@ -216,19 +178,24 @@ public class MetadataField implements Serializable {
         this.status = status;
     }
 
+    public Long getPowerExpressionId() {
+        return powerExpressionId;
+    }
+
+    public void setPowerExpressionId(Long powerExpressionId) {
+        this.powerExpressionId = powerExpressionId;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", fieldId=").append(fieldId);
-        sb.append(", tableId=").append(tableId);
-        sb.append(", fieldName=").append(fieldName);
-        sb.append(", fieldDescribe=").append(fieldDescribe);
-        sb.append(", fieldLength=").append(fieldLength);
-        sb.append(", fieldType=").append(fieldType);
-        sb.append(", fieldCode=").append(fieldCode);
+        sb.append(", id=").append(id);
+        sb.append(", orgId=").append(orgId);
+        sb.append(", relationType=").append(relationType);
+        sb.append(", relationId=").append(relationId);
         sb.append(", createdBy=").append(createdBy);
         sb.append(", createdDate=").append(createdDate);
         sb.append(", updatedBy=").append(updatedBy);
@@ -236,6 +203,7 @@ public class MetadataField implements Serializable {
         sb.append(", deleteStatus=").append(deleteStatus);
         sb.append(", remark=").append(remark);
         sb.append(", status=").append(status);
+        sb.append(", powerExpressionId=").append(powerExpressionId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

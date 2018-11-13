@@ -2,7 +2,8 @@ package com.ego.services.base.api.controller.dataauthority;
 
 import java.util.List;
 
-import org.springframework.cloud.netflix.feign.FeignClient;
+import com.ebase.core.page.PageInfo;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -17,7 +18,7 @@ import com.ego.services.base.api.vo.dataauthority.PowerExpressionVO;
  * @date 2018-11-1
  */
  
-@FeignClient(value = "${ser.name.order}") // 这个是服务名
+@FeignClient(value = "${ser.name.base}") // 这个是服务名
 public interface PowerExpressionAPI {
     
     /**
@@ -27,7 +28,7 @@ public interface PowerExpressionAPI {
 	 * @return
 	 */
 	@RequestMapping("/powerExpression/save")
-	public ServiceResponse<Integer> save(@RequestBody PowerExpressionVO jsonRequest);
+	public ServiceResponse<Integer> save(@RequestBody JsonRequest<PowerExpressionVO> jsonRequest);
 	
 	/**
 	 * 更新
@@ -63,7 +64,7 @@ public interface PowerExpressionAPI {
 	 * @return
 	 */
 	@RequestMapping("/powerExpression/findpageresult")
-	public ServiceResponse<PageDTO<PowerExpressionVO>> findPageResult(@RequestBody JsonRequest<PowerExpressionVO> jsonRequest);
+	public ServiceResponse<PageInfo<PowerExpressionVO>> findPageResult(@RequestBody JsonRequest<PowerExpressionVO> jsonRequest);
 	
 	/**
 	 * 批量 保存、修改、删除
@@ -73,6 +74,14 @@ public interface PowerExpressionAPI {
 	 */
 	@RequestMapping("/powerExpression/keep")
 	public ServiceResponse<Integer> keep(@RequestBody JsonRequest<List<PowerExpressionVO>> jsonRequest);
-    
-    
+
+	/**
+	 * 用户有多少数据权限
+	 *
+	 * @param acctId
+	 * @return
+	 */
+	@RequestMapping("/powerExpression/selectAcctConfig")
+	public ServiceResponse<PowerExpressionVO> selectAcctConfig(@RequestBody Long acctId);
+
 }
