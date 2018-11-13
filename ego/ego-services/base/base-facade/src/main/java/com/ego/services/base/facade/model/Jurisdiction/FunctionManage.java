@@ -63,6 +63,26 @@ public class FunctionManage {
 
     private Long sysId;                    //系统ID
 
+    private Integer relaStatus;             //1是不可编辑    0是可以编辑
+
+    private Integer type;                   //1是引用  0是创建
+
+    public Integer getRelaStatus() {
+        return relaStatus;
+    }
+
+    public void setRelaStatus(Integer relaStatus) {
+        this.relaStatus = relaStatus;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public Long getSysId() {
         return sysId;
     }

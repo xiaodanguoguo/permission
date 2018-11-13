@@ -47,6 +47,11 @@ public class MetadataFieldController {
 		MetadataFieldVO vo = jsonRequest.getReqBody();
 		Integer result = metadataFieldService.insertSelective(vo);
 		serviceResponse.setRetContent(result);
+		if(result==-1){
+			serviceResponse.setRetCode("0001001");
+			serviceResponse.setRetMessage("名称重复");
+		}
+
 		return serviceResponse;
 	}
 	
@@ -62,10 +67,11 @@ public class MetadataFieldController {
 		logger.info("update 参数 = {}", JsonUtil.toJson(jsonRequest));
 		MetadataFieldVO vo = jsonRequest.getReqBody();
 		Integer result = metadataFieldService.updateByPrimaryKeySelective(vo);
-		if(result > 0)
-			serviceResponse.setRetContent(result);
-		else
-			throw new BusinessException("204");
+		serviceResponse.setRetContent(result);
+		if(result==-1){
+			serviceResponse.setRetCode("0001001");
+			serviceResponse.setRetMessage("名称重复");
+		}
 		return serviceResponse;
 	}
 	

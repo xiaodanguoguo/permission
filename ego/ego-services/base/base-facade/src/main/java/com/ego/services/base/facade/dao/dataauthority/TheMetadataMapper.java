@@ -17,4 +17,6 @@ public interface TheMetadataMapper {
     int updateByPrimaryKey(TheMetadata record);
 
     List<TheMetadata> select(TheMetadata record);
+
+    List<TheMetadata> selectTitle(TheMetadata record);
 }

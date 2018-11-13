@@ -165,6 +165,11 @@
       </if>
     </trim>
   </insert>
+  <update id="updateSysId" parameterType="com.ego.services.base.facade.model.jurisdiction.FunctionManage">
+    update function_manage
+    set IS_DELETE = 1
+    where FUNCTION_ID in (select a.FUNCTION_ID from ACCT_FUNCTION_SYS a where a.SYS_ID=#{sysId})
+  </update>
 
   <update id="updateFunctionIdAll" parameterType="com.ego.services.base.facade.model.jurisdiction.FunctionManage">
     update function_manage

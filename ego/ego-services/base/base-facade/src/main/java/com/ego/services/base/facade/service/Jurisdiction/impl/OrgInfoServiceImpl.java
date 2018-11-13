@@ -260,43 +260,6 @@ public class OrgInfoServiceImpl implements OrgInfoService{
 
 
 	/**
-	 * 在内存中拼接出查询树
-	 *//*
-	@Override
-	public JsonResponse<List<OrgInfo>> getListRecursionOrgInfo(JsonRequest<OrgInfoVO> jsonRequest) {
-		JsonResponse<List<OrgInfo>> jsonResponse = new JsonResponse<List<OrgInfo>>();
-		OrgInfoVO reqBody = jsonRequest.getReqBody();
-		OrgInfo orgInfo = new OrgInfo(); 
-		BeanCopyUtil.copy(reqBody, orgInfo);		
-		
-		List<OrgInfo> orgInfos = new ArrayList<OrgInfo>();
-		List<OrgInfo> allOrgInfo = orgInfoMapper.selectListOrgInfo(orgInfo);
-		Map<Long, OrgInfo> orgInfoMap = new HashMap<Long, OrgInfo>();
-		for ( OrgInfo orgInfo1 : allOrgInfo ) {
-			orgInfoMap.put(orgInfo1.getId(), orgInfo1);
-		}
-		for ( OrgInfo orgInfo1 : allOrgInfo ) {
-			// 子菜单
-			OrgInfo child = orgInfo1;
-			if ( child.getParentId() == 0 ) {
-				orgInfos.add(orgInfo1);
-			} else {
-				// 父菜单
-				OrgInfo parent = orgInfoMap.get(child.getParentId());
-				// 组合菜单之间的关系
-				if(parent != null) {
-					parent.getChildren().add(child);
-				}	
-			}
-		}
-		jsonResponse.setRspBody(orgInfos);
-		return jsonResponse;
-	}*/
-
-
-
-
-	/**
 	 * 组织机构信息递归查询
 	 */
 	@Override

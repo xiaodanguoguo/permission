@@ -17,6 +17,8 @@ public interface RoleInfoMapper {
 
     int updateByPrimaryKey(RoleInfo record);
 
+    int updateSysId(RoleInfo record);
+
     List<RoleInfo> find(RoleInfo roleInfo);
 
     List<RoleInfo> findTwo(RoleInfo roleInfo);

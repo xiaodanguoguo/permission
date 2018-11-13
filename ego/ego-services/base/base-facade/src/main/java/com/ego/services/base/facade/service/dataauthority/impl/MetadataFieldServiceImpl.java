@@ -9,6 +9,7 @@ import com.ego.services.base.facade.dao.dataauthority.MetadataFieldMapper;
 import com.ego.services.base.facade.model.dataauthority.MetadataField;
 import com.ego.services.base.facade.service.dataauthority.MetadataFieldService;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,7 +64,12 @@ public class MetadataFieldServiceImpl implements MetadataFieldService {
 	@Override
     public Integer insertSelective(MetadataFieldVO record){
         MetadataField metadataField = BeanCopyUtil.copy(record, MetadataField.class);
-        return metadataFieldMapper.insertSelective(metadataField);
+		List<MetadataField> list=metadataFieldMapper.selectTitle(metadataField);
+		if(!CollectionUtils.isEmpty(list)){
+			return -1;
+		}else {
+			return metadataFieldMapper.insertSelective(metadataField);
+		}
     }
     
     @Override
@@ -75,7 +81,12 @@ public class MetadataFieldServiceImpl implements MetadataFieldService {
 	@Override
     public Integer updateByPrimaryKeySelective(MetadataFieldVO record){
         MetadataField metadataField = BeanCopyUtil.copy(record, MetadataField.class);
-        return metadataFieldMapper.updateByPrimaryKeySelective(metadataField);
+		List<MetadataField> list=metadataFieldMapper.selectTitle(metadataField);
+		if(!CollectionUtils.isEmpty(list)){
+			return -1;
+		}else{
+			return metadataFieldMapper.updateByPrimaryKeySelective(metadataField);
+		}
     }
 
 	@Override

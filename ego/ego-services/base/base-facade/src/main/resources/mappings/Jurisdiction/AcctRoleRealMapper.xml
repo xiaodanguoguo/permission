@@ -199,7 +199,7 @@
 
   <delete id="deleteAcctRole" parameterType="com.ego.services.base.facade.model.jurisdiction.AcctRoleReal" >
 
-    delete from acct_role_real where ACCT_ID = #{acctId,jdbcType=BIGINT}
+    delete from acct_role_real where ACCT_ID = #{acctId,jdbcType=BIGINT} and role_id > 0
   </delete>
 
 </mapper>

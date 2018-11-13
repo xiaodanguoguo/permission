@@ -52,6 +52,11 @@ public class TheMetadataController {
 		TheMetadataVO vo = jsonRequest.getReqBody();
 		Integer result = theMetadataService.insertSelective(vo);
 		serviceResponse.setRetContent(result);
+		if(result==-1){
+			serviceResponse.setRetCode("0001001");
+			serviceResponse.setRetMessage("名称重复");
+		}
+
 		return serviceResponse;
 	}
 	
@@ -68,6 +73,10 @@ public class TheMetadataController {
 		TheMetadataVO vo = jsonRequest.getReqBody();
 		Integer result = theMetadataService.updateByPrimaryKeySelective(vo);
 		serviceResponse.setRetContent(result);
+		if(result==-1){
+			serviceResponse.setRetCode("0001001");
+			serviceResponse.setRetMessage("名称重复");
+		}
 		return serviceResponse;
 	}
 	

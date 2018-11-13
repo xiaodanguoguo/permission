@@ -7,9 +7,14 @@ import java.util.Set;
 
 import com.ebase.core.page.PageInfo;
 import com.ego.services.base.api.vo.jurisdiction.SysInfoVO;
+import com.ego.services.base.facade.common.IsDelete;
 import com.ego.services.base.facade.dao.jurisdiction.AcctOrgSysMapper;
+import com.ego.services.base.facade.dao.jurisdiction.FunctionManageMapper;
+import com.ego.services.base.facade.dao.jurisdiction.RoleInfoMapper;
 import com.ego.services.base.facade.dao.jurisdiction.SysInfoMapper;
 import com.ego.services.base.facade.model.jurisdiction.AcctOrgSys;
+import com.ego.services.base.facade.model.jurisdiction.FunctionManage;
+import com.ego.services.base.facade.model.jurisdiction.RoleInfo;
 import com.ego.services.base.facade.model.jurisdiction.SysInfo;
 import com.ego.services.base.facade.service.jurisdiction.SysInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ebase.utils.ParamType;
 import com.ebase.utils.BeanCopyUtil;
 import org.springframework.util.CollectionUtils;
+
+import javax.el.FunctionMapper;
 
 /**
  * dal Interface:SysInfo
@@ -33,6 +40,12 @@ public class SysInfoServiceImpl implements SysInfoService {
 
 	@Autowired
 	private AcctOrgSysMapper acctOrgSysMapper;
+
+	@Autowired
+	private RoleInfoMapper roleInfoMapper;
+
+	@Autowired
+	private FunctionManageMapper functionManageMapper;
 
 	@Override
     public List<SysInfoVO> selectAll() {
@@ -70,7 +83,8 @@ public class SysInfoServiceImpl implements SysInfoService {
             sysInfo = sysInfoMapper.selectSysSubgrade(model);
         }else{
             if(model.getAcctType()==0 || model.getAcctType().equals(0)){
-                sysInfo = sysInfoMapper.selectSysSuper(model);
+            	//超级管理员查询出这个系统所有引用的
+                sysInfo = sysInfoMapper.selectSysSuperYinyong(model);
             }else{
                 sysInfo = sysInfoMapper.selectSysOrg(model);
             }
@@ -182,12 +196,21 @@ public class SysInfoServiceImpl implements SysInfoService {
 
 	@Override
     public SysInfoVO deleteByPrimaryKey(Long key){
-
+		//删除系统
 		SysInfo sysInfo = new SysInfo();
 		sysInfo.setSysId(key);
 		sysInfo.setIsDelete(Byte.parseByte("1"));
 		sysInfo.setUpdatedTime(new Date());
 		sysInfoMapper.updateByPrimaryKeySelective(sysInfo);
+		//删除角色
+		RoleInfo roleInfo=new RoleInfo();
+		roleInfo.setSysId(key);
+		roleInfo.setIsDelete(IsDelete.YES.getCode());
+		roleInfoMapper.updateSysId(roleInfo);
+		//删除资源
+		FunctionManage functionManage=new FunctionManage();
+		functionManage.setSysId(key);
+		functionManageMapper.updateSysId(functionManage);
 		SysInfoVO sysInfoVO= BeanCopyUtil.copy(sysInfo, SysInfoVO.class);
 		sysInfoVO.setOpt("delete");
         return sysInfoVO;

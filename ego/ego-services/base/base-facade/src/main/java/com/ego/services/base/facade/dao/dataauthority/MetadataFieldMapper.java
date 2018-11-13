@@ -17,4 +17,6 @@ public interface MetadataFieldMapper {
     int updateByPrimaryKey(MetadataField record);
 
     List<MetadataField> select(MetadataField record);
+
+    List<MetadataField> selectTitle(MetadataField record);
 }

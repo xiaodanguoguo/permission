@@ -30,6 +30,8 @@ public interface SysInfoMapper {
 
     List<SysInfo> selectSysOrg(SysInfo record);
 
+    List<SysInfo> selectSysSuperYinyong(SysInfo record);
+
     List<SysInfo> selectSysInfoOrgSee(SysInfo record);
 
     List<SysInfo> selectSysOrgSeeAcct(SysInfo record);

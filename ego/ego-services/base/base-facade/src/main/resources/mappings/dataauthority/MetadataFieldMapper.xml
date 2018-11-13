@@ -196,6 +196,24 @@
             STATUS = #{status,jdbcType=BIT}
         where FIELD_ID = #{fieldId,jdbcType=BIGINT}
     </update>
+
+
+    <select id="selectTitle" resultType="com.ego.services.base.facade.model.dataauthority.MetadataField">
+        select *
+        from metadata_field m
+        where 1=1 and DELETE_STATUS=0
+        <if test="fieldId != null">
+            and m.FIELD_ID = #{fieldId,jdbcType=BIGINT}
+        </if>
+        <if test="tableId != null">
+            and m.TABLE_ID = #{tableId,jdbcType=BIGINT}
+        </if>
+        <if test="fieldName != null">
+            and m.FIELD_NAME = #{fieldName,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+
     <select id="select" resultType="com.ego.services.base.facade.model.dataauthority.MetadataField">
         select *,t.TABLE_NAME_CODE as tableName
         from metadata_field m

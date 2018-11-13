@@ -247,6 +247,20 @@
         where aos.org_id = #{orgId} and s.is_delete = 0 and aos.status = 0 and s.status=1
     </select>
 
+    <select id="selectSysSuperYinyong" resultType="com.ego.services.base.facade.model.jurisdiction.SysInfo" parameterType="com.ego.services.base.facade.model.jurisdiction.SysInfo">
+        select s.SYS_ID, s.SYS_CODE, s.SYS_TITLE, s.SYS_DESC, s.IS_DELETE,s.CREATED_BY, s.CREATED_TIME,
+        s.UPDATED_BY, s.UPDATED_TIME, s.ORG_ID,aos.status as relaStatus,case when s.sys_id in (select s.SYS_ID
+        from sys_info s
+        LEFT JOIN  ACCT_ORG_SYS aos on aos.sys_id=s.sys_id
+        where aos.org_id = #{quoteOrgId} and s.is_delete = 0 and aos.status = 1 and s.status=1) then 1 when s.sys_id in (select s.SYS_ID
+        from sys_info s
+        LEFT JOIN  ACCT_ORG_SYS aos on aos.sys_id=s.sys_id
+        where aos.org_id = #{quoteOrgId} and s.is_delete = 0 and aos.status = 0 and s.status=1) then 1 else 0 end as status
+        from sys_info s
+        LEFT JOIN  ACCT_ORG_SYS aos on aos.sys_id=s.sys_id
+        where s.is_delete = 0 and aos.status = 1 and s.status=1
+    </select>
+
     <select id="selectSysSuper" resultType="com.ego.services.base.facade.model.jurisdiction.SysInfo" parameterType="com.ego.services.base.facade.model.jurisdiction.SysInfo">
         select s.SYS_ID, s.SYS_CODE, s.SYS_TITLE, s.SYS_DESC, s.IS_DELETE,s.CREATED_BY, s.CREATED_TIME,
         s.UPDATED_BY, s.UPDATED_TIME, s.ORG_ID,aos.status as relaStatus,case when s.sys_id in (select s.SYS_ID

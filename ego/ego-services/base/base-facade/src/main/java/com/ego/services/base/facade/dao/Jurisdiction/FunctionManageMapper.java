@@ -18,6 +18,8 @@ public interface FunctionManageMapper {
 
     int updateByPrimaryKeySelective(FunctionManage record);
 
+    int updateSysId(FunctionManage record);
+
     int updateByPrimaryKey(FunctionManage record);
 
     List<FunctionManage> findRole(FunctionManage functionManage);

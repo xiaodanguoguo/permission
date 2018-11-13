@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ebase.utils.ParamType;
 import com.ebase.utils.BeanCopyUtil;
+import org.springframework.util.CollectionUtils;
 
 /**
  * dal Interface:TheMetadata
@@ -71,7 +72,12 @@ public class TheMetadataServiceImpl implements TheMetadataService {
         TheMetadata theMetadata = BeanCopyUtil.copy(record, TheMetadata.class);
 		theMetadata.setDeleteStatus(Byte.parseByte("0"));
         theMetadata.setCreatedDate(new Date());
-        return theMetadataMapper.insertSelective(theMetadata);
+		List<TheMetadata> list=theMetadataMapper.selectTitle(theMetadata);
+		if(!CollectionUtils.isEmpty(list)){
+			return -1;
+		}else{
+			return theMetadataMapper.insertSelective(theMetadata);
+		}
     }
     
     @Override
@@ -83,7 +89,12 @@ public class TheMetadataServiceImpl implements TheMetadataService {
 	@Override
     public Integer updateByPrimaryKeySelective(TheMetadataVO record){
         TheMetadata theMetadata = BeanCopyUtil.copy(record, TheMetadata.class);
-        return theMetadataMapper.updateByPrimaryKeySelective(theMetadata);
+		List<TheMetadata> list=theMetadataMapper.selectTitle(theMetadata);
+		if(!CollectionUtils.isEmpty(list)){
+			return -1;
+		}else{
+			return theMetadataMapper.updateByPrimaryKeySelective(theMetadata);
+		}
     }
 
 	@Override

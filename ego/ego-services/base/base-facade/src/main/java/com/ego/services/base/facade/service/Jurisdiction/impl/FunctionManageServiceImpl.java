@@ -11,6 +11,7 @@ import com.ego.services.base.facade.model.jurisdiction.AcctFunctionSys;
 import com.ego.services.base.facade.model.jurisdiction.AcctInfo;
 import com.ego.services.base.facade.model.jurisdiction.FunctionManage;
 import com.ego.services.base.facade.service.jurisdiction.FunctionManageService;
+import io.swagger.models.auth.In;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,30 +57,18 @@ public class FunctionManageServiceImpl implements FunctionManageService {
 
         FunctionManage functionManage=new FunctionManage();
         BeanCopyUtil.copy(functionManageVO,functionManage);
-//            //查询一级系统
-//            List<SysInfo> listSys=new ArrayList<>();
-//            if(functionManage.getAcctType()==0 || functionManage.getAcctType().equals(0)){
-//                listSys = sysInfoMapper.selectSysInfoSuper(functionManage);
-//            }else{
-//                listSys = sysInfoMapper.selectSysInfoOrgId(functionManage);
-//            }
-//
-//
-//            for(SysInfo sysInfo:listSys){
-            //查询一级资源树状图
-            List<FunctionManage> list = functionManageMapper.find(functionManage);
+        //查询一级资源树状图
+        List<FunctionManage> list = functionManageMapper.find(functionManage);
 
-            List<FunctionManage> listTreeNull=new ArrayList<>();
-            for(int i=0;i<list.size();i++) {
-                list.get(i).setChildren(listTreeNull);
-                if (list.get(i).getFunctionId() != null) {
-                    functionManage.setParentApplicationId(list.get(i).getFunctionId());
-                    //添加数据
-                    list.get(i).setChildren(menuChild(functionManage, list.get(i).getFunctionTitle()));
-                }
+        List<FunctionManage> listTreeNull=new ArrayList<>();
+        for(int i=0;i<list.size();i++) {
+            list.get(i).setChildren(listTreeNull);
+            if (list.get(i).getFunctionId() != null) {
+                functionManage.setParentApplicationId(list.get(i).getFunctionId());
+                //添加数据
+                list.get(i).setChildren(menuChild(functionManage, list.get(i).getFunctionTitle()));
             }
-//                sysInfo.setFunctionManages(list);
-//            }
+        }
 
         List<FunctionManageVO> result = BeanCopyUtil.copyList(list, FunctionManageVO.class);
         return result;
@@ -133,14 +122,19 @@ public class FunctionManageServiceImpl implements FunctionManageService {
         BeanCopyUtil.copy(functionManageVO,functionManage);
         //获取当前用户下的所有组织
         functionManage=getFunctionOrgId(functionManage);
+        Integer relaStatus=0;
+        if(functionManageVO.getType()==1){
+            relaStatus=1;
+        }
 
         List<FunctionManage> list = functionManageMapper.findRole(functionManage);
         List<FunctionManage> listTreeNull=new ArrayList<>();
         for(int i=0;i<list.size();i++){
+            list.get(i).setRelaStatus(relaStatus);
             list.get(i).setChildren(listTreeNull);
             if(list.get(i).getFunctionId()!=null){
                 functionManage.setParentApplicationId(list.get(i).getFunctionId());
-                list.get(i).setChildren(menuChildRole(functionManage,list.get(i).getFunctionTitle()));
+                list.get(i).setChildren(menuChildRole(relaStatus,functionManage,list.get(i).getFunctionTitle()));
             }
         }
         List<FunctionManageVO> result = BeanCopyUtil.copyList(list, FunctionManageVO.class);
@@ -148,7 +142,7 @@ public class FunctionManageServiceImpl implements FunctionManageService {
         return result;
     }
 
-    public List<FunctionManage> menuChildRole(FunctionManage functionManage,String functionTitle){
+    public List<FunctionManage> menuChildRole(Integer relaStatus, FunctionManage functionManage, String functionTitle){
         String parentApplicationName=functionTitle;
         List<FunctionManage> listTreeNull=new ArrayList<>();
         //根据父Id查询数据
@@ -156,13 +150,14 @@ public class FunctionManageServiceImpl implements FunctionManageService {
 
         if(list.size()>0) {
             for (int i = 0; i < list.size(); i++) {
+                list.get(i).setRelaStatus(relaStatus);
                 list.get(i).setChildren(listTreeNull);
                 functionManage.setParentApplicationId(list.get(i).getFunctionId());
                 list.get(i).setParentApplicationName(parentApplicationName);
                 //查询当前级别的下一级是否有数据
                 List<FunctionManage> listTree = functionManageMapper.findRoleThree(functionManage);
                 if (listTree.size() > 0) {
-                    list.get(i).setChildren(menuChildRole(functionManage, list.get(i).getFunctionTitle()));
+                    list.get(i).setChildren(menuChildRole(relaStatus,functionManage, list.get(i).getFunctionTitle()));
                 } else {
                     list.get(i).setChildren(listTreeNull);
                 }

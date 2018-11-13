@@ -185,6 +185,17 @@
       </if>
     </trim>
   </insert>
+
+  <update id="updateSysId" parameterType="com.ego.services.base.facade.model.jurisdiction.RoleInfo" >
+    update role_info
+    <set >
+      <if test="isDelete != null and isDelete!='' " >
+        IS_DELETE = #{isDelete,jdbcType=TINYINT},
+      </if>
+    </set>
+    where SYS_ID = #{sysId,jdbcType=BIGINT}
+  </update>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.ego.services.base.facade.model.jurisdiction.RoleInfo" >
     update role_info
     <set >
