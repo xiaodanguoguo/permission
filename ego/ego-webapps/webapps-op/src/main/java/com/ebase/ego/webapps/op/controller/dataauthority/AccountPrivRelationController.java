@@ -2,8 +2,8 @@ package com.ebase.ego.webapps.op.controller.dataauthority;
 
 import java.util.List;
 
-import com.ego.services.base.api.controller.dataauthority.AccountPrivRelationAPI;
-import com.ego.services.base.api.vo.dataauthority.AccountPrivRelationVO;
+import com.ego.services.juri.api.controller.dataauthority.AccountPrivRelationAPI;
+import com.ego.services.juri.api.vo.dataauthority.AccountPrivRelationVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

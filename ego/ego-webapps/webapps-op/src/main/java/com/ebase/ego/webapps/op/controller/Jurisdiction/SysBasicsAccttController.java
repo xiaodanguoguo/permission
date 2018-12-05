@@ -3,10 +3,10 @@ package com.ebase.ego.webapps.op.controller.jurisdiction;
 import java.util.List;
 
 import com.ebase.core.service.ServiceResponse;
-import com.ego.services.base.api.controller.jurisdiction.AcctAPI;
-import com.ego.services.base.api.controller.jurisdiction.AcctRoleRealApl;
-import com.ego.services.base.api.vo.jurisdiction.AcctToRoleInfoVO;
-import com.ego.services.base.api.vo.jurisdiction.FunctionManageVO;
+import com.ego.services.juri.api.controller.jurisdiction.AcctAPI;
+import com.ego.services.juri.api.controller.jurisdiction.AcctRoleRealApl;
+import com.ego.services.juri.api.vo.jurisdiction.AcctToRoleInfoVO;
+import com.ego.services.juri.api.vo.jurisdiction.FunctionManageVO;
 
 import feign.FeignException;
 import org.slf4j.Logger;
@@ -21,11 +21,11 @@ import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
 import com.ebase.utils.JsonUtil;
 import com.ebase.utils.excel.ExcelUtils;
-import com.ego.services.base.api.controller.jurisdiction.SysAccInfoAPI;
+import com.ego.services.juri.api.controller.jurisdiction.SysAccInfoAPI;
 
-import com.ego.services.base.api.vo.jurisdiction.AcctInfoExcel;
-import com.ego.services.base.api.vo.jurisdiction.AcctInfoVO;
-import com.ego.services.base.api.vo.jurisdiction.AcctRoleRealVO;
+import com.ego.services.juri.api.vo.jurisdiction.AcctInfoExcel;
+import com.ego.services.juri.api.vo.jurisdiction.AcctInfoVO;
+import com.ego.services.juri.api.vo.jurisdiction.AcctRoleRealVO;
 
 /**
  *  系统基础 平台账号管理
@@ -223,6 +223,7 @@ public class SysBasicsAccttController {
             AcctInfoVO acctInfoVO=jsonRequest.getReqBody();
             acctInfoVO.setoInfoId(AssertContext.getOrgId());
             acctInfoVO.setAcctType(AssertContext.getAcctType());
+            jsonRequest.setReqBody(acctInfoVO);
             jsonResponse = sysAccInfoAPI.sysAcctList(jsonRequest);
         }catch (BusinessException e){
             jsonResponse.setRetCode(e.getErrorCode());

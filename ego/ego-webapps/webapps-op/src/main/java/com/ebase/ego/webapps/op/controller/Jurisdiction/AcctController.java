@@ -12,9 +12,9 @@ import com.ebase.core.web.json.JsonResponse;
 import com.ebase.utils.BeanCopyUtil;
 import com.ebase.utils.CookieUtil;
 import com.ebase.utils.WebUtil;
-import com.ego.services.base.api.controller.jurisdiction.AcctAPI;
-import com.ego.services.base.api.vo.jurisdiction.AcctInfoVO;
-import com.ego.services.base.api.vo.jurisdiction.FunctionManageVO;
+import com.ego.services.juri.api.controller.jurisdiction.AcctAPI;
+import com.ego.services.juri.api.vo.jurisdiction.AcctInfoVO;
+import com.ego.services.juri.api.vo.jurisdiction.FunctionManageVO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.LockedAccountException;
@@ -106,21 +106,18 @@ public class AcctController {
             UsernamePasswordToken token = new UsernamePasswordToken(acctLogin.getAcctId(), MD5Util.encrypByMd5(acctLogin.getPassword()));
             try {
                 subject.login(token);
-//                ServiceResponse<AcctSession> userLogin = acctAPI.userLogin(acctLogin);
-//                if(null != userLogin && null != userLogin.getRetContent().getAcct()){
 
-                    AcctInfoVO acctInfoVO = new AcctInfoVO();
+                AcctInfoVO acctInfoVO = new AcctInfoVO();
                 User user = AssertContext.get();
                 //subject.logout();
                 //获取当前登陆用户id用户
-                    acctInfoVO.setAcctId(Long.valueOf(user.getAcctId()));
-                    ServiceResponse<List<FunctionManageVO>> userFunctionAll = acctAPI.getUserFunctionAll(acctInfoVO);
-                    List<FunctionManageVO> retContent = userFunctionAll.getRetContent();
-                    List<String> permissions = new ArrayList<>();
-                    retContent.forEach(per -> permissions.add(per.getFunctionCode()));
-                    user.setPermissions(permissions);
-                    jsonResponse.setRspBody(user);
-//                }
+                acctInfoVO.setAcctId(Long.valueOf(user.getAcctId()));
+                ServiceResponse<List<FunctionManageVO>> userFunctionAll = acctAPI.getUserFunctionAll(acctInfoVO);
+                List<FunctionManageVO> retContent = userFunctionAll.getRetContent();
+                List<String> permissions = new ArrayList<>();
+                retContent.forEach(per -> permissions.add(per.getFunctionCode()));
+                user.setPermissions(permissions);
+                jsonResponse.setRspBody(user);
             } catch (LockedAccountException e) {
                 LOG.error(e.getMessage());
                 token.clear();

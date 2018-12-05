@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ego.services.juri.facade.dao.dataauthority.DataPrivMapper">
+    <resultMap id="BaseResultMap" type="com.ego.services.juri.facade.model.dataauthority.DataPriv">
+        <id column="PRIV_ID" jdbcType="BIGINT" property="privId" />
+        <result column="TABLE_ID" jdbcType="BIGINT" property="tableId" />
+        <result column="DATA_PRI_TITLE" jdbcType="VARCHAR" property="dataPriTitle" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="DATA_ID" jdbcType="VARCHAR" property="dataId" />
+        <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+        <result column="CREATED_DATE" jdbcType="TIMESTAMP" property="createdDate" />
+        <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+        <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+        <result column="IS_DELETE" jdbcType="TINYINT" property="isDelete" />
+        <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+        <result column="STATUS" jdbcType="TINYINT" property="status" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        PRIV_ID, TABLE_ID, DATA_PRI_TITLE, CREATE_TIME, UPDATE_TIME, DATA_ID, CREATED_BY, 
+        CREATED_DATE, UPDATED_BY, UPDATED_TIME, IS_DELETE, REMARK, STATUS
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select 
+        <include refid="Base_Column_List" />
+        from data_priv
+        where PRIV_ID = #{privId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from data_priv
+        where PRIV_ID = #{privId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.ego.services.juri.facade.model.dataauthority.DataPriv">
+        insert into data_priv (PRIV_ID, TABLE_ID, DATA_PRI_TITLE, 
+            CREATE_TIME, UPDATE_TIME, DATA_ID, 
+            CREATED_BY, CREATED_DATE, UPDATED_BY, 
+            UPDATED_TIME, IS_DELETE, REMARK, 
+            STATUS)
+        values (#{privId,jdbcType=BIGINT}, #{tableId,jdbcType=BIGINT}, #{dataPriTitle,jdbcType=VARCHAR}, 
+            #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{dataId,jdbcType=VARCHAR}, 
+            #{createdBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, 
+            #{updatedTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}, 
+            #{status,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ego.services.juri.facade.model.dataauthority.DataPriv">
+        insert into data_priv
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="privId != null">
+                PRIV_ID,
+            </if>
+            <if test="tableId != null">
+                TABLE_ID,
+            </if>
+            <if test="dataPriTitle != null">
+                DATA_PRI_TITLE,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+            <if test="dataId != null">
+                DATA_ID,
+            </if>
+            <if test="createdBy != null">
+                CREATED_BY,
+            </if>
+            <if test="createdDate != null">
+                CREATED_DATE,
+            </if>
+            <if test="updatedBy != null">
+                UPDATED_BY,
+            </if>
+            <if test="updatedTime != null">
+                UPDATED_TIME,
+            </if>
+            <if test="isDelete != null">
+                IS_DELETE,
+            </if>
+            <if test="remark != null">
+                REMARK,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="privId != null">
+                #{privId,jdbcType=BIGINT},
+            </if>
+            <if test="tableId != null">
+                #{tableId,jdbcType=BIGINT},
+            </if>
+            <if test="dataPriTitle != null">
+                #{dataPriTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dataId != null">
+                #{dataId,jdbcType=VARCHAR},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null">
+                #{updatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedTime != null">
+                #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=TINYINT},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ego.services.juri.facade.model.dataauthority.DataPriv">
+        update data_priv
+        <set>
+            <if test="tableId != null">
+                TABLE_ID = #{tableId,jdbcType=BIGINT},
+            </if>
+            <if test="dataPriTitle != null">
+                DATA_PRI_TITLE = #{dataPriTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dataId != null">
+                DATA_ID = #{dataId,jdbcType=VARCHAR},
+            </if>
+            <if test="createdBy != null">
+                CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null">
+                UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedTime != null">
+                UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                IS_DELETE = #{isDelete,jdbcType=TINYINT},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=TINYINT},
+            </if>
+        </set>
+        where PRIV_ID = #{privId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ego.services.juri.facade.model.dataauthority.DataPriv">
+        update data_priv
+        set TABLE_ID = #{tableId,jdbcType=BIGINT},
+            DATA_PRI_TITLE = #{dataPriTitle,jdbcType=VARCHAR},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            DATA_ID = #{dataId,jdbcType=VARCHAR},
+            CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+            CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP},
+            UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+            UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP},
+            IS_DELETE = #{isDelete,jdbcType=TINYINT},
+            REMARK = #{remark,jdbcType=VARCHAR},
+            STATUS = #{status,jdbcType=TINYINT}
+        where PRIV_ID = #{privId,jdbcType=BIGINT}
+    </update>
+    <select id="select" resultMap="BaseResultMap">
+        select 
+        <include refid="Base_Column_List" />
+        from data_priv
+        <include refid="Base_Where_Column_List" />
+    </select>
+    <sql id="Base_Where_Column_List">
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="privId != null">
+                and PRIV_ID = #{privId,jdbcType=BIGINT}
+            </if>
+            <if test="tableId != null">
+                and TABLE_ID = #{tableId,jdbcType=BIGINT}
+            </if>
+            <if test="dataPriTitle != null">
+                and DATA_PRI_TITLE = #{dataPriTitle,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null">
+                and CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateTime != null">
+                and UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="dataId != null">
+                and DATA_ID = #{dataId,jdbcType=VARCHAR}
+            </if>
+            <if test="createdBy != null">
+                and CREATED_BY = #{createdBy,jdbcType=VARCHAR}
+            </if>
+            <if test="createdDate != null">
+                and CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updatedBy != null">
+                and UPDATED_BY = #{updatedBy,jdbcType=VARCHAR}
+            </if>
+            <if test="updatedTime != null">
+                and UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="isDelete != null">
+                and IS_DELETE = #{isDelete,jdbcType=TINYINT}
+            </if>
+            <if test="remark != null">
+                and REMARK = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and STATUS = #{status,jdbcType=TINYINT}
+            </if>
+        </trim>
+    </sql>
+</mapper>

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.util.StringUtils;
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
-import com.ego.services.base.api.controller.jurisdiction.AcctOperPrivRelaAPI;
-import com.ego.services.base.api.vo.jurisdiction.AcctOperPrivRelaVO;
+import com.ego.services.juri.api.controller.jurisdiction.AcctOperPrivRelaAPI;
+import com.ego.services.juri.api.vo.jurisdiction.AcctOperPrivRelaVO;
 
 /**
  * 系统基础模块-  系统功能管理  -  系统角色定义

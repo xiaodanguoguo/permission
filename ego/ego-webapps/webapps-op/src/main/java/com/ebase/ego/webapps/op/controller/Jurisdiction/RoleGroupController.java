@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
-import com.ego.services.base.api.controller.jurisdiction.AcctRoleGroupRoleAPI;
-import com.ego.services.base.api.controller.jurisdiction.RoleGroupAPI;
-import com.ego.services.base.api.vo.jurisdiction.AcctRoleGroupRoleVO;
-import com.ego.services.base.api.vo.jurisdiction.RoleGroupVO;
+import com.ego.services.juri.api.controller.jurisdiction.AcctRoleGroupRoleAPI;
+import com.ego.services.juri.api.controller.jurisdiction.RoleGroupAPI;
+import com.ego.services.juri.api.vo.jurisdiction.AcctRoleGroupRoleVO;
+import com.ego.services.juri.api.vo.jurisdiction.RoleGroupVO;
 
 import java.util.List;
 

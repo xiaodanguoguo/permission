@@ -7,10 +7,10 @@ import com.ebase.core.session.TableCondition;
 import com.ebase.core.session.User;
 import com.ebase.utils.BeanCopyUtil;
 import com.ebase.utils.secret.Md5Util;
-import com.ego.services.base.api.controller.dataauthority.PowerExpressionAPI;
-import com.ego.services.base.api.controller.jurisdiction.AcctAPI;
-import com.ego.services.base.api.vo.dataauthority.PowerExpressionVO;
-import com.ego.services.base.api.vo.jurisdiction.AcctInfoVO;
+import com.ego.services.juri.api.controller.dataauthority.PowerExpressionAPI;
+import com.ego.services.juri.api.controller.jurisdiction.AcctAPI;
+import com.ego.services.juri.api.vo.dataauthority.PowerExpressionVO;
+import com.ego.services.juri.api.vo.jurisdiction.AcctInfoVO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -135,11 +135,9 @@ public class EgoShiroRealm extends AuthorizingRealm {
                 }
             }
         }
-//        user.setTableConditions(tableConditions);
-//        TableCondition t=new TableCondition();
-//        t.setFieldValue("a");
-//        tableConditions.add(t);
         cacheService.setList("a_"+user.getAcctId().toString(),tableConditions,7200);
+        cacheService.set("acctTitle_"+user.getAcctId().toString(),user.getAcctTitle(),7200);
+
         session.setAttribute(USER_SESSION_KEY, JSON.toJSONString(user));
 
 

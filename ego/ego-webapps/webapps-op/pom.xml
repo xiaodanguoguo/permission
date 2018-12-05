@@ -68,7 +68,7 @@
 
 		<dependency>
 			<groupId>com.ego</groupId>
-			<artifactId>base-api</artifactId>
+			<artifactId>juri-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

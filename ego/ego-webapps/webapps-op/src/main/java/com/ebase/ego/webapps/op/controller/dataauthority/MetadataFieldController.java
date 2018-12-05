@@ -5,8 +5,8 @@ import java.util.List;
 
 import com.ebase.core.AssertContext;
 import com.ebase.core.page.PageInfo;
-import com.ego.services.base.api.controller.dataauthority.MetadataFieldAPI;
-import com.ego.services.base.api.vo.dataauthority.MetadataFieldVO;
+import com.ego.services.juri.api.controller.dataauthority.MetadataFieldAPI;
+import com.ego.services.juri.api.vo.dataauthority.MetadataFieldVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

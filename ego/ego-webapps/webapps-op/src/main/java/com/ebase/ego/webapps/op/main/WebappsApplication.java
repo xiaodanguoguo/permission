@@ -33,7 +33,7 @@ import java.util.List;
 @EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class })
 @EnableMBeanExport(registration = RegistrationPolicy.IGNORE_EXISTING)
 @ComponentScan(basePackages = { "com.ebase.ego.webapps.op","com.ebase.core.fastdfs", "com.github.tobato.fastdfs","com.ebase.core.cache","com.ebase.core.conf"})
-@EnableFeignClients(basePackages = { "com.ego.services.base.api","com.ego.services.message.api" })
+@EnableFeignClients(basePackages = { "com.ego.services.juri.api","com.ego.services.message.api" })
 @EnableDiscoveryClient
 @EnableEurekaClient
 

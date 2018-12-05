@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
-import com.ego.services.base.api.controller.jurisdiction.FunctionManageAPI;
-import com.ego.services.base.api.vo.jurisdiction.FunctionManageVO;
+import com.ego.services.juri.api.controller.jurisdiction.FunctionManageAPI;
+import com.ego.services.juri.api.vo.jurisdiction.FunctionManageVO;
 
 /**
  * 系统基础模块-  系统功能管理  -  系统功能定义

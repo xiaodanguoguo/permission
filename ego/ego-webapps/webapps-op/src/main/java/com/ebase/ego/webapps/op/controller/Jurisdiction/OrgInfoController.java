@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ebase.core.page.PageInfo;
-import com.ego.services.base.api.vo.jurisdiction.SysInfoVO;
+import com.ego.services.juri.api.vo.jurisdiction.SysInfoVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +21,9 @@ import com.ebase.core.service.ServiceResponse;
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
 import com.ebase.utils.JsonUtil;
-import com.ego.services.base.api.controller.jurisdiction.OrgInfoServiceAPI;
-import com.ego.services.base.api.vo.jurisdiction.AcctInfoVO;
-import com.ego.services.base.api.vo.jurisdiction.OrgInfoVO;
+import com.ego.services.juri.api.controller.jurisdiction.OrgInfoServiceAPI;
+import com.ego.services.juri.api.vo.jurisdiction.AcctInfoVO;
+import com.ego.services.juri.api.vo.jurisdiction.OrgInfoVO;
 
 
 
@@ -329,6 +329,12 @@ public class OrgInfoController {
 		OrgInfoVO orgInfoVO = jsonRequest.getReqBody();
 		JsonResponse<PageInfo<OrgInfoVO>> jsonResponse = new JsonResponse<PageInfo<OrgInfoVO>>();
 		try {
+			if(AssertContext.getAcctType().equals(1)){
+				orgInfoVO.setOrgId(AssertContext.getOrgId());
+			}
+			if(AssertContext.getAcctType().equals(0)){
+				orgInfoVO.setOrgId(AssertContext.getOrgId());
+			}
 			jsonResponse = orgInfoServiceAPI.selectRoleYesQuote(orgInfoVO);
 		} catch (BusinessException e) {
 			jsonResponse.setRetCode(e.getErrorCode());

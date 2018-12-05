@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ebase.core.web.json.JsonRequest;
 import com.ebase.core.web.json.JsonResponse;
-import com.ego.services.base.api.controller.jurisdiction.AcctOperPrivRelaAPI;
-import com.ego.services.base.api.controller.jurisdiction.RoleInfoAPI;
-import com.ego.services.base.api.vo.jurisdiction.AcctOperPrivRelaVO;
-import com.ego.services.base.api.vo.jurisdiction.RoleInfoVO;
+import com.ego.services.juri.api.controller.jurisdiction.AcctOperPrivRelaAPI;
+import com.ego.services.juri.api.controller.jurisdiction.RoleInfoAPI;
+import com.ego.services.juri.api.vo.jurisdiction.AcctOperPrivRelaVO;
+import com.ego.services.juri.api.vo.jurisdiction.RoleInfoVO;
 
 import java.util.Date;
 import java.util.List;

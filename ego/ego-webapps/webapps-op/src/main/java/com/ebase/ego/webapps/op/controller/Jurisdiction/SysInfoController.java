@@ -1,13 +1,12 @@
 package com.ebase.ego.webapps.op.controller.jurisdiction;
 
 import java.util.List;
-
 import com.ebase.core.AssertContext;
 import com.ebase.core.page.PageInfo;
 import com.ebase.core.service.ServiceResponse;
 import com.ebase.core.web.json.JsonRequest;
-import com.ego.services.base.api.controller.jurisdiction.SysInfoAPI;
-import com.ego.services.base.api.vo.jurisdiction.SysInfoVO;
+import com.ego.services.juri.api.controller.jurisdiction.SysInfoAPI;
+import com.ego.services.juri.api.vo.jurisdiction.SysInfoVO;
 import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -452,6 +451,47 @@ public class SysInfoController {
 
 			sysInfoVO.setAcctId(Long.parseLong(AssertContext.getAcctId()));
 			sysInfoVO.setAcctType(AssertContext.getAcctType());
+			ServiceResponse<List<SysInfoVO>> response = sysInfoAPI.selectSysInfoOrgSee(sysInfoVO);
+			if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode()))
+				jsonResponse.setRspBody(response.getRetContent());
+				// 如果需要异常信息
+			else if (response.isHasError())
+				// 系统异常
+				jsonResponse.setRetCode(JsonResponse.SYS_EXCEPTION);
+				// 如果需要的话, 这个方法可以获取异常信息 response.getErrorMessage()
+			else {
+				// 根据业务的不同确定返回的业务信息是否正常,是否需要执行下一步操作
+				jsonResponse.setRetCode(response.getRetCode());
+				jsonResponse.setRetDesc(response.getRetMessage());
+			}
+		} catch (FeignException e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			jsonResponse.setRetCode(JsonResponse.SYS_EXCEPTION);
+			return jsonResponse;
+		}
+		return jsonResponse;
+	}
+
+
+
+	/**
+	 * 角色选择组织可以查看的系统
+	 *
+	 * @param jsonRequest
+	 * @return
+	 */
+	@RequestMapping("/selectSysInfoRoleSee")
+	public JsonResponse<List<SysInfoVO>> selectSysInfoRoleSee(@RequestBody JsonRequest<SysInfoVO> jsonRequest) {
+		JsonResponse<List<SysInfoVO>> jsonResponse = new JsonResponse<>();
+		try {
+			// 根据service层返回的编码做不同的操作
+			SysInfoVO sysInfoVO=jsonRequest.getReqBody();
+
+			if(StringUtils.isEmpty(sysInfoVO.getOrgId())){
+				sysInfoVO.setOrgId(AssertContext.getOrgId());
+			}
+			sysInfoVO.setAcctType(Long.parseLong("1"));
 			ServiceResponse<List<SysInfoVO>> response = sysInfoAPI.selectSysInfoOrgSee(sysInfoVO);
 			if (ServiceResponse.SUCCESS_CODE.equals(response.getRetCode()))
 				jsonResponse.setRspBody(response.getRetContent());
