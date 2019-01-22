@@ -1,0 +1,143 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+.small-small{
+	 width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+}
+.Short-message-management-platformcon-head {
+  clear: both;
+  width: 100%;
+}
+.Short-message-management-platformcon-head ul {
+  width: 100%;
+}
+.Short-message-management-platformcon-head ul li {
+  float: left;
+}
+.Short-message-management-platform {
+  background-color: white;
+  width: 1060px;
+  min-height: 663px;
+  padding: 30px;
+  margin: 0 auto;
+}
+.Short-message-management-platform .Short-message-management-platformcon-nav {
+  color: #999;
+}
+.Short-message-management-platform .Short-message-management-platformcon-nav .Short-message-navRight-his {
+  clear: both;
+  padding-top: 10px;
+}
+.Short-message-management-platform .Short-message-management-platformcon-nav .Short-message-navRight-his p {
+  display: block;
+  margin-left: 35%;
+}
+.Short-message-management-platform .Short-message-management-platformcon-nav .Short-message-navRight {
+  margin-left: 3.5%;
+  float: left;
+}
+.Short-message-management-platform .Short-message-management-platformcon-nav .Short-message-navRight .Wdate {
+  margin-left: 10px;
+}
+.Short-message-management-platform .Short-message-management-platformcon-nav .Short-message-navLeft {
+  float: left;
+  text-indent: 10px;
+}
+.Short-message-management-platform .Short-message-management-platformcon-nav .Short-message-navLeft input {
+  margin-left: 9px;
+  border: 1px solid #ccc;
+}
+/*.Short-message-management-platform .Short-message-management-platformcon-nav span {*/
+  /*margin-left: 30px;*/
+  /*color: #E2062C;*/
+/*}*/
+.Short-message-management-platform .Short-message-management-platformcon-nav button {
+  color: #999;
+  margin-left: 30px;
+  width: 80px;
+  height: 30px;
+  background-color: white;
+  border: 1px solid #ccc;
+}
+.Short-message-management-platform .Short-message-management-platformcon-nav input {
+  width: 228px;
+  height: 26px;
+  margin-left: 30px;
+}
+.Short-message-management-platform .Short-message-management-platformcon-nav select {
+  margin-left: 10px;
+
+  color: #999;
+  width: 228px;
+  height: 30px;
+  border:1px solid #ccc;
+}
+.Short-message-management-platform .Short-message-management-platformcon-con {
+  margin-top: 45px;
+  border-top: 1px solid #ccc;
+  padding-top: 35px;
+  padding-bottom: 35px;
+}
+.Short-message-management-platform .Short-message-management-platformcon-con span {
+  border: 1px solid #4FB0AC;
+  color: #4FB0AC;
+  padding: 10px 15px;
+}
+.Short-message-management-platform .Short-message-management-platformcon-table {
+  width: 100%;
+}
+.Short-message-management-platform .Short-message-management-platformcon-table .Short-table-red {
+  font-weight: bold;
+  color: #F14400;
+}
+.Short-message-management-platform .Short-message-management-platformcon-table .Short-table-green {
+  font-weight: bold;
+  color: #3D9A4F;
+}
+.Short-message-management-platform .Short-message-management-platformcon-table table {
+  text-align: center;
+  width: 100%;
+}
+.Short-message-management-platform .Short-message-management-platformcon-table table .Short-table-tr {
+  background-color: #F5F7F9 ;
+  color: #536C76;
+}
+.Short-message-management-platform .Short-message-management-platformcon-table table .Short-table-tr th{
+  text-align:center !important;
+}
+.Short-message-management-platform .Short-message-management-platformcon-table table tr {
+  color: #000;
+  width: 100%;
+  height: 40px;
+}
+.Short-message-management-platform .Short-message-management-platformcon-table table tr td span {
+  color: #00B3AD;
+  margin-left: 10px;
+}
+.Short-message-management-platformcon-nav2{margin-top: 15px}
+
+.bubbleTip-autoW { position:absolute;background-color: #fff; padding: 7px; color: #333; border: 1px solid #ccc; border-radius: 5px; display: inline-block; line-height: 20px;  z-index: 100; width:148px; -ms-word-break: break-all; word-break: break-all; text-align: left; top:28px;left:-30px; }
+
+.bubbleTip-w220 { background-color: #fff; padding: 10px; color: #333; border: 1px solid #ccc; border-radius: 5px; width: 200px; display: inline-block; line-height: 20px; position: absolute; z-index: 100; -ms-word-break: break-all; word-break: break-all; text-align: left; }
+
+/*.bubble-triangle { width: 52px; height: 9px; display: inline-block; background: url("../images/symbol.png") 0 -399px no-repeat; position: absolute; left: 20px; top: -9px; }*/
+
+.bubble-triangle-down {
+	    width: 60px;
+    height: 9px;
+    display: inline-block;
+    background: url(../images/symbol.png) 0 -399px no-repeat;
+    position: absolute;
+    left: 77px;
+    top: -9px;
+}
+
+/*.bubble-triangle:after, .bubble-triangle-down:after { content: ""; width: 100px; height: 16px; position: absolute; left: -20px; top: -6px; display: inline-block; }*/
+#bubbleTip-autoW{display:none}
+#detailList:hover #bubbleTip-autoW{display:block}
+	
+

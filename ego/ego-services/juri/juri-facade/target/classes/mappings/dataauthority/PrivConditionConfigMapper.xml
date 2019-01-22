@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ego.services.juri.facade.dao.dataauthority.PrivConditionConfigMapper">
+    <resultMap id="BaseResultMap" type="com.ego.services.juri.facade.model.dataauthority.PrivConditionConfig">
+        <id column="ID" jdbcType="BIGINT" property="id" />
+        <result column="TABLE_NAME" jdbcType="VARCHAR" property="tableName" />
+        <result column="EXPRESSION" jdbcType="VARCHAR" property="expression" />
+        <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+        <result column="CREATED_DATE" jdbcType="TIMESTAMP" property="createdDate" />
+        <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+        <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+        <result column="DELETE_STATUS" jdbcType="TINYINT" property="deleteStatus" />
+        <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+        <result column="STATUS" jdbcType="TINYINT" property="status" />
+        <result column="EXPRESSION_TYPE" jdbcType="TINYINT" property="expressionType" />
+        <result column="FIELD_ID" jdbcType="BIGINT" property="fieldId" />
+        <result column="FIELD_VALUE" jdbcType="VARCHAR" property="fieldValue" />
+        <result column="POWER_EXPRESSION_ID" jdbcType="BIGINT" property="powerExpressionId" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        ID, TABLE_NAME, EXPRESSION, CREATED_BY, CREATED_DATE, UPDATED_BY, UPDATED_TIME, DELETE_STATUS, 
+        REMARK, STATUS, EXPRESSION_TYPE, FIELD_ID, FIELD_VALUE, POWER_EXPRESSION_ID
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select 
+        <include refid="Base_Column_List" />
+        from priv_condition_config
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from priv_condition_config
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deletePowerId" parameterType="java.lang.Long">
+        delete from priv_condition_config
+        where POWER_EXPRESSION_ID = #{powerExpressionId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ego.services.juri.facade.model.dataauthority.PrivConditionConfig">
+        insert into priv_condition_config (ID, TABLE_NAME, EXPRESSION, 
+            CREATED_BY, CREATED_DATE, UPDATED_BY, 
+            UPDATED_TIME, DELETE_STATUS, REMARK, 
+            STATUS, EXPRESSION_TYPE, FIELD_ID, 
+            FIELD_VALUE, POWER_EXPRESSION_ID)
+        values (#{id,jdbcType=BIGINT}, #{tableName,jdbcType=VARCHAR}, #{expression,jdbcType=VARCHAR}, 
+            #{createdBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=VARCHAR}, 
+            #{updatedTime,jdbcType=TIMESTAMP}, #{deleteStatus,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}, 
+            #{status,jdbcType=TINYINT}, #{expressionType,jdbcType=TINYINT}, #{fieldId,jdbcType=BIGINT}, 
+            #{fieldValue,jdbcType=VARCHAR}, #{powerExpressionId,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" keyProperty="id" useGeneratedKeys="true" keyColumn="ID"  parameterType="com.ego.services.juri.facade.model.dataauthority.PrivConditionConfig">
+        insert into priv_condition_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="tableName != null">
+                TABLE_NAME,
+            </if>
+            <if test="expression != null">
+                EXPRESSION,
+            </if>
+            <if test="createdBy != null">
+                CREATED_BY,
+            </if>
+            <if test="createdDate != null">
+                CREATED_DATE,
+            </if>
+            <if test="updatedBy != null">
+                UPDATED_BY,
+            </if>
+            <if test="updatedTime != null">
+                UPDATED_TIME,
+            </if>
+            <if test="deleteStatus != null">
+                DELETE_STATUS,
+            </if>
+            <if test="remark != null">
+                REMARK,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="expressionType != null">
+                EXPRESSION_TYPE,
+            </if>
+            <if test="fieldId != null">
+                FIELD_ID,
+            </if>
+            <if test="fieldValue != null">
+                FIELD_VALUE,
+            </if>
+            <if test="powerExpressionId != null">
+                POWER_EXPRESSION_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="tableName != null">
+                #{tableName,jdbcType=VARCHAR},
+            </if>
+            <if test="expression != null">
+                #{expression,jdbcType=VARCHAR},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null">
+                #{updatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedTime != null">
+                #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteStatus != null">
+                #{deleteStatus,jdbcType=TINYINT},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="expressionType != null">
+                #{expressionType,jdbcType=TINYINT},
+            </if>
+            <if test="fieldId != null">
+                #{fieldId,jdbcType=BIGINT},
+            </if>
+            <if test="fieldValue != null">
+                #{fieldValue,jdbcType=VARCHAR},
+            </if>
+            <if test="powerExpressionId != null">
+                #{powerExpressionId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ego.services.juri.facade.model.dataauthority.PrivConditionConfig">
+        update priv_condition_config
+        <set>
+            <if test="tableName != null">
+                TABLE_NAME = #{tableName,jdbcType=VARCHAR},
+            </if>
+            <if test="expression != null">
+                EXPRESSION = #{expression,jdbcType=VARCHAR},
+            </if>
+            <if test="createdBy != null">
+                CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null">
+                UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedTime != null">
+                UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteStatus != null">
+                DELETE_STATUS = #{deleteStatus,jdbcType=TINYINT},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="expressionType != null">
+                EXPRESSION_TYPE = #{expressionType,jdbcType=TINYINT},
+            </if>
+            <if test="fieldId != null">
+                FIELD_ID = #{fieldId,jdbcType=BIGINT},
+            </if>
+            <if test="fieldValue != null">
+                FIELD_VALUE = #{fieldValue,jdbcType=VARCHAR},
+            </if>
+            <if test="powerExpressionId != null">
+                POWER_EXPRESSION_ID = #{powerExpressionId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ego.services.juri.facade.model.dataauthority.PrivConditionConfig">
+        update priv_condition_config
+        set TABLE_NAME = #{tableName,jdbcType=VARCHAR},
+            EXPRESSION = #{expression,jdbcType=VARCHAR},
+            CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+            CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP},
+            UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+            UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP},
+            DELETE_STATUS = #{deleteStatus,jdbcType=TINYINT},
+            REMARK = #{remark,jdbcType=VARCHAR},
+            STATUS = #{status,jdbcType=TINYINT},
+            EXPRESSION_TYPE = #{expressionType,jdbcType=TINYINT},
+            FIELD_ID = #{fieldId,jdbcType=BIGINT},
+            FIELD_VALUE = #{fieldValue,jdbcType=VARCHAR},
+            POWER_EXPRESSION_ID = #{powerExpressionId,jdbcType=BIGINT}
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="select" resultMap="BaseResultMap">
+        select 
+        <include refid="Base_Column_List" />
+        from priv_condition_config
+        <include refid="Base_Where_Column_List" />
+    </select>
+    <sql id="Base_Where_Column_List">
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="id != null">
+                and ID = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="tableName != null">
+                and TABLE_NAME = #{tableName,jdbcType=VARCHAR}
+            </if>
+            <if test="expression != null">
+                and EXPRESSION = #{expression,jdbcType=VARCHAR}
+            </if>
+            <if test="createdBy != null">
+                and CREATED_BY = #{createdBy,jdbcType=VARCHAR}
+            </if>
+            <if test="createdDate != null">
+                and CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updatedBy != null">
+                and UPDATED_BY = #{updatedBy,jdbcType=VARCHAR}
+            </if>
+            <if test="updatedTime != null">
+                and UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="deleteStatus != null">
+                and DELETE_STATUS = #{deleteStatus,jdbcType=TINYINT}
+            </if>
+            <if test="remark != null">
+                and REMARK = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and STATUS = #{status,jdbcType=TINYINT}
+            </if>
+            <if test="expressionType != null">
+                and EXPRESSION_TYPE = #{expressionType,jdbcType=TINYINT}
+            </if>
+            <if test="fieldId != null">
+                and FIELD_ID = #{fieldId,jdbcType=BIGINT}
+            </if>
+            <if test="fieldValue != null">
+                and FIELD_VALUE = #{fieldValue,jdbcType=VARCHAR}
+            </if>
+            <if test="powerExpressionId != null">
+                and POWER_EXPRESSION_ID = #{powerExpressionId,jdbcType=BIGINT}
+            </if>
+        </trim>
+    </sql>
+</mapper>

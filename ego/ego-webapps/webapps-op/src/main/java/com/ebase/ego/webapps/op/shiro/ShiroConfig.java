@@ -76,7 +76,7 @@ public class ShiroConfig {
 //                filterChainDefinitionMap.put(resources.getResurl(),permission);
 //            }
 //        }
-        filterChainDefinitionMap.put("/**", "authc");
+        //filterChainDefinitionMap.put("/**", "authc");
 
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);

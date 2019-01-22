@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ego.services.juri.facade.dao.dataauthority.RolePrivRelationMapper">
+    <resultMap id="BaseResultMap" type="com.ego.services.juri.facade.model.dataauthority.RolePrivRelation">
+        <id column="ID" jdbcType="BIGINT" property="id" />
+        <result column="ROLE_ID" jdbcType="BIGINT" property="roleId" />
+        <result column="RELATION_TYPE" jdbcType="TINYINT" property="relationType" />
+        <result column="RELATION_ID" jdbcType="BIGINT" property="relationId" />
+        <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+        <result column="CREATED_DATE" jdbcType="TIMESTAMP" property="createdDate" />
+        <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+        <result column="UPDATED_TIME" jdbcType="TIMESTAMP" property="updatedTime" />
+        <result column="DELETE_STATUS" jdbcType="TINYINT" property="deleteStatus" />
+        <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+        <result column="STATUS" jdbcType="TINYINT" property="status" />
+        <result column="POWER_EXPRESSION_ID" jdbcType="BIGINT" property="powerExpressionId" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        ID, ROLE_ID, RELATION_TYPE, RELATION_ID, CREATED_BY, CREATED_DATE, UPDATED_BY, UPDATED_TIME, 
+        DELETE_STATUS, REMARK, STATUS, POWER_EXPRESSION_ID
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select 
+        <include refid="Base_Column_List" />
+        from role_priv_relation
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from role_priv_relation
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deletePowerId" parameterType="java.lang.Long">
+        delete from role_priv_relation
+        where POWER_EXPRESSION_ID = #{powerExpressionId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ego.services.juri.facade.model.dataauthority.RolePrivRelation">
+        insert into role_priv_relation (ID, ROLE_ID, RELATION_TYPE, 
+            RELATION_ID, CREATED_BY, CREATED_DATE, 
+            UPDATED_BY, UPDATED_TIME, DELETE_STATUS, 
+            REMARK, STATUS, POWER_EXPRESSION_ID
+            )
+        values (#{id,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{relationType,jdbcType=TINYINT}, 
+            #{relationId,jdbcType=BIGINT}, #{createdBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, 
+            #{updatedBy,jdbcType=VARCHAR}, #{updatedTime,jdbcType=TIMESTAMP}, #{deleteStatus,jdbcType=TINYINT}, 
+            #{remark,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{powerExpressionId,jdbcType=BIGINT}
+            )
+    </insert>
+    <insert id="insertSelective" parameterType="com.ego.services.juri.facade.model.dataauthority.RolePrivRelation">
+        insert into role_priv_relation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="roleId != null">
+                ROLE_ID,
+            </if>
+            <if test="relationType != null">
+                RELATION_TYPE,
+            </if>
+            <if test="relationId != null">
+                RELATION_ID,
+            </if>
+            <if test="createdBy != null">
+                CREATED_BY,
+            </if>
+            <if test="createdDate != null">
+                CREATED_DATE,
+            </if>
+            <if test="updatedBy != null">
+                UPDATED_BY,
+            </if>
+            <if test="updatedTime != null">
+                UPDATED_TIME,
+            </if>
+            <if test="deleteStatus != null">
+                DELETE_STATUS,
+            </if>
+            <if test="remark != null">
+                REMARK,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="powerExpressionId != null">
+                POWER_EXPRESSION_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="roleId != null">
+                #{roleId,jdbcType=BIGINT},
+            </if>
+            <if test="relationType != null">
+                #{relationType,jdbcType=TINYINT},
+            </if>
+            <if test="relationId != null">
+                #{relationId,jdbcType=BIGINT},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null">
+                #{updatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedTime != null">
+                #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteStatus != null">
+                #{deleteStatus,jdbcType=TINYINT},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="powerExpressionId != null">
+                #{powerExpressionId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ego.services.juri.facade.model.dataauthority.RolePrivRelation">
+        update role_priv_relation
+        <set>
+            <if test="roleId != null">
+                ROLE_ID = #{roleId,jdbcType=BIGINT},
+            </if>
+            <if test="relationType != null">
+                RELATION_TYPE = #{relationType,jdbcType=TINYINT},
+            </if>
+            <if test="relationId != null">
+                RELATION_ID = #{relationId,jdbcType=BIGINT},
+            </if>
+            <if test="createdBy != null">
+                CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedBy != null">
+                UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedTime != null">
+                UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteStatus != null">
+                DELETE_STATUS = #{deleteStatus,jdbcType=TINYINT},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="powerExpressionId != null">
+                POWER_EXPRESSION_ID = #{powerExpressionId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ego.services.juri.facade.model.dataauthority.RolePrivRelation">
+        update role_priv_relation
+        set ROLE_ID = #{roleId,jdbcType=BIGINT},
+            RELATION_TYPE = #{relationType,jdbcType=TINYINT},
+            RELATION_ID = #{relationId,jdbcType=BIGINT},
+            CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+            CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP},
+            UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+            UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP},
+            DELETE_STATUS = #{deleteStatus,jdbcType=TINYINT},
+            REMARK = #{remark,jdbcType=VARCHAR},
+            STATUS = #{status,jdbcType=TINYINT},
+            POWER_EXPRESSION_ID = #{powerExpressionId,jdbcType=BIGINT}
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="select" resultMap="BaseResultMap">
+        select 
+        <include refid="Base_Column_List" />
+        from role_priv_relation
+        <include refid="Base_Where_Column_List" />
+    </select>
+    <sql id="Base_Where_Column_List">
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="id != null">
+                and ID = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="roleId != null">
+                and ROLE_ID = #{roleId,jdbcType=BIGINT}
+            </if>
+            <if test="relationType != null">
+                and RELATION_TYPE = #{relationType,jdbcType=TINYINT}
+            </if>
+            <if test="relationId != null">
+                and RELATION_ID = #{relationId,jdbcType=BIGINT}
+            </if>
+            <if test="createdBy != null">
+                and CREATED_BY = #{createdBy,jdbcType=VARCHAR}
+            </if>
+            <if test="createdDate != null">
+                and CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updatedBy != null">
+                and UPDATED_BY = #{updatedBy,jdbcType=VARCHAR}
+            </if>
+            <if test="updatedTime != null">
+                and UPDATED_TIME = #{updatedTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="deleteStatus != null">
+                and DELETE_STATUS = #{deleteStatus,jdbcType=TINYINT}
+            </if>
+            <if test="remark != null">
+                and REMARK = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and STATUS = #{status,jdbcType=TINYINT}
+            </if>
+            <if test="powerExpressionId != null">
+                and POWER_EXPRESSION_ID = #{powerExpressionId,jdbcType=BIGINT}
+            </if>
+        </trim>
+    </sql>
+</mapper>
